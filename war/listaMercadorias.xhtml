@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="/layout/template.xhtml">
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.mercadoria']}" /></ui:define>
+    	
+    	<f:metadata>
+            <f:event type="preRenderView" listener="#{mercadoriaMB.reset}" />
+        </f:metadata>
+    	
+		<ui:define name="content">
+			<div style="border-bottom: 1px solid #E5E5E5;">
+				<h3><h:outputText value="#{msg['label.mercadorias']}" />
+					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
+			</div>
+			
+			<h:form>
+				<h:dataTable value="#{mercadoriaMB.dmMercadorias}" var="mercadoria" styleClass="table table-hover">
+					<h:column>
+						<f:facet name="header">#</f:facet>
+						<h:outputText value="#{mercadoria.id}" />
+	                </h:column>
+	                
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.mercadoria.nome']}" /></f:facet>
+						<h:link outcome="editarMercadoria" value="#{mercadoria.nome}" title="#{msg['label.editar']} #{mercadoria.nome}">
+                			<f:param name="id" value="#{mercadoria.id}" />
+            			</h:link>
+	                </h:column>
+	                
+	                <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.mercadoria.descricao']}" /></f:facet>
+						<h:outputText value="#{mercadoria.descricao}" />
+	                </h:column>
+	                
+	                <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.mercadoria.quantidade']}" /></f:facet>
+						<h:outputText value="#{mercadoria.quantidade}" />
+	                </h:column>
+	                
+	                <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.mercadoria.quantidade']}" /></f:facet>
+						<h:outputText value="#{mercadoria.preco}">
+							<f:convertNumber type="currency"  />
+						</h:outputText>
+	                </h:column>
+				</h:dataTable>
+				
+				<h:panelGrid columns="1">
+					<h:commandButton action="#{mercadoriaMB.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
+				</h:panelGrid>
+			</h:form>
+			<h:messages />
+		</ui:define>
+    </ui:composition>
+</html>
