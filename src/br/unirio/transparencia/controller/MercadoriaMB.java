@@ -1,4 +1,4 @@
-package br.unirio.transparencia.mb;
+package br.unirio.transparencia.controller;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 

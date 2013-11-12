@@ -17,6 +17,11 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class Mercadoria implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private Long id;
 	

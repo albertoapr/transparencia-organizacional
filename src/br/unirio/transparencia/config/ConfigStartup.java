@@ -4,6 +4,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import br.unirio.transparencia.model.Mercadoria;
+import br.unirio.transparencia.model.Usuario;
+
 
 import com.googlecode.objectify.ObjectifyService;
 
@@ -12,13 +14,14 @@ import com.googlecode.objectify.ObjectifyService;
  * 
  * <p>Código executado durante a inicialização do aplicativo web.</p> 
  * 
- * @author YaW Tecnologia
+
  */
 public class ConfigStartup implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		ObjectifyService.register(Mercadoria.class);
+		ObjectifyService.register(Usuario.class);
 	}
 	
 	@Override

@@ -7,10 +7,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/el-api-2.2.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/el-impl-2.2.1-b05.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/javax.faces-2.1.12.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.16.jar"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-4.0b1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spring Security"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Objectify"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
