@@ -9,7 +9,7 @@
 		<intercept-url pattern="/admin/**" access="ROLE_USUARIO,ROLE_OPERADOR,ROLE_ADMINISTRADOR" />
 		<intercept-url pattern="/restrito/**" access="ROLE_USUARIO,ROLE_OPERADOR,ROLE_ADMINISTRADOR" />
 		<form-login login-page="/publico/login.jsf"
-			always-use-default-target="true" default-target-url="/restrito/principal.jsf"
+			always-use-default-target="true" default-target-url="/restrito/mercadoria/lista.jsf"
 			authentication-failure-url="/publico/login.jsf?login_error=1" />
 		<logout/>
 		<!--  <remember-me /> -->
