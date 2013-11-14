@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="listaMercadorias::#restrito#mercadoria#lista.xhtml"
+    NAME="output" PATH="/restrito/mercadoria/lista.xhtml"
+    TARGET="rules:#restrito#mercadoria#lista.xhtml"
+    TITLE="listaMercadorias" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="incluirMercadoria::#restrito#mercadoria#incluir.xhtml"
+    NAME="output1" PATH="/restrito/mercadoria/incluir.xhtml"
+    TARGET="rules:#restrito#mercadoria#incluir.xhtml"
+    TITLE="incluirMercadoria" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#restrito#mercadoria#lista.xhtml"
+  PATH="/restrito/mercadoria/lista.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#restrito#mercadoria#incluir.xhtml"
+  PATH="/restrito/mercadoria/incluir.xhtml" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

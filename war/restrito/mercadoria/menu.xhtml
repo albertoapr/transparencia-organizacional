@@ -1,0 +1,48 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:sec="http://www.springframework.org/security/facelets/tags"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    >
+    
+	<ul class="nav nav-list" style="padding-top: 15px;" >
+		<li><em><h:outputText value="#{request.remoteUser}" /></em></li>
+		<li>
+		<h:outputLink value="javascript:void(0)" onclick="document.location='#{request.contextPath}/j_spring_security_logout'" title="Sair">
+						(Sair)
+					</h:outputLink>
+					</li>
+		<li class="divider"></li>
+		<li><em><h:outputText value="#{msg['label.mercadorias']}" /></em></li>
+		
+		<li class="#{empty param.active || param.active == 'lista' ? 'active' : ''}">
+			<h:link outcome="listaMercadorias" value="#{msg['menu.lista']}">
+				<f:param name="active" value="lista" />
+				<f:param name="tab" value="organizacao" />
+            </h:link>
+		</li>
+		
+		
+		
+		<h:form id="menu"  >
+		<li class="#{param.active == 'incluir' ? 'active' : ''}"  >
+		
+		 <h:link outcome="incluir" value="#{msg['menu.incluir']}">
+				<f:param name="active" value="incluir" />
+				<f:param name="tab" value="organizacao" />
+            </h:link>
+           
+      
+        </li>
+        </h:form>
+		<li class="divider"></li>
+		<li class="#{param.active == 'sobre' ? 'active' : ''}">
+			<h:link outcome="sobre" value="#{msg['menu.sobre']}">
+				<f:param name="active" value="sobre" />
+				<f:param name="tab" value="organizacao" />
+            </h:link>
+		</li>
+	</ul>
+
+</ui:fragment>
