@@ -23,12 +23,21 @@
     	<f:view contentType="text/html">
     	<div class="header">
     		<div class="container">
-        		<ui:insert name="header"><ui:include src="header.xhtml" /></ui:insert>
-        		<ui:insert name="barra_menu">
-	    		<ui:include src="/restrito/menu_sistema.xhtml"/>
-	   		</ui:insert> 
+        		<ui:insert name="header">
+        		    <ui:include src="header.xhtml" />
+        		</ui:insert>
         	</div>
-        
+        	<div class="container" align="right">	
+        		<ui:insert name="usuario_logado">
+        		    <ui:include src="usuario_logado.xhtml" />
+        		</ui:insert>
+        	</div>
+        	<div class="container" align="center">	
+        		<ui:insert name="barra_menu">
+	    		    <ui:include src="/restrito/menu_sistema.xhtml"/>
+	   		    </ui:insert> 
+        	</div>
+              
         </div>
      
     	<div class="container">
