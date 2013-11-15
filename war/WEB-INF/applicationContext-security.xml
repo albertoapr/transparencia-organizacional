@@ -6,11 +6,11 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 	<http>
 
-		<intercept-url pattern="/admin/**" access="ROLE_USUARIO,ROLE_OPERADOR,ROLE_ADMINISTRADOR" />
-		<intercept-url pattern="/restrito/**" access="ROLE_USUARIO,ROLE_OPERADOR,ROLE_ADMINISTRADOR" />
-		<form-login login-page="/publico/login.jsf"
-			always-use-default-target="true" default-target-url="/restrito/mercadoria/lista.jsf"
-			authentication-failure-url="/publico/login.jsf?login_error=1" />
+		<intercept-url pattern="/pages/admin/**" access="ROLE_ADMINISTRADOR" />
+		<intercept-url pattern="/pages/private/**" access="ROLE_OPERADOR,ROLE_ADMINISTRADOR" />
+		<form-login login-page="/pages/public/acesso.jsf"
+			always-use-default-target="true" default-target-url="/pages/public/sobre.jsf"
+			authentication-failure-url="/pages/public/acesso.jsf?login_error=1" />
 		<logout/>
 		<!--  <remember-me /> -->
 	</http>
