@@ -13,6 +13,6 @@
   </head>
 
   <body>
-    <% response.sendRedirect("restrito/mercadoria/lista.jsf"); %>
+    <% response.sendRedirect("publico/sobre.jsf"); %>
   </body>
 </html>

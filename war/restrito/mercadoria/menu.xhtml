@@ -6,13 +6,8 @@
     xmlns:c="http://java.sun.com/jsp/jstl/core"
     >
     
-	<ul class="nav nav-list" style="padding-top: 15px;" >
-		<li><em><h:outputText value="#{request.remoteUser}" /></em></li>
-		<li>
-		<h:outputLink value="javascript:void(0)" onclick="document.location='#{request.contextPath}/j_spring_security_logout'" title="Sair">
-						(Sair)
-					</h:outputLink>
-					</li>
+	<ul class="nav nav-list"  >
+		<li class="nav-header">Menu mercadoria</li>
 		<li class="divider"></li>
 		<li><em><h:outputText value="#{msg['label.mercadorias']}" /></em></li>
 		

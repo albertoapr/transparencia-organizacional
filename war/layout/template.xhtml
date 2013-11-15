@@ -22,19 +22,19 @@
     <h:body>
     	<f:view contentType="text/html">
     	<div class="header">
-    		<div class="container">
-        		<ui:insert name="header">
-        		    <ui:include src="header.xhtml" />
-        		</ui:insert>
-        	</div>
-        	<div class="container" align="right">	
+    	   <div class="container" align="right">	
         		<ui:insert name="usuario_logado">
         		    <ui:include src="usuario_logado.xhtml" />
         		</ui:insert>
         	</div>
-        	<div class="container" align="center">	
+    		<div class="container">
+        		<ui:insert name="header">
+        		    <ui:include src="header.xhtml" />
+        		</ui:insert>
+        		
+        		
         		<ui:insert name="barra_menu">
-	    		    <ui:include src="/restrito/menu_sistema.xhtml"/>
+	    		    <ui:include src="/publico/menu_sistema.xhtml"/>
 	   		    </ui:insert> 
         	</div>
               
@@ -45,7 +45,7 @@
         	<div class="row-fluid show-grid">
         
         		<div class="well span2">
-        			<ui:insert name="sidebar"><ui:include src="../menu.xhtml" /></ui:insert>
+        			<ui:insert name="sidebar"><ui:include src="../publico/menu.xhtml" /></ui:insert>
         		</div>
         		<div class="span8">
         			<ui:insert name="content"></ui:insert>
