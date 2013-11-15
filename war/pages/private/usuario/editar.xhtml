@@ -4,13 +4,15 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="../../layout/template.xhtml">
-    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.editar.mercadoria']}" /></ui:define>
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.editar.organizacao']}" /></ui:define>
     	
     	<f:metadata>
-            <f:viewParam name="id" value="#{usuarioBean.idSelecionado}" />
-            <f:event type="preRenderView" listener="#{usuarioBean.editar}" />
+            <f:viewParam name="id" value="#{organizacaoBean.idSelecionado}" />
+            <f:event type="preRenderView" listener="#{organizacaoBean.editar}" />
         </f:metadata>
-    	
+    	<ui:define name="sidebar">
+    	<ui:include src="menu.xhtml" />
+    	</ui:define>
 		<ui:define name="content">
 			<ui:include src="form.xhtml">
 				<ui:param name="subtitle" value="#{msg['label.editar']}" />

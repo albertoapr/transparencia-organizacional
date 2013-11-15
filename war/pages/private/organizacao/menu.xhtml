@@ -7,30 +7,29 @@
     >
     
 	<ul class="nav nav-list"  >
-		<li class="nav-header">Menu mercadoria</li>
+		<li class="nav-header"><h:outputText value="Menu #{msg['label.organizacoes']}" /></li>
 		<li class="divider"></li>
-		<li><em><h:outputText value="#{msg['label.mercadorias']}" /></em></li>
+		
+		
 		
 		<li class="#{empty param.active || param.active == 'lista' ? 'active' : ''}">
-			<h:link outcome="listaMercadorias" value="#{msg['menu.lista']}">
+			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista']}">
 				<f:param name="active" value="lista" />
-				<f:param name="tab" value="organizacao" />
+				<f:param name="tab" value="organizacoes" />
             </h:link>
 		</li>
 		
-		
-		
-		<h:form id="menu"  >
+			
+	
 		<li class="#{param.active == 'incluir' ? 'active' : ''}"  >
 		
 		 <h:link outcome="incluir" value="#{msg['menu.incluir']}">
 				<f:param name="active" value="incluir" />
-				<f:param name="tab" value="organizacao" />
+				<f:param name="tab" value="organizacoes" />
             </h:link>
-           
       
         </li>
-        </h:form>
+       
 		<li class="divider"></li>
 		<li class="#{param.active == 'sobre' ? 'active' : ''}">
 			<h:link outcome="sobre" value="#{msg['menu.sobre']}">

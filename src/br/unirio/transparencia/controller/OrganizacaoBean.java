@@ -17,60 +17,65 @@ import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
-import br.unirio.transparencia.dao.MercadoriaDAO;
-import br.unirio.transparencia.dao.MercadoriaDAOObjectify;
-import br.unirio.transparencia.model.Mercadoria;
+import br.unirio.transparencia.dao.OrganizacaoDAO;
+import br.unirio.transparencia.dao.OrganizacaoDAOObjectify;
+import br.unirio.transparencia.model.Organizacao;
 
 /**
- * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>Mercadoria</code>.
+ * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>organizacao</code>.
  * 
- * <p>Trata-se de um <code>Managed Bean</code>, ou seja, as instância dessa classe são controladas pelo <code>JSF</code>. Para cada sessão de usuário será criado um objeto <code>MercadoriaMB</code>.</p>
+ * <p>Trata-se de um <code>Managed Bean</code>, ou seja, as instância dessa classe são controladas pelo <code>JSF</code>. Para cada sessão de usuário será criado um objeto <code>organizacaoMB</code>.</p>
  * 
  * <p>Esse componente atua com um papel parecido com o <code>Controller</code> de outros frameworks <code>MVC</code>, ele resolve o fluxo de navegação e liga os componentes visuais com os dados.</p>
  * 
- * @author YaW Tecnologia
+ * 
  */
 @ManagedBean
 @SessionScoped
-public class MercadoriaMB implements Serializable {
+public class OrganizacaoBean implements Serializable {
 	
-	private static Logger log = Logger.getLogger(MercadoriaMB.class);
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Logger log = Logger.getLogger(OrganizacaoBean.class);
 	
 	/**
 	 * Referência do componente de persistência.
 	 */
-	private MercadoriaDAO dao;
+	private OrganizacaoDAO dao;
 	
 	/**
-	 * Referência para a mercadoria utiliza na inclusão (nova) ou edição.
+	 * Referência para a organizacao utiliza na inclusão (nova) ou edição.
 	 */
-	private Mercadoria mercadoria;
+	private Organizacao organizacao;
 	
 	/**
-	 * Informação é utilizada na edição da mercadoria, quando a seleção de um registro na listagem ocorrer.
+	 * Informação é utilizada na edição da organizacao, quando a seleção de um registro na listagem ocorrer.
 	 */
 	private Long idSelecionado;
 	
 	/**
-	 * Mantém as mercadorias apresentadas na listagem indexadas pelo id.
+	 * Mantém as organizacaos apresentadas na listagem indexadas pelo id.
 	 * <strong>Importante:</strong> a consulta (query) no DataStore do App Engine pode retornar <i>dados antigos</i>, 
 	 * que já foram removidos ou que ainda não foram incluidos, devido a replicação dos dados.
 	 * 
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
-	private Map<Long, Mercadoria> mercadorias;
+	private Map<Long, Organizacao> organizacoes;
 	
-	public MercadoriaMB() {
-		dao = new MercadoriaDAOObjectify();
-		fillMercadorias();
+	public OrganizacaoBean() {
+		dao = new OrganizacaoDAOObjectify();
+		fillOrganizacoes();
 	}
 	
-	public Mercadoria getMercadoria() {
-		return mercadoria;
+	public Organizacao getOrganizacao() {
+		return organizacao;
 	}
 	
-	public void setMercadoria(Mercadoria mercadoria) {
-		this.mercadoria = mercadoria;
+	public void setOrganizacao(Organizacao organizacao) {
+		this.organizacao = organizacao;
 	}
 	
 	public void setIdSelecionado(Long idSelecionado) {
@@ -82,44 +87,44 @@ public class MercadoriaMB implements Serializable {
 	}
 	
 	/**
-	 * @return <code>DataModel</code> para carregar a lista de mercadorias.
+	 * @return <code>DataModel</code> para carregar a lista de organizacaos.
 	 */
-	public DataModel<Mercadoria> getDmMercadorias() {
-		return new ListDataModel<Mercadoria>(new ArrayList<Mercadoria>(mercadorias.values()));
+	public DataModel<Organizacao> getDmOrganizacoes() {
+		return new ListDataModel<Organizacao>(new ArrayList<Organizacao>(organizacoes.values()));
 	}
 	
-	private void fillMercadorias() {
+	private void fillOrganizacoes() {
 		try {
-			List<Mercadoria> qryMercadorias = new ArrayList<Mercadoria>(dao.getAll());
-			mercadorias = new HashMap<Long, Mercadoria>();
-			for (Mercadoria m: qryMercadorias) {
-				mercadorias.put(m.getId(), m);
+			List<Organizacao> qryOrganizacoes = new ArrayList<Organizacao>(dao.getAll());
+			organizacoes = new HashMap<Long, Organizacao>();
+			for (Organizacao m: qryOrganizacoes) {
+				organizacoes.put(m.getId(), m);
 			}
 			
-			log.debug("Carregou a lista de mercadorias ("+mercadorias.size()+")");
+			log.debug("Carregou a lista de organizacoes ("+organizacoes.size()+")");
 		} catch(Exception ex) {
-			log.error("Erro ao carregar a lista de mercadorias.", ex);
-			addMessage(getMessageFromI18N("msg.erro.listar.mercadoria"), ex.getMessage());
+			log.error("Erro ao carregar a lista de organizacoes.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.organizacao"), ex.getMessage());
 		}
 		
 	}
 	
 	/**
-	 * Ação executada quando a página de inclusão de mercadorias for carregada.
+	 * Ação executada quando a página de inclusão de organizacaos for carregada.
 	 */
 	public void incluir(){
-		mercadoria = new Mercadoria();
+		organizacao = new Organizacao();
 		log.debug("Pronto pra incluir");
 	}
 	
 	/**
-	 * Ação executada quando a página de edição de mercadorias for carregada.
+	 * Ação executada quando a página de edição de organizacaos for carregada.
 	 */
 	public void editar() {
 		if (idSelecionado == null) {
 			return;
 		}
-		mercadoria = mercadorias.get(idSelecionado);
+		organizacao = organizacoes.get(idSelecionado);
 		log.debug("Pronto pra editar");
 	}
 
@@ -129,29 +134,30 @@ public class MercadoriaMB implements Serializable {
 	 */
 	public String salvar() {
 		try {
-			dao.save(mercadoria);
-			mercadorias.put(mercadoria.getId(), mercadoria);
+			dao.save(organizacao);
+			organizacoes.put(organizacao.getId(), organizacao);
 		} catch(Exception ex) {
-			log.error("Erro ao salvar mercadoria.", ex);
-			addMessage(getMessageFromI18N("msg.erro.salvar.mercadoria"), ex.getMessage());
+			log.error("Erro ao salvar organizacao.", ex);
+			addMessage(getMessageFromI18N("msg.erro.salvar.organizacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Salvour mercadoria "+mercadoria.getId());
-		return "listaMercadorias";
+		log.debug("Salvour organizacao "+organizacao.getId());
+		return "listaOrganizacoes";
+	
 	}
 	
 	/**
 	 * Operação acionada pela tela de listagem, através do <code>commandButton</code> <strong>Atualizar</strong>. 
 	 */
 	public void atualizar() {
-		fillMercadorias();
+		fillOrganizacoes();
 	}
 	
 	/**
 	 * Operação acionada toda a vez que a  tela de listagem for carregada.
 	 */
 	public void reset() {
-		mercadoria = null;
+		organizacao = null;
 		idSelecionado = null;
 	}
 	
@@ -161,15 +167,15 @@ public class MercadoriaMB implements Serializable {
 	 */
 	public String remover() {
 		try {
-			dao.remove(mercadoria);
-			mercadorias.remove(mercadoria.getId());
+			dao.remove(organizacao);
+			organizacoes.remove(organizacao.getId());
 		} catch(Exception ex) {
-			log.error("Erro ao remover mercadoria.", ex);
-			addMessage(getMessageFromI18N("msg.erro.remover.mercadoria"), ex.getMessage());
+			log.error("Erro ao remover organizacao.", ex);
+			addMessage(getMessageFromI18N("msg.erro.remover.organizacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu mercadoria "+mercadoria.getId());
-		return "listaMercadorias";
+		log.debug("Removeu organizacao "+organizacao.getId());
+		return "listaOrganizacoes";
 	}
 	
 	/**

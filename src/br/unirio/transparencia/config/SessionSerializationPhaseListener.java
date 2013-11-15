@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 /**
  * <code>PhaseListener</code> do JSF para forçar a serialização da sessão do App Engine.
  * 
- * @author YaW Tecnologia
+ * 
  */
 public class SessionSerializationPhaseListener implements PhaseListener {
  

@@ -28,7 +28,7 @@
             </h:link>
 </li>
  <li class="#{ param.tab == 'organizacoes' ? 'active' : ''}"  >
-			<h:link outcome="listaMercadorias" value="Organizações" rendered="#{request.userPrincipal.authenticated}">
+			<h:link outcome="listaOrganizacoes" value="Organizações" rendered="#{request.userPrincipal.authenticated}">
 				<f:param name="tab" value="organizacoes" />
             </h:link>
 		</li>

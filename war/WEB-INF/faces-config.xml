@@ -22,18 +22,30 @@
 		<phase-listener>br.unirio.transparencia.config.SessionSerializationPhaseListener</phase-listener>
 	</lifecycle>
 
-	<!-- Define a navegacao global para a pagina com a lista de mercadorias. -->
+	<!-- Define a navegacao global para a pagina com a lista de organizacoes. -->
 	<navigation-rule>
 		<navigation-case>
-			<from-outcome>listaMercadorias</from-outcome>
-			<to-view-id>/restrito/mercadoria/lista.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>incluirMercadoria</from-outcome>
-			<to-view-id>/restrito/mercadoria/incluir.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
+			 <from-outcome>listaOrganizacoes</from-outcome>
+        <to-view-id>/pages/private/organizacao/lista.xhtml</to-view-id>
+        <redirect>
+            <view-param>
+                <name>tab</name>
+                <value>organizacoes</value>
+            </view-param>
+        </redirect>
+    </navigation-case>
+	
+	<navigation-case>
+			 <from-outcome>listaUsuarios</from-outcome>
+        <to-view-id>/pages/private/usuario/lista.xhtml</to-view-id>
+        <redirect>
+            <view-param>
+                <name>tab</name>
+                <value>usuarios</value>
+            </view-param>
+        </redirect>
+    </navigation-case>	
+		
 	</navigation-rule>
 
 	<!-- Define uma lista para servir como Managed Bean para a pagina sobre. -->
