@@ -1,0 +1,23 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+    
+	<ul class="nav nav-list" style="padding-top: 15px;">
+		
+		
+		
+		<li class="#{param.active == 'acesso' ? 'active' : ''}" >
+			<h:link outcome="acesso" value="Acesso" rendered="#{!request.userPrincipal.authenticated}">
+				<f:param name="active" value="acesso" />
+            </h:link>
+        </li>
+		<li class="divider"></li>
+		<li class="#{empty param.active || param.active == 'sobre' ? 'active' : ''}">
+			<h:link outcome="sobre" value="#{msg['menu.sobre']}">
+				<f:param name="active" value="sobre" />
+            </h:link>
+		</li>
+	</ul>
+
+</ui:fragment>
