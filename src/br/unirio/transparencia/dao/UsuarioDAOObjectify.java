@@ -8,7 +8,12 @@ import java.util.List;
 import br.unirio.transparencia.model.Usuario;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFilter;
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.Query;
+
+
 
 /**
  * Implementa o contrato de persistência da entidade <code>Usuario</code>.
@@ -55,7 +60,15 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
 
 	@Override
 	public Usuario findByEmail(String email) {
-		Key<Usuario> k = Key.create(Usuario.class, email);
-		return ofy().load().key(k).get();
+		
+		List<Usuario> usuarios =ofy().load().type(Usuario.class).list();
+		for (Usuario user:usuarios)
+		{
+			if (user.getEmail().compareTo(email)==0)
+				return user;
+		}	
+		return null;	
+		
+		
 	}
 }

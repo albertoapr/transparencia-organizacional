@@ -24,6 +24,11 @@
 
 	<!-- Define a navegacao global para a pagina com a lista de organizacoes. -->
 	<navigation-rule>
+	    <navigation-case>
+			 <from-outcome>login</from-outcome>
+              <to-view-id>/pages/public/acesso.xhtml</to-view-id>
+        </navigation-case>
+    
 	  	<navigation-case>
 			 <from-outcome>listaOrganizacoes</from-outcome>
         <to-view-id>/pages/private/organizacao/lista.xhtml</to-view-id>
@@ -31,14 +36,9 @@
     </navigation-case>
 	
 	<navigation-case>
-			 <from-outcome>listaUsuarios</from-outcome>
+		 <from-outcome>listaUsuarios</from-outcome>
         <to-view-id>/pages/private/usuario/lista.xhtml</to-view-id>
-        <redirect>
-            <view-param>
-                <name>tab</name>
-                <value>usuarios</value>
-            </view-param>
-        </redirect>
+       
     </navigation-case>	
 		
 	</navigation-rule>
@@ -55,5 +55,13 @@
 			<value>sobre.site</value>
 			<value>sobre.build</value>
 		</list-entries>
+	</managed-bean>
+	
+	<managed-bean>
+		<description>Usuário logado</description>
+		<managed-bean-name>usuario</managed-bean-name>
+		<managed-bean-class>br.unirio.transparencia.controller.LoginBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
 	</managed-bean>
 </faces-config>

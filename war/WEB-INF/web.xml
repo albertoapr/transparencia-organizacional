@@ -6,13 +6,14 @@
 		<param-value>client</param-value>
 	</context-param>
 	 <!-- Spring Security -->
+	 <!--  
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 		        /WEB-INF/applicationContext-security.xml
 		</param-value>
 	</context-param>
-
+-->
 	<!-- Define o ciclo de vida da aplicacao para o JSF. Em Production o desempenho eh melhor. -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -29,7 +30,7 @@
 	<listener>
 		<listener-class>br.unirio.transparencia.config.ConfigStartup</listener-class>
 	</listener>
-	<!-- Setup do Spring Security -->
+	<!-- Setup do Spring Security 
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -43,7 +44,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+	-->
 	<!-- Setup do Objectify -->
 	<filter>
         <filter-name>ObjectifyFilter</filter-name>

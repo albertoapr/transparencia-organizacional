@@ -7,41 +7,63 @@
 	xmlns:p="http://primefaces.org/ui" >
 	
   <ui:composition template="../layout/template.xhtml"> 
-
+<ui:define name="sidebar">
+    	<ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="acesso" />
+    	   </ui:include>
+    	</ui:define>
 	<ui:define name="content">
 
+	<f:metadata>
+            <f:event type="preRenderView" listener="#{loginBean.logout}" />
+        </f:metadata>
 	
+
+      <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
+    <h:form styleClass="form-horizontal">
+    	<fieldset>
+    		<legend>Autenticação</legend>
+    		
+    		
+    		<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.email']}" /></label>
+	    		<div class="controls">
+	    			<h:inputText id="email" value="#{loginBean.user}" size="50" maxlength="50" 
+					validatorMessage="e-Mail inválido" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
+						
+					</h:inputText> 
+	    		</div>
+	    	</div>
+	    	
+	    	
+	    	
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.senha']}" /></label>
+	    		<div class="controls">
+	    			<h:inputSecret id="senha" value="#{loginBean.password}" size="10" maxlength="8" 
+					validatorMessage="e" label="#{msg['label.usuario.senha']}" required="true" styleClass="input-large">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
+						<f:validateLength minimum="6" maximum="8" />
+					</h:inputSecret> 
+					
+	    		</div>
+	    	</div>
+	    	
+		   
+	    	
+    	</fieldset>
+    	
+    	<div class="control-group">
+    		<div class="controls" >
+    			<h:commandButton value="#{msg['button.login']}" action="#{loginBean.login}" styleClass="btn btn-success"/>
+    		</div>
+    	</div>
+    </h:form>
+
 	
-<div align="center">
-				
-         
-            <h:panelGrid columns="1" cellpadding="5">
-            <h:panelGroup rendered="#{!empty param.login_error}">
-			<span style="font-color:red"> Erro ao efetuar o login.</span><br />
-			<br/>
-			Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
-		</h:panelGroup>
-			<h:panelGroup>
-				<fieldset><legend>Autenticação:</legend>
-					<form id="login" method="post" action="${request.contextPath}/j_spring_security_check">
-		<table>
-			<tr><td>Usuário</td><td><input type='text' name='j_username'/></td></tr>
-			<tr><td>Senha</td><td><input type='password' name='j_password'/></td></tr>
-			<!--  	
-			<tr><td align="right"><input type="checkbox" name="_spring_security_remember_me"/></td><td>Entrar automaticamente</td></tr>
-			-->
-			<tr><td>&nbsp;</td>	<td align="right"><input type="submit" value="Entrar"/></td>	</tr>
-		</table>
-		<script>
-			//document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
-		</script>
-		</form>
-				</fieldset>
-			</h:panelGroup>
-		
-		   </h:panelGrid>
-		
-		</div>
 	</ui:define>
  </ui:composition>
 </html>

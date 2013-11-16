@@ -3,6 +3,10 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core">
     
+    
+    <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
     <h:form styleClass="form-horizontal">
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.usuario']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
@@ -23,20 +27,39 @@
 						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
 						<f:validateLength minimum="5" maximum="100" />
 					</h:inputText> 
-	    				
-	    			
 	    		</div>
 	    	</div>
 	    	
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.senha']}" /></label>
+	    		<div class="controls">
+	    			<h:inputSecret id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
+					validatorMessage="senha inválida" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
+						<f:validateLength minimum="6" maximum="8" />
+					</h:inputSecret> 
+	    		</div>
+	    	</div>
+	    	
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.confirmasenha']}" /></label>
+	    		<div class="controls">
+	    			<h:inputSecret id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
+					validatorMessage="e" label="#{msg['label.usuario.confirmasenha']}" required="true" styleClass="input-large">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
+						<f:validateLength minimum="6" maximum="8" />
+					</h:inputSecret> 
+	    		</div>
+	    	</div>
 	    	
 	    	
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.tipo']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-				<h:selectOneRadio id="cbPerfil" value="#{usuarioBean.usuario.tipo}" required="true" label="Tipo">
+				<h:selectOneMenu id="cbPerfil" value="#{usuarioBean.usuario.tipo}" required="true" label="Tipo"  >
 					<f:selectItems value="#{usuarioBean.tipos}" var="tipo" />
-				</h:selectOneRadio>
+				</h:selectOneMenu>
 				
 			</h:panelGroup>
 	    		</div>
@@ -47,12 +70,12 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.ativo']}" /></label>
 	    		<div class="controls">
 			<h:panelGroup>
-				<h:selectOneRadio id="cbStatus" value="#{usuarioBean.usuario.ativo}" required="true" label="Status">
+				<h:selectOneMenu id="cbStatus" value="#{usuarioBean.usuario.ativo}" required="true" label="Status" >
 					<f:selectItem itemValue="#{true}" itemLabel="Ativo" />  
                     <f:selectItem itemValue="#{false}" itemLabel="Desativo" />
 					
 					
-				</h:selectOneRadio>
+				</h:selectOneMenu>
 				
 			</h:panelGroup>
 	   	</div>
@@ -72,8 +95,6 @@
     	</div>
     </h:form>
     
-    <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
-    	<h:messages showDetail="true" showSummary="false" />
-    </h:panelGroup>
+    
     
 </ui:fragment>

@@ -3,14 +3,19 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core">
 
-<h:outputLink value="/pages/public/acesso.jsf?active=acesso"  rendered="#{!request.userPrincipal.authenticated}" title="Fazer login no sistema">
+
+
+
+
+<h:link outcome="login"  rendered="#{!loginBean.autenticado}" title="Fazer login no sistema">
 	(Entrar)
- </h:outputLink>
- <h:outputText value="Olá, " rendered="#{request.userPrincipal.authenticated}"  />
-<h:outputText value="#{request.remoteUser}" rendered="#{request.userPrincipal.authenticated}"  />
-<h:outputLink value="javascript:void(0)" onclick="document.location='#{request.contextPath}/j_spring_security_logout'" rendered="#{request.userPrincipal.authenticated}" title="Sair" >
-	(Sair)
- </h:outputLink>
 	
+ </h:link>
+ <h:outputText value="Olá, " rendered="#{loginBean.autenticado}"  />
+<h:outputText value="#{loginBean.usuarioLogado.nome}" rendered="#{loginBean.autenticado}"  />
+<h:link  outcome="login" rendered="#{loginBean.autenticado}" title="Sair" >
+	(Sair)
+ </h:link>
+
 
 </ui:fragment>

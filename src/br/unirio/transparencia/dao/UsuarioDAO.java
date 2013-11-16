@@ -2,9 +2,6 @@ package br.unirio.transparencia.dao;
 
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import br.unirio.transparencia.model.Usuario;
 

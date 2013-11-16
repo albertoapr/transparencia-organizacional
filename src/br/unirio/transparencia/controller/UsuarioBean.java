@@ -43,6 +43,15 @@ public class UsuarioBean implements Serializable {
 	 */
 	private UsuarioDAO dao;
 	
+	private String confirmaSenha;
+	public String getConfirmaSenha() {
+		return confirmaSenha;
+	}
+
+	public void setConfirmaSenha(String confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
+	}
+
 	/**
 	 * Referência para a usuario utiliza na inclusão (nova) ou edição.
 	 */
@@ -134,6 +143,11 @@ public class UsuarioBean implements Serializable {
 	 * @return Se a inclusão/edição foi realizada vai para listagem, senão permanece na mesma tela.
 	 */
 	public String salvar() {
+		if (usuario.getSenha().compareTo(this.confirmaSenha) != 0){
+			log.debug("A senha não foi confirmada corretamente!");
+			addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "erro ao salvar");
+			return "";
+		}
 		try {
 			dao.save(usuario);
 			usuarios.put(usuario.getId(), usuario);
