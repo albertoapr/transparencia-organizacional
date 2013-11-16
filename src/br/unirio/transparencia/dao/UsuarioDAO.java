@@ -46,6 +46,10 @@ public interface UsuarioDAO {
 	 */
 	Usuario findById(Long id);
 
-	UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException, DataAccessException;
+	/**
+	 * @param id filtro da pesquisa.
+	 * @return Usuario com filtro no id, caso nao exista retorna <code>null</code>.
+	 * @throws <code>RuntimeException</code> se algum problema ocorrer.
+	 */
+	Usuario findByEmail(String email);
 }

@@ -5,17 +5,10 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import br.unirio.transparencia.model.Usuario;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyFilter;
 
 /**
  * Implementa o contrato de persistência da entidade <code>Usuario</code>.
@@ -30,7 +23,12 @@ import com.googlecode.objectify.Key;
  * 
  * @author YaW Tecnologia
  */
-public class UsuarioDAOObjectify implements Serializable, UsuarioDAO , UserDetailsService{
+public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Long save(Usuario usuario) {
@@ -54,20 +52,10 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO , UserDetai
 		Key<Usuario> k = Key.create(Usuario.class, id);
 		return ofy().load().key(k).get();
 	}
-	
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException, DataAccessException
-			{
-		System.out.println("Getting access details from employee dao !!");
 
-		// Ideally it should be fetched from database and populated instance of
-		// #org.springframework.security.core.userdetails.User should be returned from this method
-		UserDetails user = new User(username, "password", true, true, true, true,
-				new GrantedAuthority[]{ new GrantedAuthorityImpl("ROLE_USER") });
-		return user;
-			}
-	
+	@Override
+	public Usuario findByEmail(String email) {
+		Key<Usuario> k = Key.create(Usuario.class, email);
+		return ofy().load().key(k).get();
+	}
 }

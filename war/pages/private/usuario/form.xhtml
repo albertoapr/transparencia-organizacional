@@ -5,49 +5,69 @@
     
     <h:form styleClass="form-horizontal">
     	<fieldset>
-    		<legend><h3><h:outputText value="#{msg['label.organizacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
+    		<legend><h3><h:outputText value="#{msg['label.usuario']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.nome']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.nome']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.nome}" label="#{msg['label.organizacao.nome']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="60" />
+	    			<h:inputText value="#{usuarioBean.usuario.nome}" size="30" maxlength="30" label="#{msg['label.usuario.nome']}" required="true" styleClass="input-large">
+	    				<f:validateLength minimum="5" maximum="30" />
 	    			</h:inputText>
 	    		</div>
     		</div>
     		
     		<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.endereco']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.email']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.endereco}" label="#{msg['label.organizacao.endereco']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="100" />
-	    			</h:inputText>
+	    			<h:inputText id="email" value="#{usuarioBean.usuario.email}" size="50" maxlength="50" 
+					validatorMessage="e-Mail inválido" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
+						<f:validateLength minimum="5" maximum="100" />
+					</h:inputText> 
+	    				
+	    			
 	    		</div>
 	    	</div>
 	    	
+	    	
+	    	
 	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.estado']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.tipo']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.estado}" label="#{msg['label.organizacao.estado']}" required="true" styleClass="input-small">
-	    				<f:validateLength minimum="2" maximum="2" />
-	    			</h:inputText>
+	    		<h:panelGroup>
+				<h:selectOneRadio id="cbPerfil" value="#{usuarioBean.usuario.tipo}" required="true" label="Tipo">
+					<f:selectItems value="#{usuarioBean.tipos}" var="tipo" />
+				</h:selectOneRadio>
+				
+			</h:panelGroup>
 	    		</div>
 	    	</div>
 	    	
-	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.patrocinador']}" /></label>
+	   
+	   <div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.ativo']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.patrocinador}" label="#{msg['label.organizacao.patrocinador']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="30" />
-	    			</h:inputText>
-	    		</div>
+			<h:panelGroup>
+				<h:selectOneRadio id="cbStatus" value="#{usuarioBean.usuario.ativo}" required="true" label="Status">
+					<f:selectItem itemValue="#{true}" itemLabel="Ativo" />  
+                    <f:selectItem itemValue="#{false}" itemLabel="Desativo" />
+					
+					
+				</h:selectOneRadio>
+				
+			</h:panelGroup>
+	   	</div>
 	    	</div>
+	   
+	   
+	   
+	    	
     	</fieldset>
     	
     	<div class="control-group">
     		<div class="controls">
-    			<h:commandButton value="#{msg['button.salvar']}" action="#{organizacaoBean.salvar}" styleClass="btn btn-success"/>
-    			<h:button value="#{msg['button.cancelar']}" outcome="lista.jsf?tab=organizacoes" styleClass="btn"/>
-    			<h:commandButton value="#{msg['button.excluir']}" action="#{organizacaoBean.remover}" rendered="#{organizacaoBean.organizacao.id != null}" immediate="true" styleClass="btn btn-danger"/>
+    			<h:commandButton value="#{msg['button.salvar']}" action="#{usuarioBean.salvar}" styleClass="btn btn-success"/>
+    			<h:button value="#{msg['button.cancelar']}" outcome="listaUsuarios" styleClass="btn"/>
+    			<h:commandButton value="#{msg['button.excluir']}" action="#{usuarioBean.remover}" rendered="#{usuarioBean.usuario.id != null}" immediate="true" styleClass="btn btn-danger"/>
     		</div>
     	</div>
     </h:form>

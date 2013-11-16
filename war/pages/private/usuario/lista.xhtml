@@ -4,62 +4,71 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       >
-
-    <ui:composition template="../../layout/template.xhtml">
-    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.mercadoria']}" /></ui:define>
+	
+ <ui:composition template="../../layout/template.xhtml">
+         <ui:param name="aba" value="usuarios" />
     	
-    	<f:metadata>
-            <f:event type="preRenderView" listener="#{organizacaoBean.reset}" />
+    	
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.usuario']}" /></ui:define>
+	<f:metadata>
+            <f:event type="preRenderView" listener="#{usuarioBean.reset}" />
         </f:metadata>
         
         <ui:define name="sidebar">
-    	   <ui:include src="menu.xhtml" />
+    	   <ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="lista" />
+    	   </ui:include>
+    	   
     	</ui:define>
-    	
-		<ui:define name="content">
+		
+<ui:define name="content">
 			<div style="border-bottom: 1px solid #E5E5E5;">
-				<h3><h:outputText value="#{msg['label.organizacoes']}" />
+				<h3><h:outputText value="#{msg['label.usuarios']}" />
 					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
 			</div>
 			
 			<h:form>
-				<h:dataTable value="#{organizacaoBean.dmOrganizacoes}" var="organizacao" styleClass="table table-hover">
+				<h:dataTable value="#{usuarioBean.dmUsuarios}" var="usuario" styleClass="table table-hover">
 					<h:column>
 						<f:facet name="header">#</f:facet>
-						<h:outputText value="#{organizacao.id}" />
+						<h:outputText value="#{usuario.id}" />
 	                </h:column>
 	                
 					<h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.nome']}" /></f:facet>
-						<h:link outcome="editar" value="#{organizacao.nome}" title="#{msg['label.editar']} #{organizacao.nome}">
-                			<f:param name="id" value="#{organizacao.id}" />
-                			<f:param name="tab" value="organizacoes" />
+						<f:facet name="header"><h:outputText value="#{msg['label.usuario.nome']}" /></f:facet>
+						<h:link outcome="editar" value="#{usuario.nome}" title="#{msg['label.editar']} #{usuario.nome}">
+                			<f:param name="id" value="#{usuario.id}" />
+                	
             			</h:link>
 	                </h:column>
 	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.endereco']}" /></f:facet>
-						<h:outputText value="#{organizacao.endereco}" />
+						<f:facet name="header"><h:outputText value="#{msg['label.usuario.email']}" /></f:facet>
+						<h:outputText value="#{usuario.email}" />
 	                </h:column>
 	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.estado']}" /></f:facet>
-						<h:outputText value="#{organizacao.estado}" />
+						<f:facet name="header"><h:outputText value="#{msg['label.usuario.ativo']}" /></f:facet>
+						<h:outputText value="#{usuario.ativo}" />
 	                </h:column>
 	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.patrocinador']}" /></f:facet>
-						<h:outputText value="#{organizacao.patrocinador}">
+						<f:facet name="header"><h:outputText value="#{msg['label.usuario.tipo']}" /></f:facet>
+						<h:outputText value="#{usuario.tipo}">
 							
 						</h:outputText>
 	                </h:column>
 				</h:dataTable>
 				
 				<h:panelGrid columns="1">
-					<h:commandButton action="#{organizacaoBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
+					<h:commandButton action="#{usuarioBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
 				</h:panelGrid>
 			</h:form>
 			<h:messages />
 		</ui:define>
     </ui:composition>
 </html>
+  
+
+
+

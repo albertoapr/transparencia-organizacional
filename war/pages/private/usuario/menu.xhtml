@@ -12,22 +12,19 @@
 		
 		
 		
-		<li class="#{empty param.active || param.active == 'lista' ? 'active' : ''}">
-			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista']}">
-				<f:param name="active" value="lista" />
-				<f:param name="tab" value="organizacoes" />
-            </h:link>
+		<li class="#{comando == 'lista' ? 'active' : ''}">
+			<h:link outcome="listaUsuarios" value="#{msg['menu.lista']}"/>
+				
+			
 		</li>
 		
 			
 	
-		<li class="#{param.active == 'incluir' ? 'active' : ''}"  >
+		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
 		
-		 <h:link outcome="incluir" value="#{msg['menu.incluir']}">
-				<f:param name="active" value="incluir" />
-				<f:param name="tab" value="organizacoes" />
-            </h:link>
-      
+		 <h:link outcome="incluir" value="#{msg['menu.incluir']}"/>
+				
+           
         </li>
        
 		<li class="divider"></li>

@@ -6,13 +6,16 @@
       >
 
     <ui:composition template="../../layout/template.xhtml">
-    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.organizacao']}" /></ui:define>
+     <ui:param name="aba" value="usuarios" />
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.usuario']}" /></ui:define>
     	
     	<f:metadata>
-            <f:event type="preRenderView" listener="#{organizacaoBean.incluir}" />
+            <f:event type="preRenderView" listener="#{usuarioBean.incluir}" />
         </f:metadata>
     	<ui:define name="sidebar">
-    	<ui:include src="menu.xhtml" />
+    	<ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="incluir" />
+    	   </ui:include> 
     	</ui:define>
 		<ui:define name="content">
 			<ui:include src="form.xhtml">

@@ -2,6 +2,8 @@ package br.unirio.transparencia.model;
 
 import java.io.Serializable;
 
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
@@ -14,24 +16,16 @@ public class Usuario implements Serializable
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long id;
-	private TipoUsuario tipoUsuario;
+	private TipoUsuario tipo;
 	private String nome;
 	private String email;
-	private String senhaCodificada;
+	private String senha;
 	private boolean ativo;
-	private boolean forcaResetSenha;
-	private boolean deveTrocarSenha;
+	
 
 	public Usuario()
 	{
-		this.id = (long) -1;
-		this.tipoUsuario = TipoUsuario.VISITANTE;
-		this.nome = "";
-		this.email = "";
-		this.senhaCodificada = "";
-		this.ativo = true;
-		this.setForcaResetSenha(false);
-		this.deveTrocarSenha = true;
+		
 	}
 	
 	
@@ -45,15 +39,7 @@ public class Usuario implements Serializable
 		this.id = id;
 	}
 	
-	public TipoUsuario getTipoUsuario()
-	{
-		return tipoUsuario;
-	}
-	
-	public void setTipoUsuario(TipoUsuario tipo)
-	{
-		this.tipoUsuario = tipo;
-	}
+
 
 	
 	public String getName()
@@ -82,15 +68,7 @@ public class Usuario implements Serializable
 		this.email = email;
 	}
 	
-	public String getSenhaCodificada()
-	{
-		return this.senhaCodificada;
-	}
-	
-	public void setSenhaCodificada(String senha)
-	{
-		this.senhaCodificada = senha;
-	}
+
 
 	
 
@@ -110,35 +88,28 @@ public class Usuario implements Serializable
 		this.ativo = ativo;
 	}
 
-	public boolean getForcaResetSenha()
-	{
-		return forcaResetSenha;
-	}
 
-	public void setForcaResetSenha(boolean forcaResetSenha)
-	{
-		this.forcaResetSenha = forcaResetSenha;
-	}
 
-	
-	public boolean mustChangePassword()
-	{
-		return deveTrocarSenha;
-	}
-	
-	public boolean getDeveTrocarSenha()
-	{
-		return deveTrocarSenha;
-	}
-	
-	public void setDeveTrocarSenha(boolean flag)
-	{
-		this.deveTrocarSenha = flag;
+
+	public TipoUsuario getTipo() {
+		return tipo;
 	}
 
 
-	public boolean checkLevel(String nivel)
-	{
-		return (tipoUsuario.getCodigo().compareToIgnoreCase(nivel) == 0);
+	public void setTipo(TipoUsuario tipo) {
+		this.tipo = tipo;
 	}
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+
+
 }

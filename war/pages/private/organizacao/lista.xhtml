@@ -6,6 +6,10 @@
       >
 
     <ui:composition template="../../layout/template.xhtml">
+      <ui:param name="aba" value="organizacoes" />
+    
+    	    
+    
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.mercadoria']}" /></ui:define>
     	
     	<f:metadata>
@@ -13,7 +17,9 @@
         </f:metadata>
         
         <ui:define name="sidebar">
-    	   <ui:include src="menu.xhtml" />
+    	   <ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="lista" />
+    	   </ui:include>     
     	</ui:define>
     	
 		<ui:define name="content">
@@ -33,7 +39,7 @@
 						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.nome']}" /></f:facet>
 						<h:link outcome="editar" value="#{organizacao.nome}" title="#{msg['label.editar']} #{organizacao.nome}">
                 			<f:param name="id" value="#{organizacao.id}" />
-                			<f:param name="tab" value="organizacoes" />
+                			
             			</h:link>
 	                </h:column>
 	                

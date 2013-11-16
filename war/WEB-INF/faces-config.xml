@@ -24,15 +24,10 @@
 
 	<!-- Define a navegacao global para a pagina com a lista de organizacoes. -->
 	<navigation-rule>
-		<navigation-case>
+	  	<navigation-case>
 			 <from-outcome>listaOrganizacoes</from-outcome>
         <to-view-id>/pages/private/organizacao/lista.xhtml</to-view-id>
-        <redirect>
-            <view-param>
-                <name>tab</name>
-                <value>organizacoes</value>
-            </view-param>
-        </redirect>
+        
     </navigation-case>
 	
 	<navigation-case>

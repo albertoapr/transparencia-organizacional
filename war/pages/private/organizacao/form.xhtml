@@ -46,7 +46,7 @@
     	<div class="control-group">
     		<div class="controls">
     			<h:commandButton value="#{msg['button.salvar']}" action="#{organizacaoBean.salvar}" styleClass="btn btn-success"/>
-    			<h:button value="#{msg['button.cancelar']}" outcome="lista.jsf?tab=organizacoes" styleClass="btn"/>
+    			<h:button value="#{msg['button.cancelar']}" outcome="lista" styleClass="btn"/>
     			<h:commandButton value="#{msg['button.excluir']}" action="#{organizacaoBean.remover}" rendered="#{organizacaoBean.organizacao.id != null}" immediate="true" styleClass="btn btn-danger"/>
     		</div>
     	</div>

@@ -25,6 +25,11 @@ import br.unirio.transparencia.model.Organizacao;
  */
 public class OrganizacaoDAOObjectify implements Serializable, OrganizacaoDAO {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public Long save(Organizacao organizacao) {
 		ofy().save().entity(organizacao).now();

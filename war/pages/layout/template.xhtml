@@ -31,10 +31,51 @@
         		</ui:insert>
         	   </div>
         		
-        		<ui:insert name="barra_menu">
-	    		    <ui:include src="../public/menu_sistema.xhtml"/>
-	   		    </ui:insert> 
-        	</div>
+        	<ui:insert name="barra_menu">
+      		
+        		
+        		    <ui:include src="../public/menu_sistema.xhtml" />
+        		             <ui:param name="aba" value="#{aba}" />
+	    	    <!--  
+	    	    <ul class="nav nav-tabs" >
+                   <li class="#{param.tab == 'avaliacoes' ? 'active' : ''}">
+                         <h:link outcome="listaMercadorias" value="Avaliações" rendered="#{request.userPrincipal.authenticated}">
+				                <f:param name="tab" value="avaliacoes" />
+                          </h:link>
+                  </li>
+                  <li class="#{param.tab == 'consulta' ? 'active' : ''}"  >
+                      <h:link outcome="/pages/public/sobre" value="Consultas" >
+				       <f:param name="tab" value="consulta" />
+                      </h:link>
+                 </li>
+                 <li class="#{param.tab == 'profissionais' ? 'active' : ''}"  >
+                    <h:link outcome="listaMercadorias" value="Profissionais" rendered="#{request.userPrincipal.authenticated}">
+			        	<f:param name="tab" value="profissionais" />
+                   </h:link>
+                 </li>
+                <li class="#{aba == 'organizacoes' ? 'active' : ''}"  >
+		        	<h:link outcome="/pages/private/organizacao/lista" value="Organizações" rendered="#{request.userPrincipal.authenticated}">
+			         
+                    </h:link>
+		           </li>
+
+               <li class="#{param.tab == 'sobre' ? 'active' : ''}"  >
+                 <h:link outcome="/pages/public/sobre" value="Sobre" >
+				   <f:param name="tab" value="sobre" />
+                 </h:link>
+               </li>
+               
+             <li class="#{param.tab == 'usuarios' ? 'active' : ''}"  >
+               <h:link outcome="/pages/private/usuario/lista" value="Usuários" rendered="#{request.userPrincipal.authenticated}">
+				     <f:param name="tab" value="usuarios" />
+               </h:link>
+            </li>
+
+          </ul>
+          -->
+          
+	   </ui:insert> 
+    </div>
               
         </div>
      
@@ -55,4 +96,5 @@
         
         </f:view>
     </h:body>
+    
 </html>  

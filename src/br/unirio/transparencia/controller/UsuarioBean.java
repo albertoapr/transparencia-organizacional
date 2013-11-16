@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import br.unirio.transparencia.dao.UsuarioDAO;
 import br.unirio.transparencia.dao.UsuarioDAOObjectify;
+import br.unirio.transparencia.model.TipoUsuario;
 import br.unirio.transparencia.model.Usuario;
 
 /**
@@ -72,6 +73,10 @@ public class UsuarioBean implements Serializable {
 	
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public TipoUsuario[] getTipos() {
+		return TipoUsuario.values();
 	}
 	
 	public void setIdSelecionado(Long idSelecionado) {
