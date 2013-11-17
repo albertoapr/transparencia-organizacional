@@ -5,35 +5,32 @@
     
     
                <ul class="nav nav-tabs" >
-                   <li class="#{param.tab == 'avaliacoes' ? 'active' : ''}">
-                         <h:link outcome="listaMercadorias" value="Avaliações" rendered="#{request.userPrincipal.authenticated}">
-				                <f:param name="tab" value="avaliacoes" />
-                          </h:link>
+                   <li class="#{aba == 'avaliacoes' ? 'active' : ''}">
+                         <h:link outcome="listaMercadorias" value="Avaliações" rendered="#{loginBean.autenticado}"/>
+				         
                   </li>
-                  <li class="#{param.tab == 'consulta' ? 'active' : ''}"  >
-                      <h:link outcome="/pages/public/sobre" value="Consultas" >
-				       <f:param name="tab" value="consulta" />
-                      </h:link>
+                  <!--  
+                  <li class="#{aba == 'consulta' ? 'active' : ''}"  >
+                      <h:link outcome="/pages/public/sobre" value="Consultas" rendered="#{loginBean.autenticado}"/>
+			     </li>
+			     
+                 <li class="#{aba == 'profissionais' ? 'active' : ''}"  >
+                    <h:link outcome="listaMercadorias" value="Profissionais" rendered="#{loginBean.autenticado}"/>
+
                  </li>
-                 <li class="#{param.tab == 'profissionais' ? 'active' : ''}"  >
-                    <h:link outcome="listaMercadorias" value="Profissionais" rendered="#{request.userPrincipal.authenticated}">
-			        	<f:param name="tab" value="profissionais" />
-                   </h:link>
-                 </li>
+                 -->
                 <li class="#{aba == 'organizacoes' ? 'active' : ''}"  >
-		        	<h:link outcome="/pages/private/organizacao/lista" value="Organizações"
-		        	 rendered="#{request.userPrincipal.authenticated}"/>
+		        	<h:link outcome="listaOrganizacoes" value="Organizações"  rendered="#{loginBean.autenticado}"/>
 			        
 		           </li>
 
-               <li class="#{param.tab == 'sobre' ? 'active' : ''}"  >
-                 <h:link outcome="/pages/public/sobre" value="Sobre" >
-				   <f:param name="tab" value="sobre" />
-                 </h:link>
+               <li class="#{aba == 'sobre' ? 'active' : ''}"  >
+                 <h:link outcome="/pages/public/sobre" value="Sobre" />
+		
                </li>
                
              <li class="#{aba == 'usuarios' ? 'active' : ''}"  >
-               <h:link outcome="/pages/private/usuario/lista" value="Usuários" rendered="#{request.userPrincipal.authenticated}"/>
+               <h:link outcome="listaUsuarios" value="Usuários" rendered="#{loginBean.autenticado}"/>
 				
             </li>
 

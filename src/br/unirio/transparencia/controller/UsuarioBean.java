@@ -2,6 +2,7 @@ package br.unirio.transparencia.controller;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
@@ -42,7 +44,7 @@ public class UsuarioBean implements Serializable {
 	 * Referência do componente de persistência.
 	 */
 	private UsuarioDAO dao;
-	
+	private TipoUsuario perfilDoUsuarioLogado;
 	private String confirmaSenha;
 	public String getConfirmaSenha() {
 		return confirmaSenha;
@@ -103,6 +105,9 @@ public class UsuarioBean implements Serializable {
 		return new ListDataModel<Usuario>(new ArrayList<Usuario>(usuarios.values()));
 	}
 	
+	
+	
+	
 	private void fillUsuarios() {
 		try {
 			List<Usuario> qryUsuarios = new ArrayList<Usuario>(dao.getAll());
@@ -141,7 +146,21 @@ public class UsuarioBean implements Serializable {
 	/**
 	 * Operação acionada pela tela de inclusão ou edição, através do <code>commandButton</code> <strong>Salvar</strong>.
 	 * @return Se a inclusão/edição foi realizada vai para listagem, senão permanece na mesma tela.
+	 * @throws IOException 
 	 */
+	
+	public void checkPermissao() throws IOException{
+		if (perfilDoUsuarioLogado != TipoUsuario.ADMINISTRADOR){
+			addMessage("Erro: Você não possui as permissões necessárias para acessar este conteúdo", "");
+	       
+			FacesContext.getCurrentInstance().getExternalContext().redirect("/pages/public/acesso.jsf?msg=accessdenied");
+
+		}
+		
+	
+			}
+	
+	
 	public String salvar() {
 		if (usuario.getSenha().compareTo(this.confirmaSenha) != 0){
 			log.debug("A senha não foi confirmada corretamente!");

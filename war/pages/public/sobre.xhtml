@@ -4,6 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:composition template="/pages/layout/template.xhtml">
+       <ui:param name="aba" value="sobre" />
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.sobre']}" /></ui:define>
     	<ui:define name="sidebar">
     	<ui:include src="menu.xhtml" >
@@ -14,6 +15,13 @@
 			<div style="border-bottom: 1px solid #E5E5E5; margin-bottom: 10px">
 				<h3><h:outputText value="#{msg['label.sobre.projeto']}" />
 					<small> <h:outputText value="#{msg['label.sobre']}" /></small></h3>
+					
+					
+					
+					<ui:repeat value="#{loginBean.leiame}" var="linha">
+                       <h:outputText value="#{linha}"/><br/>
+                    </ui:repeat>
+					
 					
 			</div>
 			

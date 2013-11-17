@@ -40,6 +40,12 @@
         <to-view-id>/pages/private/usuario/lista.xhtml</to-view-id>
        
     </navigation-case>	
+    
+		<navigation-case>
+		 <from-outcome>sobre</from-outcome>
+        <to-view-id>/pages/public/sobre.xhtml</to-view-id>
+       
+    </navigation-case>	
 		
 	</navigation-rule>
 

@@ -13,8 +13,10 @@
  </h:link>
  <h:outputText value="Olá, " rendered="#{loginBean.autenticado}"  />
 <h:outputText value="#{loginBean.usuarioLogado.nome}" rendered="#{loginBean.autenticado}"  />
-<h:link  outcome="login" rendered="#{loginBean.autenticado}" title="Sair" >
-	(Sair)
+
+
+<h:link  outcome="login" rendered="#{loginBean.autenticado}" value="(Sair)" title="Sair" >
+	<f:param name="sair" value="sim" />
  </h:link>
 
 

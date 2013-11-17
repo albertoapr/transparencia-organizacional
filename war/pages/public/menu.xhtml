@@ -8,15 +8,14 @@
 		
 		
 		<li class="#{comando== 'acesso' ? 'active' : ''}" >
-			<h:link outcome="acesso" value="Acesso" rendered="#{!loginBean.autenticado}">
-				<f:param name="active" value="acesso" />
-            </h:link>
+		<h:link outcome="acesso" value="Acesso" rendered="#{!loginBean.autenticado}"/>
+			
+           
         </li>
 		<li class="divider"></li>
 		<li class="#{comando == 'sobre' ? 'active' : ''}">
-			<h:link outcome="sobre" value="#{msg['menu.sobre']}">
-				<f:param name="active" value="sobre" />
-            </h:link>
+			<h:link outcome="sobre" value="#{msg['menu.sobre']}"/>
+		
 		</li>
 	</ul>
 
