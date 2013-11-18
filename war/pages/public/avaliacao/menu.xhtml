@@ -1,0 +1,36 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" >
+    
+	<ul class="nav nav-list"  >
+		<li class="nav-header"><h:outputText value="Menu #{msg['label.organizacoes']}" /></li>
+		<li class="divider"></li>
+		
+		
+		
+		<li class="#{comando == 'lista' ? 'active' : ''}">
+			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista']}"/>
+		
+		</li>
+		
+			
+	
+		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
+		
+		 <h:link outcome="incluir" value="#{msg['menu.incluir']}"/>
+								
+           
+      
+        </li>
+       
+		<li class="divider"></li>
+		<li class="#{param.active == 'sobre' ? 'active' : ''}">
+			<h:link outcome="sobre" value="#{msg['menu.sobre']}">
+				<f:param name="active" value="sobre" />
+				
+            </h:link>
+		</li>
+	</ul>
+
+</ui:fragment>

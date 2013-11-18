@@ -29,7 +29,7 @@
 					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
 			</div>
 			
-			<h:form rendered="#{loginBean.checkAdministrador}">
+			<h:form >
 				<h:dataTable value="#{organizacaoBean.dmOrganizacoes}" var="organizacao" styleClass="table table-hover">
 					<h:column>
 						<f:facet name="header">#</f:facet>

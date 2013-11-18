@@ -13,6 +13,6 @@
   </head>
 
   <body>
-    <% response.sendRedirect("pages/public/acesso.jsf"); %>
+    <% response.sendRedirect("pages/public/sobre.jsf"); %>
   </body>
 </html>

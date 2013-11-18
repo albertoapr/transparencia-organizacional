@@ -6,7 +6,7 @@
     
                <ul class="nav nav-tabs" >
                    <li class="#{aba == 'avaliacoes' ? 'active' : ''}">
-                         <h:link outcome="listaMercadorias" value="Avaliações" rendered="#{loginBean.autenticado}"/>
+                         <h:link outcome="listaAvaliacoes" value="Avaliações" />
 				         
                   </li>
                   <!--  
@@ -24,15 +24,17 @@
 			        
 		           </li>
 
-               <li class="#{aba == 'sobre' ? 'active' : ''}"  >
-                 <h:link outcome="/pages/public/sobre" value="Sobre" />
-		
-               </li>
+              
                
              <li class="#{aba == 'usuarios' ? 'active' : ''}"  >
                <h:link outcome="listaUsuarios" value="Usuários" rendered="#{loginBean.autenticado}"/>
 				
             </li>
+            
+             <li class="#{aba == 'sobre' ? 'active' : ''}"  >
+                 <h:link outcome="/pages/public/sobre" value="Sobre" />
+		
+               </li>
 
           </ul>
 

@@ -36,6 +36,12 @@
     </navigation-case>
 	
 	<navigation-case>
+			 <from-outcome>listaAvaliacoes</from-outcome>
+        <to-view-id>/pages/public/avaliacao/lista.xhtml</to-view-id>
+        
+    </navigation-case>  	
+	  	
+	<navigation-case>
 		 <from-outcome>listaUsuarios</from-outcome>
         <to-view-id>/pages/private/usuario/lista.xhtml</to-view-id>
        
