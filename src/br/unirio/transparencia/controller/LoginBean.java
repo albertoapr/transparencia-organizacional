@@ -63,6 +63,7 @@ public class LoginBean extends BaseBean implements Serializable {
 			dao = new UsuarioDAOObjectify();
 			setAutenticado(false);
 			setCheckAdministrador(false);
+			
 			}
 	public String login() 
 	{

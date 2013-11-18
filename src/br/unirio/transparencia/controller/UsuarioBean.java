@@ -128,15 +128,19 @@ public class UsuarioBean implements Serializable {
 	
 	
 	
+
 	
 	private void fillUsuarios() {
 		
 		try {
+			
 			List<Usuario> qryUsuarios = new ArrayList<Usuario>(dao.getAll());
 			usuarios = new HashMap<Long, Usuario>();
 			for (Usuario m: qryUsuarios) {
 				usuarios.put(m.getId(), m);
+				
 			}
+			
 			
 			log.debug("Carregou a lista de usuarios ("+usuarios.size()+")");
 		} catch(Exception ex) {

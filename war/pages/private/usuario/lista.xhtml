@@ -30,7 +30,7 @@
 			<h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
-			<h:form rendered="#{loginBean.checkAdministrador}">
+			<h:form >
 				<h:dataTable value="#{usuarioBean.dmUsuarios}" var="usuario" styleClass="table table-hover" >
 					<h:column>
 						<f:facet name="header">#</f:facet>
