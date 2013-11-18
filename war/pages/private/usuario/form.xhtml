@@ -8,7 +8,7 @@
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
 
-    <h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador}" >
+    <h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador or usuarioBean.usuario.id ==loginBean.usuarioLogado.id }" >
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.usuario']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
@@ -31,25 +31,23 @@
 	    		</div>
 	    	</div>
 	    	
-	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.senha']}" /></label>
+	    	<div class="control-group" rendered="#{!usuarioBean.modoEdicao}">
+	    		<label class="control-label" ><h:outputText rendered="#{!usuarioBean.modoEdicao}" value="#{msg['label.usuario.senha']}" /></label>
 	    		<div class="controls">
-	    			<h:inputSecret  id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
-					validatorMessage="senha inválida" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
-						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
-						<f:validateLength minimum="6" maximum="8" />
-					</h:inputSecret> 
+	    			<h:inputText rendered="#{!usuarioBean.modoEdicao}" id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
+					 label="caso a senha esteja branco a senha padrão será o email"  styleClass="input-large">
+						
+					</h:inputText> 
 	    		</div>
 	    	</div>
 	    	
-	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.confirmasenha']}" /></label>
+	    	<div class="control-group" rendered="#{!usuarioBean.modoEdicao}">
+	    		<label class="control-label"><h:outputText rendered="#{!usuarioBean.modoEdicao}" value="#{msg['label.usuario.confirmasenha']}" /></label>
 	    		<div class="controls">
-	    			<h:inputSecret  id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
-					validatorMessage="e" label="#{msg['label.usuario.confirmasenha']}" required="true" styleClass="input-large">
-						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
-						<f:validateLength minimum="6" maximum="8" />
-					</h:inputSecret> 
+	    			<h:inputText rendered="#{!usuarioBean.modoEdicao}" id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
+					 label="#{msg['label.usuario.confirmasenha']}"  styleClass="input-large">
+						
+					</h:inputText> 
 	    		</div>
 	    	</div>
 	    	

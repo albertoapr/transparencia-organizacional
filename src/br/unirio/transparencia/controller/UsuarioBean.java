@@ -49,7 +49,7 @@ public class UsuarioBean implements Serializable {
 	
 	private UsuarioDAO dao;
 	
-	
+	private Boolean modoEdicao;
 	private LoginBean loginBean;
 	
 	public TipoUsuario getPerfilDoUsuarioLogado() {
@@ -156,6 +156,7 @@ public class UsuarioBean implements Serializable {
 	public void incluir(){
 		usuario = new Usuario();
 		log.debug("Pronto pra incluir");
+		setModoEdicao(false);
 	}
 	
 	/**
@@ -166,6 +167,7 @@ public class UsuarioBean implements Serializable {
 			return;
 		}
 		usuario = usuarios.get(idSelecionado);
+		setModoEdicao(true);
 		log.debug("Pronto pra editar");
 	}
 
@@ -200,13 +202,15 @@ public class UsuarioBean implements Serializable {
 	}
 	
 	public String salvar() {
-		
+	if(!getModoEdicao())	
 		if (usuario.getSenha().compareTo(this.confirmaSenha) != 0){
 			log.debug("A senha não foi confirmada corretamente!");
 			addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "erro ao salvar");
 			return "";
 		}
 		try {
+			if (usuario.getSenha()=="")
+				usuario.setSenha(usuario.getEmail());
 			dao.save(usuario);
 			usuarios.put(usuario.getId(), usuario);
 		} catch(Exception ex) {
@@ -214,7 +218,8 @@ public class UsuarioBean implements Serializable {
 			addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), ex.getMessage());
 			return "";
 		}
-		log.debug("Salvour usuario "+usuario.getId());
+		log.debug("Salvou usuario "+usuario.getId());
+		addMessage("Usuário salvo com sucesso !", "");
 		return "listaUsuarios";
 	}
 	
@@ -268,5 +273,13 @@ public class UsuarioBean implements Serializable {
 	 */
 	private void addMessage(String summary, String detail) {
 		getCurrentInstance().addMessage(null, new FacesMessage(summary, summary.concat("<br/>").concat(detail)));
+	}
+
+	public Boolean getModoEdicao() {
+		return modoEdicao;
+	}
+
+	public void setModoEdicao(Boolean modoEdicao) {
+		this.modoEdicao = modoEdicao;
 	}
 }

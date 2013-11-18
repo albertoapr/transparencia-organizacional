@@ -15,7 +15,7 @@ public class BaseBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private final String arquivoLeiame ="SOBRE.md";
+    private final String arquivoLeiame ="SOBRE.txt";
 
 	protected void addErrorMessage(String componentId, String errorMessage){
 		addMessage(componentId, errorMessage, FacesMessage.SEVERITY_ERROR);
