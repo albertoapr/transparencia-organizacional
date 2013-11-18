@@ -8,7 +8,7 @@
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
 
-    <h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador or usuarioBean.usuario.id ==loginBean.usuarioLogado.id }" >
+    <h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador or usuarioBean.usuario.id ==loginBean.usuarioLogado.id or param.novo=='true'}" >
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.usuario']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
@@ -53,10 +53,10 @@
 	    	
 	    	
 	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.tipo']}" /></label>
+	    		<label class="control-label"><h:outputText rendered="#{!param.novo==true}" value="#{msg['label.usuario.tipo']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-				<h:selectOneMenu id="cbPerfil" value="#{usuarioBean.usuario.tipo}" required="true" label="Tipo"  >
+				<h:selectOneMenu rendered="#{!param.novo==true}" id="cbPerfil" value="#{usuarioBean.usuario.tipo}"  label="Tipo"  >
 					<f:selectItems value="#{usuarioBean.tipos}" var="tipo" />
 				</h:selectOneMenu>
 				
@@ -66,10 +66,10 @@
 	    	
 	   
 	   <div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.ativo']}" /></label>
+	    		<label class="control-label"><h:outputText rendered="#{!param.novo==true}" value="#{msg['label.usuario.ativo']}" /></label>
 	    		<div class="controls">
 			<h:panelGroup>
-				<h:selectOneMenu id="cbStatus" value="#{usuarioBean.usuario.ativo}" required="true" label="Status" >
+				<h:selectOneMenu id="cbStatus" rendered="#{!param.novo==true}" value="#{usuarioBean.usuario.ativo}"  label="Status" >
 					<f:selectItem itemValue="#{true}" itemLabel="Ativo" />  
                     <f:selectItem itemValue="#{false}" itemLabel="Desativo" />
 					

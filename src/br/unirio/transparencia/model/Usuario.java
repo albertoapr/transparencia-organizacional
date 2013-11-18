@@ -25,7 +25,8 @@ public class Usuario implements Serializable
 
 	public Usuario()
 	{
-		
+	setAtivo(true);
+	setTipo(TipoUsuario.USUARIO);
 	}
 	
 	

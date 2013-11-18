@@ -211,6 +211,8 @@ public class UsuarioBean implements Serializable {
 		try {
 			if (usuario.getSenha()=="")
 				usuario.setSenha(usuario.getEmail());
+			
+			
 			dao.save(usuario);
 			usuarios.put(usuario.getId(), usuario);
 		} catch(Exception ex) {
