@@ -34,7 +34,7 @@
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.senha']}" /></label>
 	    		<div class="controls">
-	    			<h:inputSecret id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
+	    			<h:inputSecret  id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
 					validatorMessage="senha inválida" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
 						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
 						<f:validateLength minimum="6" maximum="8" />
@@ -45,7 +45,7 @@
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.confirmasenha']}" /></label>
 	    		<div class="controls">
-	    			<h:inputSecret id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
+	    			<h:inputSecret  id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
 					validatorMessage="e" label="#{msg['label.usuario.confirmasenha']}" required="true" styleClass="input-large">
 						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+"/>
 						<f:validateLength minimum="6" maximum="8" />
