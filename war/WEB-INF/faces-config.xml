@@ -63,11 +63,8 @@
 		</list-entries>
 	</managed-bean>
 	
-	<managed-bean>
-		<description>Usuário logado</description>
-		<managed-bean-name>usuario</managed-bean-name>
-		<managed-bean-class>br.unirio.transparencia.controller.LoginBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		
-	</managed-bean>
+	
+	
+
+	
 </faces-config>

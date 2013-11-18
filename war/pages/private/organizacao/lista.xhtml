@@ -23,12 +23,13 @@
     	</ui:define>
     	
 		<ui:define name="content">
+		<h:messages />
 			<div style="border-bottom: 1px solid #E5E5E5;">
 				<h3><h:outputText value="#{msg['label.organizacoes']}" />
 					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
 			</div>
 			
-			<h:form>
+			<h:form >
 				<h:dataTable value="#{organizacaoBean.dmOrganizacoes}" var="organizacao" styleClass="table table-hover">
 					<h:column>
 						<f:facet name="header">#</f:facet>
@@ -65,7 +66,7 @@
 					<h:commandButton action="#{organizacaoBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
 				</h:panelGrid>
 			</h:form>
-			<h:messages />
+			
 		</ui:define>
     </ui:composition>
 </html>

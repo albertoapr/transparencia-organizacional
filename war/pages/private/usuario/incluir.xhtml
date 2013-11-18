@@ -10,6 +10,7 @@
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.usuario']}" /></ui:define>
     	
     	<f:metadata>
+    	<f:event type="preRenderView" listener="#{usuarioBean.checkList}" />  
             <f:event type="preRenderView" listener="#{usuarioBean.incluir}" />
         </f:metadata>
     	<ui:define name="sidebar">

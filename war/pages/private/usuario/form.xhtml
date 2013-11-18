@@ -7,7 +7,8 @@
     <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
-    <h:form styleClass="form-horizontal">
+
+    <h:form styleClass="form-horizontal"  >
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.usuario']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">

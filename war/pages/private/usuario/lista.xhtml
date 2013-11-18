@@ -11,8 +11,7 @@
     	
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.usuario']}" /></ui:define>
 	<f:metadata>
-	       <f:viewParam name="perfilDoUsuarioLogado" value="#{loginBean.usuarioLogado.tipo}" />
-           <f:event type="preRenderView" listener="#{usuarioBean.checkPermissao}" />
+	        <f:event type="preRenderView" listener="#{usuarioBean.checkList}" /> 
             <f:event type="preRenderView" listener="#{usuarioBean.reset}" />
         </f:metadata>
         
@@ -23,13 +22,15 @@
     	   
     	</ui:define>
 		
-<ui:define name="content">
+<ui:define name="content" >
 			<div style="border-bottom: 1px solid #E5E5E5;">
 				<h3><h:outputText value="#{msg['label.usuarios']}" />
 					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
 			</div>
-			
-			<h:form>
+			<h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
+			<h:form >
 				<h:dataTable value="#{usuarioBean.dmUsuarios}" var="usuario" styleClass="table table-hover" >
 					<h:column>
 						<f:facet name="header">#</f:facet>
@@ -66,7 +67,7 @@
 					<h:commandButton action="#{usuarioBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
 				</h:panelGrid>
 			</h:form>
-			<h:messages />
+			
 		</ui:define>
     </ui:composition>
 </html>

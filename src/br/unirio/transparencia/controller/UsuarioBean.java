@@ -10,15 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
-
 
 import br.unirio.transparencia.dao.UsuarioDAO;
 import br.unirio.transparencia.dao.UsuarioDAOObjectify;
@@ -43,8 +45,22 @@ public class UsuarioBean implements Serializable {
 	/**
 	 * Referência do componente de persistência.
 	 */
+	
+	
 	private UsuarioDAO dao;
-	private TipoUsuario perfilDoUsuarioLogado;
+	
+	
+	private LoginBean loginBean;
+	
+	public TipoUsuario getPerfilDoUsuarioLogado() {
+		return perfilDoUsuarioLogado;
+	}
+
+	public void setPerfilDoUsuarioLogado(TipoUsuario perfilDoUsuarioLogado) {
+		this.perfilDoUsuarioLogado = perfilDoUsuarioLogado;
+	}
+
+	private TipoUsuario perfilDoUsuarioLogado=null;
 	private String confirmaSenha;
 	public String getConfirmaSenha() {
 		return confirmaSenha;
@@ -76,6 +92,10 @@ public class UsuarioBean implements Serializable {
 	public UsuarioBean() {
 		dao = new UsuarioDAOObjectify();
 		fillUsuarios();
+		
+		ELContext elContext = FacesContext.getCurrentInstance().getELContext();  
+		this.loginBean =(LoginBean)FacesContext.getCurrentInstance().getApplication()  
+                         .getELResolver().getValue(elContext, null, "loginBean"); 
 	}
 	
 	public Usuario getUsuario() {
@@ -102,6 +122,7 @@ public class UsuarioBean implements Serializable {
 	 * @return <code>DataModel</code> para carregar a lista de usuarios.
 	 */
 	public DataModel<Usuario> getDmUsuarios() {
+	
 		return new ListDataModel<Usuario>(new ArrayList<Usuario>(usuarios.values()));
 	}
 	
@@ -109,6 +130,7 @@ public class UsuarioBean implements Serializable {
 	
 	
 	private void fillUsuarios() {
+		
 		try {
 			List<Usuario> qryUsuarios = new ArrayList<Usuario>(dao.getAll());
 			usuarios = new HashMap<Long, Usuario>();
@@ -149,19 +171,32 @@ public class UsuarioBean implements Serializable {
 	 * @throws IOException 
 	 */
 	
-	public void checkPermissao() throws IOException{
-		if (perfilDoUsuarioLogado != TipoUsuario.ADMINISTRADOR){
-			addMessage("Erro: Você não possui as permissões necessárias para acessar este conteúdo", "");
-	       
-			FacesContext.getCurrentInstance().getExternalContext().redirect("/pages/public/acesso.jsf?msg=accessdenied");
-
+	public boolean checkAutenticado(){
+		return (loginBean.isAutenticado());	
+					
+	}
+	
+	public boolean checkPermissao() {
+		if (loginBean.getUsuarioLogado()!=null)
+		  return (loginBean.getUsuarioLogado().getTipo() == TipoUsuario.ADMINISTRADOR) ;
+		else
+		return false;
 		}
-		
 	
+	public String checkList(){
+		if (!checkAutenticado()){addMessage("Login necessário para este conteúdo !", "");
+			
 			}
-	
+		if (!checkPermissao()){
+			addMessage("Você não possui as permissões necessárias", "");
+			
+			}
+		
+		return "";
+	}
 	
 	public String salvar() {
+		
 		if (usuario.getSenha().compareTo(this.confirmaSenha) != 0){
 			log.debug("A senha não foi confirmada corretamente!");
 			addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "erro ao salvar");
@@ -190,6 +225,8 @@ public class UsuarioBean implements Serializable {
 	 * Operação acionada toda a vez que a  tela de listagem for carregada.
 	 */
 	public void reset() {
+		
+			
 		usuario = null;
 		idSelecionado = null;
 	}

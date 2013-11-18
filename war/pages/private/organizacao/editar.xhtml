@@ -8,6 +8,7 @@
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.editar.organizacao']}" /></ui:define>
     	
     	<f:metadata>
+    	    <f:event type="preRenderView" listener="#{usuarioBean.checkList}" />  
             <f:viewParam name="id" value="#{organizacaoBean.idSelecionado}" />
             <f:event type="preRenderView" listener="#{organizacaoBean.editar}" />
         </f:metadata>
