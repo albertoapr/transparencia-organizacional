@@ -10,7 +10,7 @@
     
     	    
     
-    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.mercadoria']}" /></ui:define>
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.avaliacao']}" /></ui:define>
     	
     	<f:metadata>
             <f:event type="preRenderView" listener="#{organizacaoBean.reset}" />
@@ -23,42 +23,56 @@
     	</ui:define>
     	
 		<ui:define name="content">
-		<h:messages />
-			<div style="border-bottom: 1px solid #E5E5E5;">
-				<h3><h:outputText value="#{msg['label.organizacoes']}" />
-					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
-			</div>
+		
+		
+		<div style="border-bottom: 1px solid #E5E5E5;">
+					<h3>	<small> <h:outputText value="#{msg['lista.avaliacao.informacao']}" /></small></h3>
+		 </div>
 			
+			
+		<h:messages />	
 			<h:form >
 				<h:dataTable value="#{organizacaoBean.dmOrganizacoes}" var="organizacao" styleClass="table table-hover">
+				
 					<h:column>
-						<f:facet name="header">#</f:facet>
-						<h:outputText value="#{organizacao.id}" />
-	                </h:column>
-	                
-					<h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.nome']}" /></f:facet>
-						<h:link outcome="editar" value="#{organizacao.nome}" title="#{msg['label.editar']} #{organizacao.nome}">
-                			<f:param name="id" value="#{organizacao.id}" />
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.organizacao']}" /></f:facet>
+						<h:link outcome="editar" value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}">
+                			<f:param name="id" value="#{avaliacao.id}" />
                 			
             			</h:link>
 	                </h:column>
 	                
+	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.endereco']}" /></f:facet>
-						<h:outputText value="#{organizacao.endereco}" />
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.nivel_transparencia']}" /></f:facet>
+						<h:outputText value="#{avaliacao.organizacao.nivelTransparencia}" />
 	                </h:column>
 	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.estado']}" /></f:facet>
-						<h:outputText value="#{organizacao.estado}" />
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.download']}" /></f:facet>
+						
+						<!--  
+						<h:link outcome="#{avaliacao.resultado}" value="#{msg['label.avaliacao.resultado']}" title="#{msg['label.avaliacao.download.baixar']}" >
+                			<f:param name="id" value="#{avaliacao.id}" />
+                		</h:link>
+                		<h:link outcome="#{avaliacao.declaracao}" value="#{msg['label.avaliacao.declaracao']}" title="#{msg['label.avaliacao.download.baixar']}"  >
+                			<f:param name="id" value="#{avaliacao.id}" />
+                		</h:link>
+						-->
+						
 	                </h:column>
 	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.patrocinador']}" /></f:facet>
-						<h:outputText value="#{organizacao.patrocinador}">
-							
-						</h:outputText>
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.processo']}" /></f:facet>
+						<h:outputText value="#{avaliacao.processo}"/>
+					
+					
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.datavalidade']}" /></f:facet>
+						<h:outputText value="#{avaliacao.dataValidade}"/>
+					
 	                </h:column>
 				</h:dataTable>
 				

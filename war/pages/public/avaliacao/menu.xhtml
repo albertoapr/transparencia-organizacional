@@ -3,8 +3,8 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core" >
     
-	<ul class="nav nav-list"  >
-		<li class="nav-header"><h:outputText value="Menu #{msg['label.avaliacoes']}" /></li>
+	<ul class="nav nav-list" style="padding-top: 5px;padding-left: 5px;padding-right: 5px;padding-bottom: 5px;" >
+		<li class="nav-header"><h:outputText value="#{msg['label.avaliacoes']}" /></li>
 		<li class="divider"></li>
 		
 		
@@ -14,23 +14,24 @@
 		
 		</li>
 		
-			
+		<li class="#{comando == 'porEstado' ? 'active' : ''}">
+			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista.estado']}"/>
+		
+		</li>	
+		
+		<li class="#{comando == 'porNivel' ? 'active' : ''}">
+			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista.nivel']}"/>
+		
+		</li>
 	
 		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
-		
-		 <h:link outcome="incluir" value="#{msg['menu.incluir']}"/>
+			 <h:link outcome="incluir" value="#{msg['menu.incluir']}" rendered="#{loginBean.checkAdministrador}"/>
 								
-           
+        
       
         </li>
        
-		<li class="divider"></li>
-		<li class="#{param.active == 'sobre' ? 'active' : ''}">
-			<h:link outcome="sobre" value="#{msg['menu.sobre']}">
-				<f:param name="active" value="sobre" />
-				
-            </h:link>
-		</li>
+		
 	</ul>
 
 </ui:fragment>

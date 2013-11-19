@@ -13,12 +13,12 @@
                   <li class="#{aba == 'consulta' ? 'active' : ''}"  >
                       <h:link outcome="/pages/public/sobre" value="Consultas" rendered="#{loginBean.autenticado}"/>
 			     </li>
-			     
+			      -->
                  <li class="#{aba == 'profissionais' ? 'active' : ''}"  >
-                    <h:link outcome="listaMercadorias" value="Profissionais" rendered="#{loginBean.autenticado}"/>
+                    <h:link outcome="listaProfissionais" value="Profissionais Habilitados" />
 
                  </li>
-                 -->
+                
                 <li class="#{aba == 'organizacoes' ? 'active' : ''}"  >
 		        	<h:link outcome="listaOrganizacoes" value="Organizações"  rendered="#{loginBean.autenticado}"/>
 			        
@@ -30,12 +30,12 @@
                <h:link outcome="listaUsuarios" value="Usuários" rendered="#{loginBean.autenticado}"/>
 				
             </li>
-            
+            <!--  
              <li class="#{aba == 'sobre' ? 'active' : ''}"  >
                  <h:link outcome="/pages/public/sobre" value="Sobre" />
 		
                </li>
-
+-->
           </ul>
 
 </ui:fragment>
