@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <ui:composition template="../../layout/template.xhtml">
+      <ui:param name="aba" value="profissionais" />
+    
+    	    
+    
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.profissional']}" /></ui:define>
+    	
+    	<f:metadata>
+            <f:event type="preRenderView" listener="#{profissionalBean.reset}" />
+        </f:metadata>
+        
+        <ui:define name="sidebar">
+    	   <ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="lista" />
+    	   </ui:include>     
+    	</ui:define>
+    	
+		<ui:define name="content">
+		
+		
+		<div style="border-bottom: 1px solid #E5E5E5;">
+				
+				<h3>	<small> <h:outputText value="#{msg['lista.profissional.informacao']}" /></small></h3>
+			 </div>
+			
+		 <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
+			<h:form >
+				<h:dataTable value="#{profissionalBean.dmProfissionais}" var="profissional" styleClass="table table-hover">
+				<!--  
+				<h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.id']}" /></f:facet>
+						<h:link outcome="editar" value="#{profissional.id}" >
+                		
+            			</h:link>
+	           </h:column>
+	           -->
+	           <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.profissional.nome']}" /></f:facet>
+						<h:link outcome="editar" value="#{profissional.nome}" title="#{msg['label.editar']} #{profissional.nome}">
+                			<f:param name="id" value="#{profissional.id}" />
+                			
+            			</h:link>
+	                </h:column>
+	           
+	             <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.profissional.titulacao']}" /></f:facet>
+						<h:outputText value="#{profissional.titulacao}" />
+	                </h:column>
+	                
+	                
+	                  <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.profissional.instituicao']}" /></f:facet>
+						<h:outputText value="#{profissional.instituicao}" />
+	                </h:column>
+	                
+	                
+	                <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.profissional.email']}" /></f:facet>
+						<h:outputText value="#{profissional.email}" />
+	                </h:column>
+	                
+	               
+				</h:dataTable>
+				
+				<h:panelGrid columns="1">
+					<h:commandButton action="#{profissionalBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
+				</h:panelGrid>
+			</h:form>
+			
+		</ui:define>
+    </ui:composition>
+</html>

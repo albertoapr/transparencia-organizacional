@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      
+      >
+
+    <ui:composition template="../../layout/template.xhtml">
+    <ui:param name="aba" value="profissionais" />
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.profissional']}" /></ui:define>
+    	
+    	<f:metadata>
+            <f:event type="preRenderView" listener="#{profissionalBean.incluir}" />
+        </f:metadata>
+    	<ui:define name="sidebar">
+    	 <ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="incluir" />
+    	   </ui:include>
+    	</ui:define>
+		<ui:define name="content">
+			<ui:include src="form.xhtml">
+				<ui:param name="subtitle" value="#{msg['label.incluir']}" />
+			</ui:include>
+		</ui:define>
+    </ui:composition>
+</html>

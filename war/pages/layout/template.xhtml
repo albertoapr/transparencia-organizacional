@@ -8,9 +8,12 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link type="text/css" rel="stylesheet" href="/resources/css/bootstrap.min.css" />
+         <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css"/>
+       <!--    <link type="text/css" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap-theme.min.css"/> -->
+       <!--   <link type="text/css" rel="stylesheet" href="/resources/css/bootstrap.min.css" /> -->
         <link type="text/css" rel="stylesheet" href="/resources/css/jsf_gae.css" />
-        <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <!-- <script type="text/javascript" src="/resources/js/bootstrap.min.js"> -->
         
         <title>
             <h:outputText value="#{msg['page.title.app']}" /> - <ui:insert name="pageTitle"></ui:insert>
@@ -29,60 +32,20 @@
         		<ui:insert name="usuario_logado">
         		    <ui:include src="usuario_logado.xhtml" />
         		</ui:insert>
-        	   </div>
+        	</div>
         		
         	<ui:insert name="barra_menu">
-      		
-        		
-        		    <ui:include src="../public/menu_sistema.xhtml" />
+      			    <ui:include src="../public/menu_sistema.xhtml" />
         		             <ui:param name="aba" value="#{aba}" />
-	    	    <!--  
-	    	    <ul class="nav nav-tabs" >
-                   <li class="#{param.tab == 'avaliacoes' ? 'active' : ''}">
-                         <h:link outcome="listaMercadorias" value="Avaliações" rendered="#{request.userPrincipal.authenticated}">
-				                <f:param name="tab" value="avaliacoes" />
-                          </h:link>
-                  </li>
-                  <li class="#{param.tab == 'consulta' ? 'active' : ''}"  >
-                      <h:link outcome="/pages/public/sobre" value="Consultas" >
-				       <f:param name="tab" value="consulta" />
-                      </h:link>
-                 </li>
-                 <li class="#{param.tab == 'profissionais' ? 'active' : ''}"  >
-                    <h:link outcome="listaMercadorias" value="Profissionais" rendered="#{request.userPrincipal.authenticated}">
-			        	<f:param name="tab" value="profissionais" />
-                   </h:link>
-                 </li>
-                <li class="#{aba == 'organizacoes' ? 'active' : ''}"  >
-		        	<h:link outcome="/pages/private/organizacao/lista" value="Organizações" rendered="#{request.userPrincipal.authenticated}">
-			         
-                    </h:link>
-		           </li>
-
-               <li class="#{param.tab == 'sobre' ? 'active' : ''}"  >
-                 <h:link outcome="/pages/public/sobre" value="Sobre" >
-				   <f:param name="tab" value="sobre" />
-                 </h:link>
-               </li>
-               
-             <li class="#{param.tab == 'usuarios' ? 'active' : ''}"  >
-               <h:link outcome="/pages/private/usuario/lista" value="Usuários" rendered="#{request.userPrincipal.authenticated}">
-				     <f:param name="tab" value="usuarios" />
-               </h:link>
-            </li>
-
-          </ul>
-          -->
-          
-	   </ui:insert> 
-    </div>
+                   </ui:insert> 
+              </div>
               
         </div>
      
-    	<div class="container">
+    	 <div class="container"> 
     	 
-        	<div class="row-fluid show-grid">
-        
+        	<div class="row-fluid show-grid ">
+        <!--  -->
         		<div class="well span2">
         			<ui:insert name="sidebar"><ui:include src="../public/menu.xhtml" /></ui:insert>
         		</div>
@@ -92,7 +55,7 @@
         			<ui:insert name="footer"><ui:include src="footer.xhtml" /></ui:insert>
         		</div>
         	</div>
-        </div>
+          </div> 
         
         </f:view>
     </h:body>

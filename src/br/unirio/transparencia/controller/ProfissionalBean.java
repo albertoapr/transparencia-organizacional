@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.unirio.transparencia.controller;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
@@ -13,8 +16,6 @@ import java.util.ResourceBundle;
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
@@ -22,93 +23,73 @@ import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
-import br.unirio.transparencia.dao.UsuarioDAO;
-import br.unirio.transparencia.dao.UsuarioDAOObjectify;
+import br.unirio.transparencia.dao.ProfissionalDAO;
+import br.unirio.transparencia.dao.ProfissionalDAOObjectify;
+import br.unirio.transparencia.model.Profissional;
 import br.unirio.transparencia.model.TipoUsuario;
-import br.unirio.transparencia.model.Usuario;
 
 /**
- * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>Usuario</code>.
- * 
- * <p>Trata-se de um <code>Managed Bean</code>, ou seja, as instância dessa classe são controladas pelo <code>JSF</code>. Para cada sessão de usuário será criado um objeto <code>UsuarioBean</code>.</p>
- * 
- * <p>Esse componente atua com um papel parecido com o <code>Controller</code> de outros frameworks <code>MVC</code>, ele resolve o fluxo de navegação e liga os componentes visuais com os dados.</p>
- * 
- * @author YaW Tecnologia
+ * @author alberto
+ *
  */
 @ManagedBean
 @SessionScoped
-public class UsuarioBean implements Serializable {
-	
-	private static Logger log = Logger.getLogger(UsuarioBean.class);
+public class ProfissionalBean implements Serializable{
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+private static Logger log = Logger.getLogger(ProfissionalBean.class);
 	
 	/**
 	 * Referência do componente de persistência.
 	 */
 	
 	
-	private UsuarioDAO dao;
+	private ProfissionalDAO dao;
 	
 	private Boolean modoEdicao;
 	private LoginBean loginBean;
-	
-	public TipoUsuario getPerfilDoUsuarioLogado() {
-		return perfilDoUsuarioLogado;
-	}
 
-	public void setPerfilDoUsuarioLogado(TipoUsuario perfilDoUsuarioLogado) {
-		this.perfilDoUsuarioLogado = perfilDoUsuarioLogado;
-	}
-
-	private TipoUsuario perfilDoUsuarioLogado=null;
-	private String confirmaSenha;
-	public String getConfirmaSenha() {
-		return confirmaSenha;
-	}
-
-	public void setConfirmaSenha(String confirmaSenha) {
-		this.confirmaSenha = confirmaSenha;
-	}
 
 	/**
-	 * Referência para a usuario utiliza na inclusão (nova) ou edição.
+	 * Referência para a profissional utiliza na inclusão (nova) ou edição.
 	 */
-	private Usuario usuario;
+	private Profissional profissional;
 	
 	/**
-	 * Informação é utilizada na edição da usuario, quando a seleção de um registro na listagem ocorrer.
+	 * Informação é utilizada na edição da profissional, quando a seleção de um registro na listagem ocorrer.
 	 */
 	private Long idSelecionado;
 	
 	/**
-	 * Mantém as usuarios apresentadas na listagem indexadas pelo id.
+	 * Mantém as profissionais apresentadas na listagem indexadas pelo id.
 	 * <strong>Importante:</strong> a consulta (query) no DataStore do App Engine pode retornar <i>dados antigos</i>, 
 	 * que já foram removidos ou que ainda não foram incluidos, devido a replicação dos dados.
 	 * 
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
-	private Map<Long, Usuario> usuarios;
+	private Map<Long, Profissional> profissionais;
 	
-	public UsuarioBean() {
-		dao = new UsuarioDAOObjectify();
-		fillUsuarios();
+	public ProfissionalBean() {
+		dao = new ProfissionalDAOObjectify();
+		fillProfissionais();
 		
 		ELContext elContext = FacesContext.getCurrentInstance().getELContext();  
 		this.loginBean =(LoginBean)FacesContext.getCurrentInstance().getApplication()  
                          .getELResolver().getValue(elContext, null, "loginBean"); 
 	}
 	
-	public Usuario getUsuario() {
-		return usuario;
+	public Profissional getProfissional() {
+		return profissional;
 	}
 	
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setProfissional(Profissional profissional) {
+		this.profissional = profissional;
 	}
 	
-	public TipoUsuario[] getTipos() {
-		return TipoUsuario.values();
-	}
+	
 	
 	public void setIdSelecionado(Long idSelecionado) {
 		this.idSelecionado = idSelecionado;
@@ -119,56 +100,50 @@ public class UsuarioBean implements Serializable {
 	}
 	
 	/**
-	 * @return <code>DataModel</code> para carregar a lista de usuarios.
+	 * @return <code>DataModel</code> para carregar a lista de profissionais.
 	 */
-	public DataModel<Usuario> getDmUsuarios() {
+	public DataModel<Profissional> getDmProfissionais() {
 	
-		return new ListDataModel<Usuario>(new ArrayList<Usuario>(usuarios.values()));
+		return new ListDataModel<Profissional>(new ArrayList<Profissional>(profissionais.values()));
 	}
-	
-	
-	
 
-	
-	private void fillUsuarios() {
+	private void fillProfissionais() {
 		
 		try {
 			
-			List<Usuario> qryUsuarios = new ArrayList<Usuario>(dao.getAll());
-			usuarios = new HashMap<Long, Usuario>();
-			for (Usuario m: qryUsuarios) {
-				usuarios.put(m.getId(), m);
+			List<Profissional> qryProfissionais = new ArrayList<Profissional>(dao.getAll());
+			profissionais = new HashMap<Long, Profissional>();
+			for (Profissional m: qryProfissionais) {
+				profissionais.put(m.getId(), m);
 				
 			}
 			
 			
-			log.debug("Carregou a lista de usuarios ("+usuarios.size()+")");
+			log.debug("Carregou a lista de profissionais ("+profissionais.size()+")");
 		} catch(Exception ex) {
-			log.error("Erro ao carregar a lista de usuarios.", ex);
-			addMessage(getMessageFromI18N("msg.erro.listar.usuario"), ex.getMessage());
+			log.error("Erro ao carregar a lista de profissionais.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.profissional"), ex.getMessage());
 		}
 		
 	}
 	
 	/**
-	 * Ação executada quando a página de inclusão de usuarios for carregada.
+	 * Ação executada quando a página de inclusão de profissionais for carregada.
 	 */
 	public void incluir(){
-		usuario = new Usuario();
-		usuario.setAtivo(true);
-		usuario.setTipo(TipoUsuario.USUARIO);
+		profissional = new Profissional();
 		log.debug("Pronto pra incluir");
 		setModoEdicao(false);
 	}
 	
 	/**
-	 * Ação executada quando a página de edição de usuarios for carregada.
+	 * Ação executada quando a página de edição de profissionais for carregada.
 	 */
 	public void editar() {
 		if (idSelecionado == null) {
 			return;
 		}
-		usuario = usuarios.get(idSelecionado);
+		profissional = profissionais.get(idSelecionado);
 		setModoEdicao(true);
 		log.debug("Pronto pra editar");
 	}
@@ -205,30 +180,26 @@ public class UsuarioBean implements Serializable {
 	
 	public String salvar() {
 	if(!getModoEdicao())	
-		if (usuario.getSenha().compareTo(this.confirmaSenha) != 0){
-			log.debug("A senha não foi confirmada corretamente!");
-			addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "erro ao salvar");
-			return "";
-		}
+		
 		try {
-			
-			dao.save(usuario);
-			usuarios.put(usuario.getId(), usuario);
+		
+			dao.save(profissional);
+			profissionais.put(profissional.getId(), profissional);
 		} catch(Exception ex) {
-			log.error("Erro ao salvar usuario.", ex);
-			addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), ex.getMessage());
+			log.error("Erro ao salvar profissional.", ex);
+			addMessage(getMessageFromI18N("msg.erro.salvar.profissional"), ex.getMessage());
 			return "";
 		}
-		log.debug("Salvou usuario "+usuario.getId());
-		addMessage("Usuário salvo com sucesso !", "");
-		return "listaUsuarios";
+		log.debug("Salvou profissional "+profissional.getId());
+		addMessage("Profissional salvo com sucesso !", "");
+		return "listaProfissionais";
 	}
 	
 	/**
 	 * Operação acionada pela tela de listagem, através do <code>commandButton</code> <strong>Atualizar</strong>. 
 	 */
 	public void atualizar() {
-		fillUsuarios();
+		fillProfissionais();
 	}
 	
 	/**
@@ -237,7 +208,7 @@ public class UsuarioBean implements Serializable {
 	public void reset() {
 		
 			
-		usuario = null;
+		profissional = null;
 		idSelecionado = null;
 	}
 	
@@ -247,15 +218,15 @@ public class UsuarioBean implements Serializable {
 	 */
 	public String remover() {
 		try {
-			dao.remove(usuario);
-			usuarios.remove(usuario.getId());
+			dao.remove(profissional);
+			profissionais.remove(profissional.getId());
 		} catch(Exception ex) {
-			log.error("Erro ao remover usuario.", ex);
-			addMessage(getMessageFromI18N("msg.erro.remover.usuario"), ex.getMessage());
+			log.error("Erro ao remover profissional.", ex);
+			addMessage(getMessageFromI18N("msg.erro.remover.profissional"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu usuario "+usuario.getId());
-		return "listaUsuarios";
+		log.debug("Removeu profissional "+profissional.getId());
+		return "listaProfissionais";
 	}
 	
 	/**

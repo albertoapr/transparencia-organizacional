@@ -23,10 +23,7 @@
     	</ui:define>
 		
 <ui:define name="content" >
-			<div style="border-bottom: 1px solid #E5E5E5;">
-				<h3><h:outputText value="#{msg['label.usuarios']}" />
-					<small> <h:outputText value="#{msg['label.listagem']}" /></small></h3>
-			</div>
+		 
 			<h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>

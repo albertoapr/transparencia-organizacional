@@ -1,0 +1,31 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" >
+    
+	<ul class="nav nav-list" style="padding-top: 5px;padding-left: 5px;padding-right: 5px;padding-bottom: 5px;" >
+		<li class="nav-header"><h:outputText value="#{msg['label.profissionais']}" /></li>
+		<li class="divider"></li>
+		
+		
+		
+		<li class="#{comando == 'lista' ? 'active' : ''}">
+			<h:link outcome="listaProfissionais" value="#{msg['menu.lista']}"/>
+		
+		</li>
+		
+		
+		
+		
+	
+		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
+			 <h:link outcome="incluir" value="#{msg['menu.incluir']}" rendered="#{loginBean.checkAdministrador}"/>
+								
+        
+      
+        </li>
+       
+		
+	</ul>
+
+</ui:fragment>

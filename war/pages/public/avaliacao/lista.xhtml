@@ -63,7 +63,7 @@
 	                </h:column>
 	                
 	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.processo']}" /></f:facet>
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></f:facet>
 						<h:outputText value="#{avaliacao.processo}"/>
 					
 					
@@ -72,6 +72,11 @@
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.datavalidade']}" /></f:facet>
 						<h:outputText value="#{avaliacao.dataValidade}"/>
+					
+	                </h:column>
+	                <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.avaliador']}" /></f:facet>
+						<h:outputText value="#{avaliacao.avaliador.nome}"/>
 					
 	                </h:column>
 				</h:dataTable>

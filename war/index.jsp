@@ -13,6 +13,10 @@
   </head>
 
   <body>
+    
+    <center>
+    <img alt="" src="resources/img/loading.gif" align="middle">
+    </center>
     <% response.sendRedirect("pages/public/avaliacao/lista.jsf"); %>
   </body>
 </html>

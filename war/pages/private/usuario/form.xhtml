@@ -14,9 +14,12 @@
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.nome']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{usuarioBean.usuario.nome}" size="30" maxlength="30" label="#{msg['label.usuario.nome']}" required="true" styleClass="input-large">
+	    		
+	    			
+	    			<h:inputText  value="#{usuarioBean.usuario.nome}" size="30" maxlength="30" label="#{msg['label.usuario.nome']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="30" />
 	    			</h:inputText>
+	    			
 	    		</div>
     		</div>
     		
@@ -31,23 +34,27 @@
 	    		</div>
 	    	</div>
 	    	
-	    	<div class="control-group" rendered="#{!usuarioBean.modoEdicao}">
-	    		<label class="control-label" ><h:outputText rendered="#{!usuarioBean.modoEdicao}" value="#{msg['label.usuario.senha']}" /></label>
+	    	<div class="control-group" >
+	    		<label class="control-label" ><h:outputText  value="#{msg['label.usuario.senha']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText rendered="#{!usuarioBean.modoEdicao}" id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
-					 label="caso a senha esteja branco a senha padrão será o email"  styleClass="input-large">
-						
+	    			<h:inputSecret rendered ="#{!usuarioBean.modoEdicao}" id="senha" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
+					 label="caso a senha esteja branco a senha padrão será 123456"  styleClass="input-large">
+					</h:inputSecret> 
+					
+					<h:inputText rendered ="#{usuarioBean.modoEdicao}" id="senha2" value="#{usuarioBean.usuario.senha}" size="10" maxlength="8" 
+					 label="caso a senha esteja branco a senha padrão será 123456"  styleClass="input-large">
 					</h:inputText> 
 	    		</div>
 	    	</div>
 	    	
-	    	<div class="control-group" rendered="#{!usuarioBean.modoEdicao}">
+	    	<div class="control-group" >
 	    		<label class="control-label"><h:outputText rendered="#{!usuarioBean.modoEdicao}" value="#{msg['label.usuario.confirmasenha']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText rendered="#{!usuarioBean.modoEdicao}" id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
-					 label="#{msg['label.usuario.confirmasenha']}"  styleClass="input-large">
-						
-					</h:inputText> 
+	    			<h:inputSecret rendered ="#{!usuarioBean.modoEdicao}"  id="confirmasenha" value="#{usuarioBean.confirmaSenha}" size="10" maxlength="8" 
+					  label="#{msg['label.usuario.confirmasenha']}"  styleClass="input-large">
+					</h:inputSecret> 
+					
+					
 	    		</div>
 	    	</div>
 	    	
