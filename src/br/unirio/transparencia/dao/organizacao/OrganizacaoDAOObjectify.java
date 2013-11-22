@@ -1,4 +1,4 @@
-package br.unirio.transparencia.dao;
+package br.unirio.transparencia.dao.organizacao;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -18,7 +18,7 @@ import br.unirio.transparencia.model.Organizacao;
  *   A proposta do Objetify é denifir uma API mais alto-nível para manipular dados no <code>DataStore</code> do App Engine.
  * </p>
  * 
- * @see br.OrganizacaoDAO.yaw.sjpac.dao.OrganizacaoDAO
+
  * @see com.googlecode.objectify.ObjectifyService.
  * 
  * a

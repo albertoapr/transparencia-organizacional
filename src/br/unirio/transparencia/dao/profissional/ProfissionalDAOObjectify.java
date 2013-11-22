@@ -1,4 +1,4 @@
-package br.unirio.transparencia.dao;
+package br.unirio.transparencia.dao.profissional;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 

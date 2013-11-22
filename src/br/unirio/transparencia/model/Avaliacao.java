@@ -1,12 +1,16 @@
 package br.unirio.transparencia.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 /**
  * Classe de modelo que representa uma organização. A organização é um objeto persistido, por isso utilizamos o nome entidade.
@@ -27,11 +31,36 @@ public class Avaliacao implements Serializable {
 
 	@Id
 	private Long id;
+	@Load
+	Ref<Organizacao> organizacao;
+	
 	private String escopo;
 	private Date dataAvaliacao;
 	private Date dataValidade;
+	private String resumo; //arquivo com o documento resumo
+	private String declaracao; //arquivo com o documento de declaração
+	public String getResumo() {
+		return resumo;
+	}
+
+	public void setResumo(String resumo) {
+		this.resumo = resumo;
+	}
+
+	public String getDeclaracao() {
+		return declaracao;
+	}
+
+	public void setDeclaracao(String declaracao) {
+		this.declaracao = declaracao;
+	}
+
 	private NivelTransparencia nivelTransparencia;
-	Key<Profissional> avaliador;
+	@Load
+	Ref<Profissional> avaliadorLider;
+	
+	@Load
+	List<Ref<Profissional>> avaliadores = new ArrayList<Ref<Profissional>>();
 	private String patrocinador;
 	
 	
@@ -73,13 +102,7 @@ public class Avaliacao implements Serializable {
 		this.nivelTransparencia = nivelTransparencia;
 	}
 
-	public Key<Profissional> getAvaliador() {
-		return avaliador;
-	}
 
-	public void setAvaliador(Key<Profissional> avaliador) {
-		this.avaliador = avaliador;
-	}
 
 	public String getEscopo() {
 		return escopo;
@@ -95,6 +118,34 @@ public class Avaliacao implements Serializable {
 
 	public void setPatrocinador(String patrocinador) {
 		this.patrocinador = patrocinador;
+	}
+	
+	public Organizacao getOrganizacao() {
+		return organizacao.get();
+	}
+
+	public void setOrganizacao(Organizacao organizacao) {
+		this.organizacao  = Ref.create(organizacao); ;
+	}
+
+	public Profissional getAvaliadorLider() {
+		return avaliadorLider.get();
+	}
+
+	public void setAvaliadorLider(Profissional avaliadorLider) {
+		this.avaliadorLider = Ref.create(avaliadorLider);
+	}
+
+	public List<Profissional> getProfissionais() {
+		List<Profissional> list = new ArrayList<Profissional>();
+		for (Ref<Profissional> ref : avaliadores)
+			list.add(ref.get());
+		return list;
+	}
+
+	public void setProfissionais(List<Profissional> avaliadores) {
+		for (Profissional prof : avaliadores)
+		  this.avaliadores.add(Ref.create(prof));
 	}
 
 

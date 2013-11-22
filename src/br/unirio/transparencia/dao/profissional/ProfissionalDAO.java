@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.unirio.transparencia.dao;
+package br.unirio.transparencia.dao.profissional;
 
 import java.util.List;
 

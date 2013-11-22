@@ -14,8 +14,8 @@ import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
 
-import br.unirio.transparencia.dao.UsuarioDAO;
-import br.unirio.transparencia.dao.UsuarioDAOObjectify;
+import br.unirio.transparencia.dao.usuario.UsuarioDAO;
+import br.unirio.transparencia.dao.usuario.UsuarioDAOObjectify;
 import br.unirio.transparencia.model.TipoUsuario;
 import br.unirio.transparencia.model.Usuario;
 

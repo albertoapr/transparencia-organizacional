@@ -17,14 +17,14 @@ import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
-import br.unirio.transparencia.model.Organizacao;
+import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
+import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
+import br.unirio.transparencia.model.Avaliacao;
 
 /**
- * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>organizacao</code>.
+ * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>avaliacao</code>.
  * 
- * <p>Trata-se de um <code>Managed Bean</code>, ou seja, as instância dessa classe são controladas pelo <code>JSF</code>. Para cada sessão de usuário será criado um objeto <code>organizacaoMB</code>.</p>
+ * <p>Trata-se de um <code>Managed Bean</code>, ou seja, as instância dessa classe são controladas pelo <code>JSF</code>. Para cada sessão de usuário será criado um objeto <code>avaliacaoMB</code>.</p>
  * 
  * <p>Esse componente atua com um papel parecido com o <code>Controller</code> de outros frameworks <code>MVC</code>, ele resolve o fluxo de navegação e liga os componentes visuais com os dados.</p>
  * 
@@ -32,50 +32,50 @@ import br.unirio.transparencia.model.Organizacao;
  */
 @ManagedBean
 @SessionScoped
-public class OrganizacaoBean implements Serializable {
+public class AvaliacaoBean implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Logger log = Logger.getLogger(OrganizacaoBean.class);
+	private static Logger log = Logger.getLogger(AvaliacaoBean.class);
 	
 	/**
 	 * Referência do componente de persistência.
 	 */
-	private OrganizacaoDAO dao;
+	private AvaliacaoDAO dao;
 	
 	/**
-	 * Referência para a organizacao utiliza na inclusão (nova) ou edição.
+	 * Referência para a avaliacao utiliza na inclusão (nova) ou edição.
 	 */
-	private Organizacao organizacao;
+	private Avaliacao avaliacao;
 	
 	/**
-	 * Informação é utilizada na edição da organizacao, quando a seleção de um registro na listagem ocorrer.
+	 * Informação é utilizada na edição da avaliacao, quando a seleção de um registro na listagem ocorrer.
 	 */
 	private Long idSelecionado;
 	
 	/**
-	 * Mantém as organizacaos apresentadas na listagem indexadas pelo id.
+	 * Mantém as avaliacaos apresentadas na listagem indexadas pelo id.
 	 * <strong>Importante:</strong> a consulta (query) no DataStore do App Engine pode retornar <i>dados antigos</i>, 
 	 * que já foram removidos ou que ainda não foram incluidos, devido a replicação dos dados.
 	 * 
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
-	private Map<Long, Organizacao> organizacoes;
+	private Map<Long, Avaliacao> avaliacoes;
 	
-	public OrganizacaoBean() {
-		dao = new OrganizacaoDAOObjectify();
-		fillOrganizacoes();
+	public AvaliacaoBean() {
+		dao = new AvaliacaoDAOObjectify();
+		fillAvaliacoes();
 	}
 	
-	public Organizacao getOrganizacao() {
-		return organizacao;
+	public Avaliacao getAvaliacao() {
+		return avaliacao;
 	}
 	
-	public void setOrganizacao(Organizacao organizacao) {
-		this.organizacao = organizacao;
+	public void setAvaliacao(Avaliacao avaliacao) {
+		this.avaliacao = avaliacao;
 	}
 	
 	public void setIdSelecionado(Long idSelecionado) {
@@ -87,44 +87,44 @@ public class OrganizacaoBean implements Serializable {
 	}
 	
 	/**
-	 * @return <code>DataModel</code> para carregar a lista de organizacaos.
+	 * @return <code>DataModel</code> para carregar a lista de avaliacaos.
 	 */
-	public DataModel<Organizacao> getDmOrganizacoes() {
-		return new ListDataModel<Organizacao>(new ArrayList<Organizacao>(organizacoes.values()));
+	public DataModel<Avaliacao> getDmAvaliacoes() {
+		return new ListDataModel<Avaliacao>(new ArrayList<Avaliacao>(avaliacoes.values()));
 	}
 	
-	private void fillOrganizacoes() {
+	private void fillAvaliacoes() {
 		try {
-			List<Organizacao> qryOrganizacoes = new ArrayList<Organizacao>(dao.getAll());
-			organizacoes = new HashMap<Long, Organizacao>();
-			for (Organizacao m: qryOrganizacoes) {
-				organizacoes.put(m.getId(), m);
+			List<Avaliacao> qryAvaliacoes = new ArrayList<Avaliacao>(dao.getAll());
+			avaliacoes = new HashMap<Long, Avaliacao>();
+			for (Avaliacao m: qryAvaliacoes) {
+				avaliacoes.put(m.getId(), m);
 			}
 			
-			log.debug("Carregou a lista de organizacoes ("+organizacoes.size()+")");
+			log.debug("Carregou a lista de avaliacoes ("+avaliacoes.size()+")");
 		} catch(Exception ex) {
-			log.error("Erro ao carregar a lista de organizacoes.", ex);
-			addMessage(getMessageFromI18N("msg.erro.listar.organizacao"), ex.getMessage());
+			log.error("Erro ao carregar a lista de avaliacoes.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.avaliacao"), ex.getMessage());
 		}
 		
 	}
 	
 	/**
-	 * Ação executada quando a página de inclusão de organizacaos for carregada.
+	 * Ação executada quando a página de inclusão de avaliacaos for carregada.
 	 */
 	public void incluir(){
-		organizacao = new Organizacao();
+		avaliacao = new Avaliacao();
 		log.debug("Pronto pra incluir");
 	}
 	
 	/**
-	 * Ação executada quando a página de edição de organizacaos for carregada.
+	 * Ação executada quando a página de edição de avaliacaos for carregada.
 	 */
 	public void editar() {
 		if (idSelecionado == null) {
 			return;
 		}
-		organizacao = organizacoes.get(idSelecionado);
+		avaliacao = avaliacoes.get(idSelecionado);
 		log.debug("Pronto pra editar");
 	}
 
@@ -134,15 +134,15 @@ public class OrganizacaoBean implements Serializable {
 	 */
 	public String salvar() {
 		try {
-			dao.save(organizacao);
-			organizacoes.put(organizacao.getId(), organizacao);
+			dao.save(avaliacao);
+			avaliacoes.put(avaliacao.getId(), avaliacao);
 		} catch(Exception ex) {
-			log.error("Erro ao salvar organizacao.", ex);
-			addMessage(getMessageFromI18N("msg.erro.salvar.organizacao"), ex.getMessage());
+			log.error("Erro ao salvar avaliacao.", ex);
+			addMessage(getMessageFromI18N("msg.erro.salvar.avaliacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Salvour organizacao "+organizacao.getId());
-		return "listaOrganizacoes";
+		log.debug("Salvour avaliacao "+avaliacao.getId());
+		return "listaAvaliacoes";
 	
 	}
 	
@@ -150,14 +150,14 @@ public class OrganizacaoBean implements Serializable {
 	 * Operação acionada pela tela de listagem, através do <code>commandButton</code> <strong>Atualizar</strong>. 
 	 */
 	public void atualizar() {
-		fillOrganizacoes();
+		fillAvaliacoes();
 	}
 	
 	/**
 	 * Operação acionada toda a vez que a  tela de listagem for carregada.
 	 */
 	public void reset() {
-		organizacao = null;
+		avaliacao = null;
 		idSelecionado = null;
 	}
 	
@@ -167,15 +167,15 @@ public class OrganizacaoBean implements Serializable {
 	 */
 	public String remover() {
 		try {
-			dao.remove(organizacao);
-			organizacoes.remove(organizacao.getId());
+			dao.remove(avaliacao);
+			avaliacoes.remove(avaliacao.getId());
 		} catch(Exception ex) {
-			log.error("Erro ao remover organizacao.", ex);
-			addMessage(getMessageFromI18N("msg.erro.remover.organizacao"), ex.getMessage());
+			log.error("Erro ao remover avaliacao.", ex);
+			addMessage(getMessageFromI18N("msg.erro.remover.avaliacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu organizacao "+organizacao.getId());
-		return "listaOrganizacoes";
+		log.debug("Removeu avaliacao "+avaliacao.getId());
+		return "listaAvaliacoes";
 	}
 	
 	/**

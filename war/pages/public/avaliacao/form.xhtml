@@ -5,38 +5,38 @@
     
     <h:form styleClass="form-horizontal">
     	<fieldset>
-    		<legend><h3><h:outputText value="#{msg['label.organizacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
+    		<legend><h3><h:outputText value="#{msg['label.avaliacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.nome']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.nome']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.nome}" label="#{msg['label.organizacao.nome']}" required="true" styleClass="input-large">
+	    			<h:inputText value="#{avaliacaoBean.avaliacao.organizacao.nome}" label="#{msg['label.organizacao']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="60" />
 	    			</h:inputText>
 	    		</div>
     		</div>
     		
     		<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.endereco']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.endereco}" label="#{msg['label.organizacao.endereco']}" required="true" styleClass="input-large">
+	    			<h:inputText value="#{avaliacaoBean.avaliacao.escopo}" label="#{msg['label.avaliacao.escopo']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="100" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>
 	    	
 	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.estado']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.avaliador']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.estado}" label="#{msg['label.organizacao.estado']}" required="true" styleClass="input-small">
+	    			<h:inputText value="#{avaliacaoBean.avaliacao.avaliador}" label="#{msg['label.avaliacao.avaliador']}" required="true" styleClass="input-small">
 	    				<f:validateLength minimum="2" maximum="2" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>
 	    	
 	    	<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.patrocinador']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.data']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{organizacaoBean.organizacao.patrocinador}" label="#{msg['label.organizacao.patrocinador']}" required="true" styleClass="input-large">
+	    			<h:inputText value="#{avaliacaoBean.avaliacao.dataAvaliacao}" label="#{msg['label.avaliacao.dataavaliacao']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="30" />
 	    			</h:inputText>
 	    		</div>
@@ -45,9 +45,9 @@
     	
     	<div class="control-group">
     		<div class="controls">
-    			<h:commandButton value="#{msg['button.salvar']}" action="#{organizacaoBean.salvar}" styleClass="btn btn-success"/>
+    			<h:commandButton value="#{msg['button.salvar']}" action="#{avaliacaoBean.salvar}" styleClass="btn btn-success"/>
     			<h:button value="#{msg['button.cancelar']}" outcome="lista" styleClass="btn"/>
-    			<h:commandButton value="#{msg['button.excluir']}" action="#{organizacaoBean.remover}" rendered="#{organizacaoBean.organizacao.id != null}" immediate="true" styleClass="btn btn-danger"/>
+    			<h:commandButton value="#{msg['button.excluir']}" action="#{avaliacaoBean.remover}" rendered="#{avaliacaoBean.avaliacao.id != null}" immediate="true" styleClass="btn btn-danger"/>
     		</div>
     	</div>
     </h:form>

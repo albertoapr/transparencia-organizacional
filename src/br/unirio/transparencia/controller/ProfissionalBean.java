@@ -23,8 +23,8 @@ import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
-import br.unirio.transparencia.dao.ProfissionalDAO;
-import br.unirio.transparencia.dao.ProfissionalDAOObjectify;
+import br.unirio.transparencia.dao.profissional.ProfissionalDAO;
+import br.unirio.transparencia.dao.profissional.ProfissionalDAOObjectify;
 import br.unirio.transparencia.model.Profissional;
 import br.unirio.transparencia.model.TipoUsuario;
 

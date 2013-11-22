@@ -3,6 +3,7 @@ package br.unirio.transparencia.config;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import br.unirio.transparencia.model.Avaliacao;
 import br.unirio.transparencia.model.Organizacao;
 import br.unirio.transparencia.model.Profissional;
 import br.unirio.transparencia.model.Usuario;
@@ -24,6 +25,7 @@ public class ConfigStartup implements ServletContextListener {
 		ObjectifyService.register(Organizacao.class);
 		ObjectifyService.register(Usuario.class);
 		ObjectifyService.register(Profissional.class);
+		ObjectifyService.register(Avaliacao.class);
 	}
 	
 	@Override

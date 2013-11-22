@@ -7,10 +7,10 @@
 
     <ui:composition template="../../layout/template.xhtml">
     <ui:param name="aba" value="avaliacoes" />
-    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.organizacao']}" /></ui:define>
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.avaliacao']}" /></ui:define>
     	
     	<f:metadata>
-            <f:event type="preRenderView" listener="#{organizacaoBean.incluir}" />
+            <f:event type="preRenderView" listener="#{avaliacaoBean.incluir}" />
         </f:metadata>
     	<ui:define name="sidebar">
     	 <ui:include src="menu.xhtml" >

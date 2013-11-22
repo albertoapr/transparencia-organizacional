@@ -1,4 +1,4 @@
-package br.unirio.transparencia.dao;
+package br.unirio.transparencia.dao.organizacao;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import br.unirio.transparencia.model.Organizacao;
  * 
  * <p>Define as operações basicas de cadastro (CRUD), seguindo o design pattern <code>Data Access Object</code>.</p>
  * 
- * @author YaW Tecnologia
+
  */
 public interface OrganizacaoDAO {
 

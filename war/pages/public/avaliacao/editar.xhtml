@@ -9,8 +9,8 @@
     	
     	<f:metadata>
     	    <f:event type="preRenderView" listener="#{usuarioBean.checkList}" />  
-            <f:viewParam name="id" value="#{organizacaoBean.idSelecionado}" />
-            <f:event type="preRenderView" listener="#{organizacaoBean.editar}" />
+            <f:viewParam name="id" value="#{avaliacaoBean.idSelecionado}" />
+            <f:event type="preRenderView" listener="#{avaliacaoBean.editar}" />
         </f:metadata>
     	<ui:define name="sidebar">
     	 <ui:include src="menu.xhtml" >
