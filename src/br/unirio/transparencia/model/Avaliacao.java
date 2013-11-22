@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
+import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Load;
+
 
 /**
  * Classe de modelo que representa uma organização. A organização é um objeto persistido, por isso utilizamos o nome entidade.
@@ -31,9 +34,43 @@ public class Avaliacao implements Serializable {
 
 	@Id
 	private Long id;
-	@Load
-	Ref<Organizacao> organizacao;
 	
+	@Load
+	Ref<Organizacao> organizacaoRef;
+	@Ignore
+	Organizacao organizacao;
+	
+	@Ignore
+	Long organizacaoId;
+	
+	@Ignore
+	Long avaliadorLiderId;
+	
+	public Profissional getAvaliadorLider() {
+		return avaliadorLider;
+	}
+
+	public void setAvaliadorLider(Profissional avaliadorLider) {
+		this.avaliadorLider = avaliadorLider;
+	}
+
+	public Organizacao getOrganizacao() {
+		return organizacao;
+	}
+
+	public void setOrganizacao(Organizacao organizacao) {
+		this.organizacao = organizacao;
+	}
+
+	@Load
+	Ref<Profissional> avaliadorLiderRef;
+	
+	@Ignore
+	Profissional avaliadorLider;
+	
+	@Load
+	List<Ref<Profissional>> avaliadores = new ArrayList<Ref<Profissional>>();
+	private String patrocinador;
 	private String escopo;
 	private Date dataAvaliacao;
 	private Date dataValidade;
@@ -56,12 +93,7 @@ public class Avaliacao implements Serializable {
 	}
 
 	private NivelTransparencia nivelTransparencia;
-	@Load
-	Ref<Profissional> avaliadorLider;
 	
-	@Load
-	List<Ref<Profissional>> avaliadores = new ArrayList<Ref<Profissional>>();
-	private String patrocinador;
 	
 	
 	public void setId(Long id) {
@@ -74,6 +106,7 @@ public class Avaliacao implements Serializable {
 	
 	
 	public Avaliacao() {
+		this.organizacao = getOrganizacaoRef();
 	}
 	
 	
@@ -120,27 +153,57 @@ public class Avaliacao implements Serializable {
 		this.patrocinador = patrocinador;
 	}
 	
-	public Organizacao getOrganizacao() {
-		return organizacao.get();
+	public Organizacao getOrganizacaoRef() {
+		if (organizacao!=null)
+		   return organizacaoRef.get();
+		return null;
+	}
+/*
+	public void setOrganizacaoRef() {
+		this.organizacaoRef  = Ref.create(organizacao); 
+	}
+	*/
+	public void setOrganizacaoRef() {
+		OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
+		Organizacao org = dao.findById(organizacaoId);
+		this.organizacaoRef  = Ref.create(org); 
+	}
+	
+	public Long getOrganizacaoId() {
+		return organizacaoId;
 	}
 
-	public void setOrganizacao(Organizacao organizacao) {
-		this.organizacao  = Ref.create(organizacao); ;
+	public void setOrganizacaoId(Long organizacaoId) {
+		this.organizacaoId = organizacaoId;
 	}
 
-	public Profissional getAvaliadorLider() {
-		return avaliadorLider.get();
+	public void setOrganizacaoRef(Ref<Organizacao> organizacaoRef) {
+		this.organizacaoRef  = organizacaoRef; 
 	}
 
-	public void setAvaliadorLider(Profissional avaliadorLider) {
-		this.avaliadorLider = Ref.create(avaliadorLider);
+	public Profissional getAvaliadorLiderRef() {
+	 if (avaliadorLider!=null)	
+		return avaliadorLiderRef.get();
+	 return null;
+	}
+
+	public void setAvaliadorLiderRef() {
+		this.avaliadorLiderRef = Ref.create(avaliadorLider);
+	}
+	
+	public void setAvaliadorLiderRef(Ref<Profissional> avaliadorLiderRef) {
+		this.avaliadorLiderRef = avaliadorLiderRef;
 	}
 
 	public List<Profissional> getProfissionais() {
 		List<Profissional> list = new ArrayList<Profissional>();
+		if (avaliadores!=null)
+		{	
 		for (Ref<Profissional> ref : avaliadores)
 			list.add(ref.get());
 		return list;
+		}
+		return null;
 	}
 
 	public void setProfissionais(List<Profissional> avaliadores) {

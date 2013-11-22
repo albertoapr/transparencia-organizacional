@@ -17,9 +17,15 @@ import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
+import com.googlecode.objectify.Ref;
+
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
+import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
+import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.model.Organizacao;
+import br.unirio.transparencia.model.TipoUsuario;
 
 /**
  * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>avaliacao</code>.
@@ -69,6 +75,16 @@ public class AvaliacaoBean implements Serializable {
 		dao = new AvaliacaoDAOObjectify();
 		fillAvaliacoes();
 	}
+	
+	
+	public List<Ref<Organizacao>> getOrganizacoes() {
+		OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
+		List<Ref<Organizacao>> organizacoes = new ArrayList<Ref<Organizacao>>() ;
+		for (Organizacao organizacao : dao.getAll() )
+		    organizacoes.add(Ref.create(organizacao));
+		
+		return organizacoes;
+	             }
 	
 	public Avaliacao getAvaliacao() {
 		return avaliacao;
@@ -134,6 +150,8 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	public String salvar() {
 		try {
+			avaliacao.setOrganizacaoRef();
+		//	avaliacao.setAvaliadorLiderRef();
 			dao.save(avaliacao);
 			avaliacoes.put(avaliacao.getId(), avaliacao);
 		} catch(Exception ex) {

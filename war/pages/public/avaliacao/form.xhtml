@@ -7,11 +7,18 @@
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.avaliacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.nome']}" /></label>
+	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao']}" /></label>
 	    		<div class="controls">
+	    		<h:panelGroup>
+				  <h:selectOneMenu  id="organizacao" value="#{avaliacaoBean.avaliacao.organizacaoId}"  label="Organizacao"  >
+					<f:selectItems value="#{organizacaoBean.dmOrganizacoes}"  var="organizacao" itemValue="#{organizacao.id}" itemLabel="#{organizacao.nome}"/>
+				  </h:selectOneMenu>
+				
+			   </h:panelGroup>
+	    		<!--  
 	    			<h:inputText value="#{avaliacaoBean.avaliacao.organizacao.nome}" label="#{msg['label.organizacao']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="60" />
-	    			</h:inputText>
+	    			</h:inputText> -->
 	    		</div>
     		</div>
     		
@@ -23,21 +30,32 @@
 	    			</h:inputText>
 	    		</div>
 	    	</div>
-	    	
+	    	<!--  
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.avaliador']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{avaliacaoBean.avaliacao.avaliador}" label="#{msg['label.avaliacao.avaliador']}" required="true" styleClass="input-small">
+	    		<h:panelGroup>
+				  <h:selectOneMenu  id="avaliador" value="#{avaliacaoBean.avaliacao.avaliadorLider}"  label="Avaliador"  >
+					<f:selectItems value="#{profissionalBean.dmProfissionais}" var="profissional" itemLabel="#{profissional.nome}"/>
+				  </h:selectOneMenu>
+				
+			   </h:panelGroup>
+	    			-->
+	    		<!--  	
+	    			<h:inputText value="#{avaliacaoBean.avaliacao.avaliadorLider}" label="#{msg['label.avaliacao.avaliador']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="2" maximum="2" />
 	    			</h:inputText>
+	    			-->
+	    		<!-- 
 	    		</div>
 	    	</div>
-	    	
+	    	-->
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.data']}" /></label>
 	    		<div class="controls">
-	    			<h:inputText value="#{avaliacaoBean.avaliacao.dataAvaliacao}" label="#{msg['label.avaliacao.dataavaliacao']}" required="true" styleClass="input-large">
+	    			<h:inputText id="dataAvaliacao" value="#{avaliacaoBean.avaliacao.dataAvaliacao}" label="#{msg['label.avaliacao.dataavaliacao']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="30" />
+	    				<f:convertDateTime pattern="d-M-yyyy" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>
@@ -56,4 +74,30 @@
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
     
+    
+    <script src="../../../resources/js/jquery/jquery.ui.min.js"></script>
+<script src="../../../resources/js/jquery/jquery.maskedinput.js"></script>
+<script src="../../../resources/js/jquery/jquery.meiomask.js"></script>
+<script src="../../../resources/js/simplemvc/simplemvc.datefield.js"></script>
+<script src="../../../resources/js/simplemvc/simplemvc.phonefield.js"></script>
+<script src="../../../resources/js/simplemvc/simplemvc.intfield.js"></script>
+<script src="../../../resources/js/forms.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	//$("#cpf").mask("999.999.999/99");
+	//$("#cep").mask("99.999-999");
+	//$("#tempoEmpresa").setIntField();
+	//$("#anoConclusao").setIntField();
+	$("#dataAvaliacao").setDateField();
+	//$("#telefoneFixo").phoneField();
+	//$("#telefoneCelular").phoneField();
+	
+//	$("#estado").change(function() {
+//		capturaMunicipios("estado", "municipio", "${item.municipio}");
+//	});
+//	$("#estado").trigger("change");	
+});
+</script>
 </ui:fragment>
+

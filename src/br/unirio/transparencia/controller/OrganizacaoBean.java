@@ -38,7 +38,7 @@ public class OrganizacaoBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+   // private List<Organizacao> organizacoes;
 	private static Logger log = Logger.getLogger(OrganizacaoBean.class);
 	
 	/**
@@ -69,6 +69,7 @@ public class OrganizacaoBean implements Serializable {
 		dao = new OrganizacaoDAOObjectify();
 		fillOrganizacoes();
 	}
+	
 	
 	public Organizacao getOrganizacao() {
 		return organizacao;
