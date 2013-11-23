@@ -17,15 +17,11 @@ import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
-import com.googlecode.objectify.Ref;
-
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
-import br.unirio.transparencia.model.TipoUsuario;
 
 /**
  * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>avaliacao</code>.
@@ -51,11 +47,14 @@ public class AvaliacaoBean implements Serializable {
 	 * Referência do componente de persistência.
 	 */
 	private AvaliacaoDAO dao;
+
+	
 	
 	/**
 	 * Referência para a avaliacao utiliza na inclusão (nova) ou edição.
 	 */
 	private Avaliacao avaliacao;
+	
 	
 	/**
 	 * Informação é utilizada na edição da avaliacao, quando a seleção de um registro na listagem ocorrer.
@@ -70,21 +69,31 @@ public class AvaliacaoBean implements Serializable {
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
 	private Map<Long, Avaliacao> avaliacoes;
+	private Map<Long,Organizacao> organizacoesAvaliadas;
 	
+	public NivelTransparencia[] getNiveis(){
+		return NivelTransparencia.values();
+		
+	}
+	public Organizacao getOrganizacaoAvaliada() {
+		return organizacoesAvaliadas.get(avaliacao.getId());
+	}
+
+
+	
+
+
 	public AvaliacaoBean() {
 		dao = new AvaliacaoDAOObjectify();
+		
 		fillAvaliacoes();
+		
+		
+		
 	}
 	
 	
-	public List<Ref<Organizacao>> getOrganizacoes() {
-		OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
-		List<Ref<Organizacao>> organizacoes = new ArrayList<Ref<Organizacao>>() ;
-		for (Organizacao organizacao : dao.getAll() )
-		    organizacoes.add(Ref.create(organizacao));
-		
-		return organizacoes;
-	             }
+	
 	
 	public Avaliacao getAvaliacao() {
 		return avaliacao;
@@ -109,6 +118,7 @@ public class AvaliacaoBean implements Serializable {
 		return new ListDataModel<Avaliacao>(new ArrayList<Avaliacao>(avaliacoes.values()));
 	}
 	
+	
 	private void fillAvaliacoes() {
 		try {
 			List<Avaliacao> qryAvaliacoes = new ArrayList<Avaliacao>(dao.getAll());
@@ -124,6 +134,8 @@ public class AvaliacaoBean implements Serializable {
 		}
 		
 	}
+	
+
 	
 	/**
 	 * Ação executada quando a página de inclusão de avaliacaos for carregada.
@@ -141,6 +153,7 @@ public class AvaliacaoBean implements Serializable {
 			return;
 		}
 		avaliacao = avaliacoes.get(idSelecionado);
+		
 		log.debug("Pronto pra editar");
 	}
 
@@ -150,8 +163,7 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	public String salvar() {
 		try {
-			avaliacao.setOrganizacaoRef();
-		//	avaliacao.setAvaliadorLiderRef();
+	
 			dao.save(avaliacao);
 			avaliacoes.put(avaliacao.getId(), avaliacao);
 		} catch(Exception ex) {
@@ -159,7 +171,7 @@ public class AvaliacaoBean implements Serializable {
 			addMessage(getMessageFromI18N("msg.erro.salvar.avaliacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Salvour avaliacao "+avaliacao.getId());
+		log.debug("Salvou avaliacao "+avaliacao.getId());
 		return "listaAvaliacoes";
 	
 	}

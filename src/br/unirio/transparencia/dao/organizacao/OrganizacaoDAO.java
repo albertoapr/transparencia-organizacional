@@ -2,6 +2,8 @@ package br.unirio.transparencia.dao.organizacao;
 
 import java.util.List;
 
+import com.googlecode.objectify.Key;
+
 import br.unirio.transparencia.model.Organizacao;
 
 /**
@@ -41,4 +43,6 @@ public interface OrganizacaoDAO {
 	 * @throws <code>RuntimeException</code> se algum problema ocorrer.
 	 */
 	Organizacao findById(Long id);
+	
+	Organizacao findByKey(Key<Organizacao> k);
 }

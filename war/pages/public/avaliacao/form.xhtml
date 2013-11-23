@@ -10,17 +10,26 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-				  <h:selectOneMenu  id="organizacao" value="#{avaliacaoBean.avaliacao.organizacaoId}"  label="Organizacao"  >
+				  <h:selectOneMenu  id="organizacao" value="#{avaliacaoBean.avaliacao.organizacao.id}"  label="Organizacao"  >
 					<f:selectItems value="#{organizacaoBean.dmOrganizacoes}"  var="organizacao" itemValue="#{organizacao.id}" itemLabel="#{organizacao.nome}"/>
 				  </h:selectOneMenu>
 				
 			   </h:panelGroup>
-	    		<!--  
-	    			<h:inputText value="#{avaliacaoBean.avaliacao.organizacao.nome}" label="#{msg['label.organizacao']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="60" />
-	    			</h:inputText> -->
+	    	
 	    		</div>
     		</div>
+    		
+    		<div class="control-group">
+	    		<label class="control-label"><h:outputText  value="#{msg['label.avaliacao.nivel']}" /></label>
+	    		<div class="controls">
+	    		<h:panelGroup>
+				<h:selectOneMenu  id="nivelTransparencia" value="#{avaliacaoBean.avaliacao.nivelTransparencia}"  label="Nível de Transparência"  >
+					<f:selectItems value="#{avaliacaoBean.niveis}" var="nivel" />
+				</h:selectOneMenu>
+				
+			</h:panelGroup>
+	    		</div>
+	    	</div>
     		
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></label>
@@ -30,32 +39,38 @@
 	    			</h:inputText>
 	    		</div>
 	    	</div>
-	    	<!--  
+	    	  
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.avaliador']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-				  <h:selectOneMenu  id="avaliador" value="#{avaliacaoBean.avaliacao.avaliadorLider}"  label="Avaliador"  >
-					<f:selectItems value="#{profissionalBean.dmProfissionais}" var="profissional" itemLabel="#{profissional.nome}"/>
+				  <h:selectOneMenu  id="avaliador" value="#{avaliacaoBean.avaliacao.avaliador.id}"  label="Avaliador"  >
+					<f:selectItems value="#{profissionalBean.dmProfissionais}" var="profissional" itemValue="#{profissional.id}" itemLabel="#{profissional.nome}"/>
 				  </h:selectOneMenu>
 				
 			   </h:panelGroup>
-	    			-->
-	    		<!--  	
-	    			<h:inputText value="#{avaliacaoBean.avaliacao.avaliadorLider}" label="#{msg['label.avaliacao.avaliador']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="2" maximum="2" />
-	    			</h:inputText>
-	    			-->
-	    		<!-- 
+	    		
+	    	
+	    		
 	    		</div>
 	    	</div>
-	    	-->
+	    	
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.data']}" /></label>
 	    		<div class="controls">
 	    			<h:inputText id="dataAvaliacao" value="#{avaliacaoBean.avaliacao.dataAvaliacao}" label="#{msg['label.avaliacao.dataavaliacao']}" required="true" styleClass="input-large">
 	    				<f:validateLength minimum="5" maximum="30" />
-	    				<f:convertDateTime pattern="d-M-yyyy" />
+	    				<f:convertDateTime pattern="d/M/yyyy" />
+	    			</h:inputText>
+	    		</div>
+	    	</div>
+	    	
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.validade.data']}" /></label>
+	    		<div class="controls">
+	    			<h:inputText id="dataValidade" value="#{avaliacaoBean.avaliacao.dataValidade}" label="#{msg['label.avaliacao.datavalidade']}" required="true" styleClass="input-large">
+	    				<f:validateLength minimum="5" maximum="30" />
+	    				<f:convertDateTime pattern="d/M/yyyy" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>

@@ -38,7 +38,7 @@ public class OrganizacaoBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-   // private List<Organizacao> organizacoes;
+ 
 	private static Logger log = Logger.getLogger(OrganizacaoBean.class);
 	
 	/**
@@ -110,6 +110,16 @@ public class OrganizacaoBean implements Serializable {
 		
 	}
 	
+	public Map<Long, Organizacao> getOrganizacoes() {
+		return organizacoes;
+	}
+
+
+	public void setOrganizacoes(Map<Long, Organizacao> organizacoes) {
+		this.organizacoes = organizacoes;
+	}
+
+
 	/**
 	 * Ação executada quando a página de inclusão de organizacaos for carregada.
 	 */

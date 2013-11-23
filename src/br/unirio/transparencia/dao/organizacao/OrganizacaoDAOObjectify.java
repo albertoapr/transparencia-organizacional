@@ -52,5 +52,10 @@ public class OrganizacaoDAOObjectify implements Serializable, OrganizacaoDAO {
 		Key<Organizacao> k = Key.create(Organizacao.class, id);
 		return ofy().load().key(k).get();
 	}
+	@Override
+	public Organizacao findByKey(Key<Organizacao> k) {
+		
+		return ofy().load().key(k).get();
+	}
 	
 }

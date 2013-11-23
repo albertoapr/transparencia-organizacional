@@ -35,50 +35,57 @@
 				<h:dataTable value="#{avaliacaoBean.dmAvaliacoes}" var="avaliacao" styleClass="table table-hover">
 				
 					<h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.id']}" /></f:facet>
+						<h:outputText outcome="editar" value="#{avaliacao.id}" />
+                		
+	                </h:column>
+				
+					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.organizacao']}" /></f:facet>
-						<h:link outcome="editar" value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}">
-                			<f:param name="id" value="#{avaliacao.id}" />
-                			
-            			</h:link>
+						<h:outputText value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}"/>
+                	
 	                </h:column>
 	                
 	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.nivel_transparencia']}" /></f:facet>
-						<h:outputText value="#{avaliacao.organizacao.nivelTransparencia}" />
+						<h:outputText value="#{avaliacao.nivelTransparencia}" />
 	                </h:column>
 	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.download']}" /></f:facet>
 						
-						<!--  
+						 
 						<h:link outcome="#{avaliacao.resultado}" value="#{msg['label.avaliacao.resultado']}" title="#{msg['label.avaliacao.download.baixar']}" >
-                			<f:param name="id" value="#{avaliacao.id}" />
-                		</h:link>
+                			<f:param name="resultado" value="#{avaliacao.id}" />
+                		</h:link><br/>
+                		
                 		<h:link outcome="#{avaliacao.declaracao}" value="#{msg['label.avaliacao.declaracao']}" title="#{msg['label.avaliacao.download.baixar']}"  >
-                			<f:param name="id" value="#{avaliacao.id}" />
+                			<f:param name="declaracao" value="#{avaliacao.id}" />
                 		</h:link>
-						-->
+						
 						
 	                </h:column>
 	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></f:facet>
-						<h:outputText value="#{avaliacao.escopo}"/>
-					
-					
+						<h:link outcome="editar" value="#{avaliacao.escopo}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}" >
+						    <f:param name="id" value="#{avaliacao.id}" />
+						</h:link>
 					</h:column>
 					
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.datavalidade']}" /></f:facet>
-						<h:outputText value="#{avaliacao.dataValidade}"/>
-					
+						<h:outputText value="#{avaliacao.dataValidade}">
+						   <f:convertDateTime pattern="d/M/yyyy" />
+					</h:outputText>
 	                </h:column>
+	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.avaliador']}" /></f:facet>
 						<h:outputText value="#{avaliacao.avaliador.nome}"/>
-					
-	                </h:column>
+				   </h:column>
+	                
 				</h:dataTable>
 				
 				<h:panelGrid columns="1">

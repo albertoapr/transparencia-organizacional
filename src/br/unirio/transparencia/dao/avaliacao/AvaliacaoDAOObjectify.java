@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.model.Organizacao;
+import br.unirio.transparencia.model.Profissional;
 
 import com.googlecode.objectify.Key;
 
@@ -18,6 +20,12 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 
 	@Override
 	public Long save(Avaliacao avaliacao) {
+		//setando as chaves de referência para tabelas externas
+		Key<Profissional> keyAvaliador =Key.create(Profissional.class, avaliacao.getAvaliador().getId());
+		Key<Organizacao> keyOrganizacao =Key.create(Organizacao.class, avaliacao.getOrganizacao().getId());
+		
+		avaliacao.setKeyAvaliador(keyAvaliador);
+		avaliacao.setKeyOrganizacao(keyOrganizacao);
 		ofy().save().entity(avaliacao).now();
 		return avaliacao.getId();
 	}

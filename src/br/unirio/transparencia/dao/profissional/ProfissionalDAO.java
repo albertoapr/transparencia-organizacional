@@ -5,6 +5,8 @@ package br.unirio.transparencia.dao.profissional;
 
 import java.util.List;
 
+import com.googlecode.objectify.Key;
+
 import br.unirio.transparencia.model.Profissional;
 
 /**
@@ -47,6 +49,8 @@ public interface ProfissionalDAO {
 	 * @throws <code>RuntimeException</code> se algum problema ocorrer.
 	 */
 	Profissional findByEmail(String email);
+
+	Profissional findByKey(Key<Profissional> keyAvaliador);
 }
 
 

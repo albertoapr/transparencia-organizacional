@@ -65,5 +65,10 @@ public class ProfissionalDAOObjectify implements Serializable, ProfissionalDAO {
 		
 	}
 
+	@Override
+	public Profissional findByKey(Key<Profissional> keyAvaliador) {
+		return ofy().load().key(keyAvaliador).get();
+	}
+
 
 }

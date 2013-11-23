@@ -1,29 +1,20 @@
 package br.unirio.transparencia.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
+import br.unirio.transparencia.dao.profissional.ProfissionalDAO;
+import br.unirio.transparencia.dao.profissional.ProfissionalDAOObjectify;
 
-import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
-import com.googlecode.objectify.annotation.Load;
 
 
-/**
- * Classe de modelo que representa uma organização. A organização é um objeto persistido, por isso utilizamos o nome entidade.
- * 
- * <p>As funcionalidades desse sistema demonstração são concentradas no cadastro (CRUD) de organizações.</p>
- * 
- * <p>Essa entidade é mapeada com anotações do <code>Objectify</code>, um framework para persistência alto-nível no datastore (mecanismo de persistência do <code>App Engine</code>).</p>
- * 
- * 
- */
+
 @Entity
 public class Avaliacao implements Serializable {
 
@@ -35,26 +26,76 @@ public class Avaliacao implements Serializable {
 	@Id
 	private Long id;
 	
-	@Load
-	Ref<Organizacao> organizacaoRef;
-	@Ignore
-	Organizacao organizacao;
-	
-	@Ignore
-	Long organizacaoId;
-	
-	@Ignore
-	Long avaliadorLiderId;
-	
-	public Profissional getAvaliadorLider() {
-		return avaliadorLider;
+   
+    
+    Key<Organizacao> keyOrganizacao;
+    @Ignore
+    private Organizacao organizacao;
+    
+    Key<Profissional> keyAvaliador;
+    public Key<Organizacao> getKeyOrganizacao() {
+		return keyOrganizacao;
 	}
 
-	public void setAvaliadorLider(Profissional avaliadorLider) {
-		this.avaliadorLider = avaliadorLider;
+
+
+	public void setKeyOrganizacao(Key<Organizacao> keyOrganizacao) {
+		this.keyOrganizacao = keyOrganizacao;
 	}
+
+
+
+	public Key<Profissional> getKeyAvaliador() {
+		return keyAvaliador;
+	}
+
+
+
+	public void setKeyAvaliador(Key<Profissional> keyAvaliador) {
+		this.keyAvaliador = keyAvaliador;
+	}
+
+	@Ignore
+    private Profissional avaliador;
+    
+	private String patrocinador;
+	
+	private String escopo;
+	
+	private Date dataAvaliacao;
+	
+	private Date dataValidade;
+	
+	private String resultado; 
+	
+	private String declaracao; 
+	
+	private NivelTransparencia nivelTransparencia;
+	
+	public String getDeclaracao(){
+		return "/documentos/avaliacoes/declaracao/"+String.valueOf(getId())+".odt";
+	}
+	
+	public String getResultado(){
+		return "/documentos/avaliacoes/resultado/"+String.valueOf(getId())+".odt";
+	}
+	
+	public Avaliacao() {
+		this.avaliador =new Profissional();
+		this.organizacao =new Organizacao();
+		this.dataAvaliacao = new Date();
+		this.dataValidade =new Date();
+		
+		
+	}
+	
+ 
 
 	public Organizacao getOrganizacao() {
+		if (keyOrganizacao != null){
+			OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
+			return dao.findByKey(keyOrganizacao);
+		}
 		return organizacao;
 	}
 
@@ -62,38 +103,34 @@ public class Avaliacao implements Serializable {
 		this.organizacao = organizacao;
 	}
 
-	@Load
-	Ref<Profissional> avaliadorLiderRef;
-	
-	@Ignore
-	Profissional avaliadorLider;
-	
-	@Load
-	List<Ref<Profissional>> avaliadores = new ArrayList<Ref<Profissional>>();
-	private String patrocinador;
-	private String escopo;
-	private Date dataAvaliacao;
-	private Date dataValidade;
-	private String resumo; //arquivo com o documento resumo
-	private String declaracao; //arquivo com o documento de declaração
-	public String getResumo() {
-		return resumo;
+
+
+	public Profissional getAvaliador() {
+		if (keyAvaliador != null){
+			ProfissionalDAO dao = new ProfissionalDAOObjectify();
+			return dao.findByKey(keyAvaliador);
+		}
+		return avaliador;
 	}
 
-	public void setResumo(String resumo) {
-		this.resumo = resumo;
+	public void setAvaliador(Profissional avaliador) {
+		this.avaliador = avaliador;
 	}
 
-	public String getDeclaracao() {
-		return declaracao;
+	
+	
+
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
 	}
+
+
 
 	public void setDeclaracao(String declaracao) {
 		this.declaracao = declaracao;
 	}
 
-	private NivelTransparencia nivelTransparencia;
-	
 	
 	
 	public void setId(Long id) {
@@ -104,13 +141,10 @@ public class Avaliacao implements Serializable {
 		return id;
 	}
 	
+
+
 	
-	public Avaliacao() {
-		this.organizacao = getOrganizacaoRef();
-	}
-	
-	
-	
+
 	public Date getDataAvaliacao() {
 		return dataAvaliacao;
 	}
@@ -152,66 +186,6 @@ public class Avaliacao implements Serializable {
 	public void setPatrocinador(String patrocinador) {
 		this.patrocinador = patrocinador;
 	}
-	
-	public Organizacao getOrganizacaoRef() {
-		if (organizacao!=null)
-		   return organizacaoRef.get();
-		return null;
-	}
-/*
-	public void setOrganizacaoRef() {
-		this.organizacaoRef  = Ref.create(organizacao); 
-	}
-	*/
-	public void setOrganizacaoRef() {
-		OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
-		Organizacao org = dao.findById(organizacaoId);
-		this.organizacaoRef  = Ref.create(org); 
-	}
-	
-	public Long getOrganizacaoId() {
-		return organizacaoId;
-	}
-
-	public void setOrganizacaoId(Long organizacaoId) {
-		this.organizacaoId = organizacaoId;
-	}
-
-	public void setOrganizacaoRef(Ref<Organizacao> organizacaoRef) {
-		this.organizacaoRef  = organizacaoRef; 
-	}
-
-	public Profissional getAvaliadorLiderRef() {
-	 if (avaliadorLider!=null)	
-		return avaliadorLiderRef.get();
-	 return null;
-	}
-
-	public void setAvaliadorLiderRef() {
-		this.avaliadorLiderRef = Ref.create(avaliadorLider);
-	}
-	
-	public void setAvaliadorLiderRef(Ref<Profissional> avaliadorLiderRef) {
-		this.avaliadorLiderRef = avaliadorLiderRef;
-	}
-
-	public List<Profissional> getProfissionais() {
-		List<Profissional> list = new ArrayList<Profissional>();
-		if (avaliadores!=null)
-		{	
-		for (Ref<Profissional> ref : avaliadores)
-			list.add(ref.get());
-		return list;
-		}
-		return null;
-	}
-
-	public void setProfissionais(List<Profissional> avaliadores) {
-		for (Profissional prof : avaliadores)
-		  this.avaliadores.add(Ref.create(prof));
-	}
-
-
 
 
 	
