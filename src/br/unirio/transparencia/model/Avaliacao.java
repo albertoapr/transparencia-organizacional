@@ -8,6 +8,7 @@ import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.dao.profissional.ProfissionalDAO;
 import br.unirio.transparencia.dao.profissional.ProfissionalDAOObjectify;
 
+import com.google.appengine.api.datastore.Blob;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -67,19 +68,51 @@ public class Avaliacao implements Serializable {
 	private Date dataValidade;
 	
 	private String resultado; 
-	
 	private String declaracao; 
 	
+	private Blob fileResultado;
+	private Blob fileDeclaracao;
+	
+	public byte[] getFileResultado() {
+		return fileResultado.getBytes();
+	}
+
+
+
+	public void setFileResultado(byte[] file) {
+		this.fileResultado = new Blob(file);
+	}
+
+
+
+	public byte[] getFileDeclaracao() {
+		return fileDeclaracao.getBytes();
+	}
+
+
+
+	public void setFileDeclaracao(byte [] file) {
+		this.fileDeclaracao = new Blob(file);
+	}
+
 	private NivelTransparencia nivelTransparencia;
 	
 	public String getDeclaracao(){
-		return "/documentos/avaliacoes/declaracao/"+String.valueOf(getId())+".odt";
+		
+		return declaracao;
+	 
 	}
 	
-	public String getResultado(){
-		return "/documentos/avaliacoes/resultado/"+String.valueOf(getId())+".odt";
-	}
+
 	
+	public String getResultado() {
+	
+		return resultado;
+	
+	}
+
+
+
 	public Avaliacao() {
 		this.avaliador =new Profissional();
 		this.organizacao =new Organizacao();
@@ -121,14 +154,12 @@ public class Avaliacao implements Serializable {
 	
 
 
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
-	}
+	
 
 
 
-	public void setDeclaracao(String declaracao) {
-		this.declaracao = declaracao;
+	public void setDeclaracao(String string) {
+		this.declaracao =string;
 	}
 
 	
@@ -185,6 +216,13 @@ public class Avaliacao implements Serializable {
 
 	public void setPatrocinador(String patrocinador) {
 		this.patrocinador = patrocinador;
+	}
+
+
+
+	public void setResultado(String string) {
+		this.resultado = string;
+		
 	}
 
 

@@ -16,12 +16,18 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.UploadedFile;
 
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
 import br.unirio.transparencia.model.Avaliacao;
 import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
+
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+
 
 /**
  * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>avaliacao</code>.
@@ -47,7 +53,21 @@ public class AvaliacaoBean implements Serializable {
 	 * Referência do componente de persistência.
 	 */
 	private AvaliacaoDAO dao;
+	private UploadedFile resultado;
+	public UploadedFile getResultado() {
+		return resultado;
+	}
+	public void setResultado(UploadedFile resultado) {
+		this.resultado = resultado;
+	}
+	public UploadedFile getDeclaracao() {
+		return declaracao;
+	}
+	public void setDeclaracao(UploadedFile declaracao) {
+		this.declaracao = declaracao;
+	}
 
+	private UploadedFile declaracao;
 	
 	
 	/**
@@ -71,6 +91,7 @@ public class AvaliacaoBean implements Serializable {
 	private Map<Long, Avaliacao> avaliacoes;
 	private Map<Long,Organizacao> organizacoesAvaliadas;
 	
+	
 	public NivelTransparencia[] getNiveis(){
 		return NivelTransparencia.values();
 		
@@ -78,7 +99,6 @@ public class AvaliacaoBean implements Serializable {
 	public Organizacao getOrganizacaoAvaliada() {
 		return organizacoesAvaliadas.get(avaliacao.getId());
 	}
-
 
 	
 
@@ -92,8 +112,43 @@ public class AvaliacaoBean implements Serializable {
 		
 	}
 	
+	public void upload(){
+		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService() ;
+		String avaliacao = resultado.getFileName();
+		
+		avaliacao=blobstoreService.createUploadUrl("/upload");
+		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(null);
+        List<BlobKey> blobKeyList = blobs.get("file");
+        for (BlobKey key : blobKeyList )
+	    	this.avaliacao.setDeclaracao("/serve?blob-key=" + key.getKeyString());
+	}
+	public void uploadDeclaracao() {
+		
 	
+        BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/declaracao/"+declaracao.getFileName());
+    
+    	avaliacao.setFileDeclaracao(declaracao.getContents());
+        if (blobKey == null) {
+            avaliacao.setDeclaracao("/");
+        } else {
+        	avaliacao.setDeclaracao("/serve?blob-key=" + blobKey.getKeyString());
+        }
+
+		
+		addMessage("Carregamento de arquivo","carregando arquivo"); 
+		}
+
+	public void uploadResultado() {
+		BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/resultado/"+resultado.getFileName());
+		 avaliacao.setFileResultado(resultado.getContents());
+        if (blobKey == null) {
+            avaliacao.setResultado("/");
+        } else {
+        	avaliacao.setResultado("/serve?blob-key=" + blobKey.getKeyString());
+        }
 	
+		addMessage("Carregamento de arquivo","carregando"); 
+		}
 	
 	public Avaliacao getAvaliacao() {
 		return avaliacao;
@@ -161,9 +216,13 @@ public class AvaliacaoBean implements Serializable {
 	 * Operação acionada pela tela de inclusão ou edição, através do <code>commandButton</code> <strong>Salvar</strong>.
 	 * @return Se a inclusão/edição foi realizada vai para listagem, senão permanece na mesma tela.
 	 */
+	
+
 	public String salvar() {
 		try {
-	
+
+          uploadResultado();
+          uploadDeclaracao();
 			dao.save(avaliacao);
 			avaliacoes.put(avaliacao.getId(), avaliacao);
 		} catch(Exception ex) {
@@ -225,4 +284,5 @@ public class AvaliacaoBean implements Serializable {
 	private void addMessage(String summary, String detail) {
 		getCurrentInstance().addMessage(null, new FacesMessage(summary, summary.concat("<br/>").concat(detail)));
 	}
+
 }

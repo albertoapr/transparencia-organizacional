@@ -30,11 +30,12 @@
 			
 			<h:form rendered="#{loginBean.checkAdministrador}">
 				<h:dataTable value="#{organizacaoBean.dmOrganizacoes}" var="organizacao" styleClass="table table-hover">
+					<!--  
 					<h:column>
 						<f:facet name="header">#</f:facet>
 						<h:outputText value="#{organizacao.id}" />
 	                </h:column>
-	                
+	                -->
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.nome']}" /></f:facet>
 						<h:link outcome="editar" value="#{organizacao.nome}" title="#{msg['label.editar']} #{organizacao.nome}">

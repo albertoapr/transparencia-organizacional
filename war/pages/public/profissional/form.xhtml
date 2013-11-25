@@ -2,6 +2,9 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core">
+      <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    <h:messages showDetail="true" showSummary="false" />	
+    </h:panelGroup>
     
     <h:form styleClass="form-horizontal">
     	<fieldset>
@@ -45,15 +48,13 @@
     	
     	<div class="control-group">
     		<div class="controls">
-    			<h:commandButton value="#{msg['button.salvar']}" action="#{profissionalBean.salvar}" styleClass="btn btn-success"/>
+    			<h:commandButton value="#{msg['button.salvar']}" action="#{profissionalBean.salvar}" styleClass="btn btn-success" rendered="#{loginBean.checkAdministrador}"/>
     			<h:button value="#{msg['button.cancelar']}" outcome="lista" styleClass="btn"/>
-    			<h:commandButton value="#{msg['button.excluir']}" action="#{profissionalBean.remover}" rendered="#{profissionalBean.profissional.id != null}" immediate="true" styleClass="btn btn-danger"/>
+    			<h:commandButton value="#{msg['button.excluir']}" action="#{profissionalBean.remover}" rendered="#{profissionalBean.profissional.id != null and loginBean.checkAdministrador}" immediate="true" styleClass="btn btn-danger"/>
     		</div>
     	</div>
     </h:form>
     
-    <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
-    	<h:messages showDetail="true" showSummary="false" />
-    </h:panelGroup>
+  
     
 </ui:fragment>

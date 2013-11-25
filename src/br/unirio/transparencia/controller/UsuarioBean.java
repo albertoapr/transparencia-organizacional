@@ -211,7 +211,10 @@ public class UsuarioBean implements Serializable {
 			return "";
 		}
 		try {
-			
+			if (!loginBean.getCheckAdministrador()){
+				usuario.setAtivo(true);
+                 usuario.setTipo(TipoUsuario.USUARIO); 				
+			}
 			dao.save(usuario);
 			usuarios.put(usuario.getId(), usuario);
 		} catch(Exception ex) {

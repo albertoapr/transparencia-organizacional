@@ -29,11 +29,12 @@
     </h:panelGroup>
 			<h:form rendered="#{loginBean.checkAdministrador}">
 				<h:dataTable value="#{usuarioBean.dmUsuarios}" var="usuario" styleClass="table table-hover" >
+					<!--  
 					<h:column>
 						<f:facet name="header">#</f:facet>
 						<h:outputText value="#{usuario.id}" />
 	                </h:column>
-	                
+	                -->
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.usuario.nome']}" /></f:facet>
 						<h:link outcome="editar" value="#{usuario.nome}" title="#{msg['label.editar']} #{usuario.nome}">

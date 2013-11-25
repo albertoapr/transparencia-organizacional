@@ -1,9 +1,12 @@
 <ui:fragment xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
-    
-    <h:form styleClass="form-horizontal">
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
+    <h:form enctype="multipart/form-data" styleClass="form-horizontal">
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.avaliacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
@@ -49,9 +52,35 @@
 				  </h:selectOneMenu>
 				
 			   </h:panelGroup>
-	    		
+	    		</div>
+	    		</div>
+	    	 	
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.declaracao']}" /></label>
+	    		<div class="controls">
+	    		<h:panelGroup>
+	    		 
+  
+				<p:fileUpload value="#{avaliacaoBean.declaracao}" mode="simple"/>  
+  
+                       
+                
+				<!--   <h:inputText value="#{avaliacaoBean.avaliacao.declaracao}" />
+		            -->
+		           
+                          
+                </h:panelGroup>
+	    		</div>
+	    	</div>
 	    	
-	    		
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.resultado']}" /></label>
+	    		<div class="controls">
+	    		<h:panelGroup>
+				<p:fileUpload  value="#{avaliacaoBean.resultado}" mode="simple"/>  
+               
+                                
+                </h:panelGroup>
 	    		</div>
 	    	</div>
 	    	
@@ -78,16 +107,14 @@
     	
     	<div class="control-group">
     		<div class="controls">
-    			<h:commandButton value="#{msg['button.salvar']}" action="#{avaliacaoBean.salvar}" styleClass="btn btn-success"/>
+    			<h:commandButton value="#{msg['button.salvar']}" action="#{avaliacaoBean.salvar}" styleClass="btn btn-success" rendered="#{loginBean.checkAdministrador}"/>
     			<h:button value="#{msg['button.cancelar']}" outcome="lista" styleClass="btn"/>
-    			<h:commandButton value="#{msg['button.excluir']}" action="#{avaliacaoBean.remover}" rendered="#{avaliacaoBean.avaliacao.id != null}" immediate="true" styleClass="btn btn-danger"/>
+    			<h:commandButton value="#{msg['button.excluir']}" action="#{avaliacaoBean.remover}" rendered="#{avaliacaoBean.avaliacao.id != null and loginBean.checkAdministrador}"  immediate="true" styleClass="btn btn-danger"/>
     		</div>
     	</div>
     </h:form>
     
-    <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
-    	<h:messages showDetail="true" showSummary="false" />
-    </h:panelGroup>
+    
     
     
     <script src="../../../resources/js/jquery/jquery.ui.min.js"></script>

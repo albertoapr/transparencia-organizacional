@@ -7,7 +7,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Objectify"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JSF"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

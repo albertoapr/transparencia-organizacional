@@ -33,13 +33,13 @@
 		<h:messages />	
 			<h:form >
 				<h:dataTable value="#{avaliacaoBean.dmAvaliacoes}" var="avaliacao" styleClass="table table-hover">
-				
+				<!--  
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.id']}" /></f:facet>
 						<h:outputText outcome="editar" value="#{avaliacao.id}" />
                 		
 	                </h:column>
-				
+				-->
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.organizacao']}" /></f:facet>
 						<h:outputText value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}"/>
@@ -56,13 +56,13 @@
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.download']}" /></f:facet>
 						
 						 
-						<h:link outcome="#{avaliacao.resultado}" value="#{msg['label.avaliacao.resultado']}" title="#{msg['label.avaliacao.download.baixar']}" >
-                			<f:param name="resultado" value="#{avaliacao.id}" />
-                		</h:link><br/>
+						<h:outputLink  value="#{avaliacao.resultado}" >
+                			#{msg['label.avaliacao.resultado']}
+                		</h:outputLink><br/>
                 		
-                		<h:link outcome="#{avaliacao.declaracao}" value="#{msg['label.avaliacao.declaracao']}" title="#{msg['label.avaliacao.download.baixar']}"  >
-                			<f:param name="declaracao" value="#{avaliacao.id}" />
-                		</h:link>
+                		<h:outputLink  value="#{avaliacao.declaracao}" >
+                			#{msg['label.avaliacao.declaracao']}
+                		</h:outputLink>
 						
 						
 	                </h:column>

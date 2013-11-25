@@ -63,7 +63,7 @@
 	    		<label class="control-label"><h:outputText rendered="#{!param.novo==true}" value="#{msg['label.usuario.tipo']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-				<h:selectOneMenu rendered="#{!param.novo==true}" id="cbPerfil" value="#{usuarioBean.usuario.tipo}"  label="Tipo"  >
+				<h:selectOneMenu rendered="#{!param.novo==true and loginBean.checkAdministrador}" id="cbPerfil" value="#{usuarioBean.usuario.tipo}"  label="Tipo"  >
 					<f:selectItems value="#{usuarioBean.tipos}" var="tipo" />
 				</h:selectOneMenu>
 				
@@ -95,7 +95,8 @@
     	<div class="control-group">
     		<div class="controls">
     			<h:commandButton value="#{msg['button.salvar']}" action="#{usuarioBean.salvar}" styleClass="btn btn-success"/>
-    			<h:button value="#{msg['button.cancelar']}" outcome="listaUsuarios" styleClass="btn"/>
+    			<h:button value="#{msg['button.cancelar']}" outcome="listaUsuarios" styleClass="btn" rendered="#{loginBean.checkAdministrador}"/>
+    			<h:button value="#{msg['button.cancelar']}" outcome="login" styleClass="btn" rendered="#{!loginBean.checkAdministrador}"/>
     			<h:commandButton value="#{msg['button.excluir']}" action="#{usuarioBean.remover}" rendered="#{usuarioBean.usuario.id != null}" immediate="true" styleClass="btn btn-danger"/>
     		</div>
     	</div>
