@@ -56,11 +56,11 @@
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.download']}" /></f:facet>
 						
 						 
-						<h:outputLink  value="#{avaliacao.resultado}" >
+						<h:outputLink  value="/serve?blob-key=#{avaliacao.resultado}" >
                 			#{msg['label.avaliacao.resultado']}
                 		</h:outputLink><br/>
                 		
-                		<h:outputLink  value="#{avaliacao.declaracao}" >
+                		<h:outputLink  value="/serve?blob-key=#{avaliacao.declaracao}" >
                 			#{msg['label.avaliacao.declaracao']}
                 		</h:outputLink>
 						

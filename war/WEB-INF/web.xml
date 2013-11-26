@@ -56,13 +56,16 @@ version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.
 		<filter-name>ObjectifyFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	  <!--  
 	<filter>
 	     <filter-name>primeUploadFilter</filter-name> 
 	     <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class> 
-	     </filter> <filter-mapping> <filter-name>primeUploadFilter</filter-name> 
+	</filter>
+	      <filter-mapping> 
+	     <filter-name>primeUploadFilter</filter-name> 
 	     <servlet-name>Faces Servlet</servlet-name>
 	      </filter-mapping>
-
+-->
 	
 	<!-- Controle de thread eh realizado pelo App Engine, necessario desabilitar no JSF. -->
 	<context-param>

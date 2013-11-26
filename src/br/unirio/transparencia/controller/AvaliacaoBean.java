@@ -12,11 +12,13 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.primefaces.model.UploadedFile;
+
 
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
@@ -53,22 +55,7 @@ public class AvaliacaoBean implements Serializable {
 	 * Referência do componente de persistência.
 	 */
 	private AvaliacaoDAO dao;
-	private UploadedFile resultado;
-	public UploadedFile getResultado() {
-		return resultado;
-	}
-	public void setResultado(UploadedFile resultado) {
-		this.resultado = resultado;
-	}
-	public UploadedFile getDeclaracao() {
-		return declaracao;
-	}
-	public void setDeclaracao(UploadedFile declaracao) {
-		this.declaracao = declaracao;
-	}
 
-	private UploadedFile declaracao;
-	
 	
 	/**
 	 * Referência para a avaliacao utiliza na inclusão (nova) ou edição.
@@ -104,6 +91,7 @@ public class AvaliacaoBean implements Serializable {
 
 
 	public AvaliacaoBean() {
+		
 		dao = new AvaliacaoDAOObjectify();
 		
 		fillAvaliacoes();
@@ -111,43 +99,37 @@ public class AvaliacaoBean implements Serializable {
 		
 		
 	}
-	
-	public void upload(){
-		BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService() ;
-		String avaliacao = resultado.getFileName();
-		
-		avaliacao=blobstoreService.createUploadUrl("/upload");
-		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(null);
-        List<BlobKey> blobKeyList = blobs.get("file");
-        for (BlobKey key : blobKeyList )
-	    	this.avaliacao.setDeclaracao("/serve?blob-key=" + key.getKeyString());
-	}
+
 	public void uploadDeclaracao() {
-		
-	
-        BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/declaracao/"+declaracao.getFileName());
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	     avaliacao.setDeclaracao((String)session.getAttribute("documento"));
+    //    BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/declaracao/"+declaracao.getFileName());
     
-    	avaliacao.setFileDeclaracao(declaracao.getContents());
-        if (blobKey == null) {
-            avaliacao.setDeclaracao("/");
-        } else {
-        	avaliacao.setDeclaracao("/serve?blob-key=" + blobKey.getKeyString());
-        }
+    //	avaliacao.setFileDeclaracao(declaracao.getContents());
+   //     if (blobKey == null) {
+  //          avaliacao.setDeclaracao("/");
+  //      } else {
+  //      	avaliacao.setDeclaracao("/serve?blob-key=" + blobKey.getKeyString());
+  //      }
 
 		
-		addMessage("Carregamento de arquivo","carregando arquivo"); 
+	//	addMessage("Carregamento de arquivo","carregando arquivo"); 
 		}
 
 	public void uploadResultado() {
-		BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/resultado/"+resultado.getFileName());
-		 avaliacao.setFileResultado(resultado.getContents());
-        if (blobKey == null) {
-            avaliacao.setResultado("/");
-        } else {
-        	avaliacao.setResultado("/serve?blob-key=" + blobKey.getKeyString());
-        }
+		FacesContext fc = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+	     avaliacao.setResultado((String)session.getAttribute("documento"));
+		//BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/resultado/"+resultado.getFileName());
+	//	 avaliacao.setFileResultado(resultado.getContents());
+    //    if (blobKey == null) {
+    //        avaliacao.setResultado("/");
+     //   } else {
+    //    	avaliacao.setResultado("/serve?blob-key=" + blobKey.getKeyString());
+   //     }
 	
-		addMessage("Carregamento de arquivo","carregando"); 
+	//	addMessage("Carregamento de arquivo","carregando"); 
 		}
 	
 	public Avaliacao getAvaliacao() {
