@@ -18,6 +18,7 @@ public class Usuario implements Serializable
 	@Id
 	private Long id;
 	private TipoUsuario tipo;
+	@Index
 	private String nome;
 	private String email;
 	private String senha;
