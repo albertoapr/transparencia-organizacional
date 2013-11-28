@@ -202,9 +202,14 @@ public class AvaliacaoBean implements Serializable {
 
 	public String salvar() {
 		try {
-
-          uploadResultado();
-          uploadDeclaracao();
+           FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session =(HttpSession) fc.getExternalContext().getSession(false);
+            String fileSelo= (String)session.getAttribute("selo");
+            String fileResultado= (String)session.getAttribute("resultado");
+            avaliacao.setDeclaracao(fileSelo);
+            avaliacao.setResultado(fileResultado);
+            session.setAttribute("selo", null);
+            session.setAttribute("resultado", null); 
 			dao.save(avaliacao);
 			avaliacoes.put(avaliacao.getId(), avaliacao);
 		} catch(Exception ex) {

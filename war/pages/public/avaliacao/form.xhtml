@@ -6,7 +6,7 @@
     <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
-    <h:form enctype="multipart/form-data" styleClass="form-horizontal">
+    <h:form  styleClass="form-horizontal">
     	<fieldset>
     		<legend><h3><h:outputText value="#{msg['label.avaliacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
@@ -59,14 +59,11 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.declaracao']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-	    		 
-                 <iframe src="/upload.jsp" width="420px" height="80px"/> 
-				 
-  
-                       
-                
-				<!--   <h:inputText value="#{avaliacaoBean.avaliacao.declaracao}" />
-		            -->
+	    		 <h:inputText value="#{avaliacaoBean.avaliacao.declaracao}" /><br/>  
+                 <iframe src="uploadSelo.jsp" width="420px" height="80px"/> 
+			   
+				
+		            
 		           
                           
                 </h:panelGroup>
@@ -77,7 +74,8 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.resultado']}" /></label>
 	    		<div class="controls">
 	    		<h:panelGroup>
-				<iframe src="/upload.jsp" width="420px" height="80px"/> 
+	    		<h:inputText value="#{avaliacaoBean.avaliacao.resultado}" /> <br/>  
+				<iframe src="uploadResultado.jsp" width="420px" height="80px"/> 
                                 
                 </h:panelGroup>
 	    		</div>

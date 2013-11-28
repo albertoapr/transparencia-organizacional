@@ -12,16 +12,14 @@
     	   </ui:include>
     	</ui:define>
 		<ui:define name="content">
-			<div style="border-bottom: 1px solid #E5E5E5; margin-bottom: 10px">
+		
+				<div style="border-bottom: 1px solid #E5E5E5; margin-bottom: 10px">
 				<h3><h:outputText value="#{msg['label.sobre.projeto']}" />
 					<small> <h:outputText value="#{msg['label.sobre']}" /></small></h3>
-					
-					
 					
 					<ui:repeat value="#{loginBean.leiame}" var="linha">
                        <h:outputText value="#{linha}"/><br/>
                     </ui:repeat>
-					
 					
 			</div>
 			
@@ -34,6 +32,7 @@
 				</ui:repeat>
 				</div>
 			</div>
+			
 		</ui:define>
     </ui:composition>
 </html>
