@@ -2,6 +2,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
     >
     <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
     	<h:messages showDetail="true" showSummary="false" />
@@ -94,20 +95,31 @@
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.data']}" /></label>
 	    		<div class="controls">
+	    		  <!--   <p:calendar value="#{avaliacaoBean.avaliacao.dataAvaliacao}"  id="dataAvaliacao" pattern="MM/dd/yyyy" label="#{msg['label.avaliacao.dataavaliacao']}" required="true" styleClass="input-large"/>
+	    	-->
+	    		 	  
 	    			<h:inputText id="dataAvaliacao" value="#{avaliacaoBean.avaliacao.dataAvaliacao}" label="#{msg['label.avaliacao.dataavaliacao']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="30" />
+	    				
 	    				<f:convertDateTime pattern="d/M/yyyy" />
 	    			</h:inputText>
+	    			
+	    			
 	    		</div>
 	    	</div>
 	    	
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.validade.data']}" /></label>
 	    		<div class="controls">
+	    	<!-- 		  <p:calendar value="#{avaliacaoBean.avaliacao.dataValidade}"  id="dataValidade" pattern="MM/dd/yyyy" label="#{msg['label.avaliacao.datavalidade']}" required="true" styleClass="input-large"/>
+	    	
+	    			-->
+	    			  
 	    			<h:inputText id="dataValidade" value="#{avaliacaoBean.avaliacao.dataValidade}" label="#{msg['label.avaliacao.datavalidade']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="30" />
+	    				
 	    				<f:convertDateTime pattern="d/M/yyyy" />
 	    			</h:inputText>
+	    			 
+	    			
 	    		</div>
 	    	</div>
     	</fieldset>

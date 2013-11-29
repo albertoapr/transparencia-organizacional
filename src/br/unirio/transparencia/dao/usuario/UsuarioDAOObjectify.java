@@ -48,6 +48,7 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
 		administrador.setTipo(TipoUsuario.ADMINISTRADOR);
 		administrador.setSenha("123456");
 		
+		
 		return administrador;
 	}
 	
@@ -84,10 +85,16 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
 	public Usuario findByEmail(String email) {
 		
 		List<Usuario> usuarios = ofy().load().type(Usuario.class).list();
+		if (usuarios.size()>0)
+		{	
 		for (Usuario user:usuarios)
-			if (user.getEmail().compareTo(email)==0) 	return user;
-		return null;	
-		
+			if (user.getEmail().compareTo(email)==0)
+				return user;
+		}
+		else
+		 return	criaAdministradorPadrao();
+			
+		return null;
 		
 	}
 }
