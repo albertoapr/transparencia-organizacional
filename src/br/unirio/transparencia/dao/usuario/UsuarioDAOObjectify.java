@@ -9,6 +9,7 @@ import br.unirio.transparencia.model.TipoUsuario;
 import br.unirio.transparencia.model.Usuario;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 
 
 
@@ -83,17 +84,19 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
 
 	@Override
 	public Usuario findByEmail(String email) {
-		
 		List<Usuario> usuarios = ofy().load().type(Usuario.class).list();
 		if (usuarios.size()>0)
-		{	
-		for (Usuario user:usuarios)
-			if (user.getEmail().compareTo(email)==0)
-				return user;
+		{
+			Ref<Usuario> usuario =ofy().load().type(Usuario.class).filter("email", email).first();
+			if (usuario!=null)
+			{
+				return usuario.get();
+			}
 		}
-		else
-		 return	criaAdministradorPadrao();
-			
+		else{
+			return	criaAdministradorPadrao();
+		}
+		
 		return null;
 		
 	}

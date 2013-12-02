@@ -20,6 +20,7 @@ public class Usuario implements Serializable
 	private TipoUsuario tipo;
 	@Index
 	private String nome;
+	@Index
 	private String email;
 	private String senha;
 	private boolean ativo;
