@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" >
+	
+  <ui:composition template="../layout/template.xhtml"> 
+<ui:define name="sidebar">
+    	<ui:include src="menu.xhtml" >
+    	        <ui:param name="comando" value="acesso" />
+    	   </ui:include>
+    	</ui:define>
+	<ui:define name="content">
+
+	<f:metadata>
+	        
+            <f:event type="preRenderView" listener="#{loginBean.logout}" />
+        </f:metadata>
+	
+
+      <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
+    <h:form styleClass="form-horizontal">
+    	<fieldset>
+    		<legend>Recuperação de Senha</legend>
+    		
+    		
+    		<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.usuario.email']}" /></label>
+	    		<div class="controls">
+	    			<h:inputText id="email" value="#{loginBean.user}" size="50" maxlength="50" 
+					validatorMessage="e-Mail inválido" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
+						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
+						
+					</h:inputText> 
+	    		</div>
+	    	</div>
+	    	
+	    	
+	    	
+	    
+	    	
+		   
+	    	
+    	</fieldset>
+    	
+    	<div class="control-group">
+    		<div class="controls" >
+    			<h:commandButton value="Enviar senha" action="#{loginBean.enviaSenha}" styleClass="btn btn-success"/>
+    			<h:button value="Login" outcome="acesso.jsf" styleClass="btn"/>
+    		</div>
+    	</div>
+    </h:form>
+
+	
+	</ui:define>
+ </ui:composition>
+</html>
