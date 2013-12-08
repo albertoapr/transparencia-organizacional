@@ -3,6 +3,8 @@ package br.unirio.transparencia.dao.avaliacao;
 import java.util.List;
 
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.util.TotalizadorAvaliacaoPorEstado;
+import br.unirio.transparencia.util.TotalizadorAvaliacaoPorNivel;
 
 public interface AvaliacaoDAO {
 	/**
@@ -18,6 +20,13 @@ public interface AvaliacaoDAO {
 	 * @throws <code>RuntimeException</code> se algum problema ocorrer.
 	 */
 	List<Avaliacao> getAll();
+	
+	/**
+	 * @return Lista com todas as avaliacaos cadastradas no banco de dados.
+	 * @throws <code>RuntimeException</code> se algum problema ocorrer.
+	 */
+	List<TotalizadorAvaliacaoPorNivel> getTotalPorNivel();
+	List<TotalizadorAvaliacaoPorEstado> getTotalPorEstado();
 	
 	/**
 	 * Exclui o registro da avaliacao na base de dados 

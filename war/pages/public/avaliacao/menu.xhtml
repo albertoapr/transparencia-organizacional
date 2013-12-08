@@ -10,20 +10,31 @@
 		
 		
 		<li class="#{comando == 'lista' ? 'active' : ''}">
-			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista']}"/>
+			<h:link outcome="lista.jsf" value="#{msg['menu.lista']}"/>
 		
 		</li>
 		
-		<li class="#{comando == 'porEstado' ? 'active' : ''}">
-			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista.estado']}"/>
-		
-		</li>	
-		
-		<li class="#{comando == 'porNivel' ? 'active' : ''}">
-			<h:link outcome="listaOrganizacoes" value="#{msg['menu.lista.nivel']}"/>
-		
-		</li>
 	
+		
+		
+		<li class="nav-header"><h:outputText value="#{msg['menu.lista.nivel.total.avaliado']}" /></li>
+		
+		<li class="#{comando == 'totalAvaliadoPorEstado' ? 'active' : ''}">
+			<h:link outcome="total_avaliado_por_estado.jsf" value="#{msg['menu.lista.avaliacao.uf']}"/>
+		</li>
+		<li class="#{comando == 'totalAvaliadoPorNivel' ? 'active' : ''}">
+			<h:link outcome="total_avaliado_por_nivel.jsf" value="#{msg['menu.lista.avaliacao.nivel']}"/>
+		</li>
+		
+		<li class="nav-header"><h:outputText value="#{msg['menu.lista.nivel.total.valido']}" /></li>
+		
+			<li class="#{comando == 'totalValidoPorEstado' ? 'active' : ''}">
+			<h:link outcome="total_valido_por_estado.jsf" value="#{msg['menu.lista.avaliacao.uf']}"/>
+		</li>
+		<li class="#{comando == 'totalValidoPorNivel' ? 'active' : ''}">
+			<h:link outcome="total_valido_por_nivel.jsf" value="#{msg['menu.lista.avaliacao.nivel']}"/>
+		</li>
+			
 		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
 			 <h:link outcome="incluir" value="#{msg['menu.incluir']}" rendered="#{loginBean.checkAdministrador}"/>
 								

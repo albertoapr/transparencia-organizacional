@@ -43,8 +43,8 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
 		/* Cria um Usuário Administrador Padrão */
 		Usuario administrador = new Usuario();
 		administrador.setAtivo(true);
-		administrador.setEmail("administrador@uniriotec.br");
-		administrador.setNome("Administrador");
+		administrador.setEmail("transparencia.contato@gmail.com");
+		administrador.setNome("Transparencia");
 		administrador.setId((long) 0);
 		administrador.setTipo(TipoUsuario.ADMINISTRADOR);
 		administrador.setSenha("123456");
@@ -60,7 +60,10 @@ public class UsuarioDAOObjectify implements Serializable, UsuarioDAO {
 		List<Usuario> usuarios =ofy().load().type(Usuario.class).list();
 		for(Usuario usuario:usuarios){
 			if (usuario.getTipo()==TipoUsuario.ADMINISTRADOR)
+			{
 				existeAdministrador =true;
+				break;
+			}
 		}
 		/*cria um usuário administrador padrão para operar o sistema, se ainda não houver*/
 	   if (!existeAdministrador){

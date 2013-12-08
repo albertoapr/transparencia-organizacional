@@ -4,6 +4,7 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,16 +20,14 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
 import br.unirio.transparencia.model.Avaliacao;
 import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
-
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import br.unirio.transparencia.util.ControladorEstados;
+import br.unirio.transparencia.util.TotalizadorAvaliacaoPorEstado;
+import br.unirio.transparencia.util.TotalizadorAvaliacaoPorNivel;
 
 
 /**
@@ -76,6 +75,8 @@ public class AvaliacaoBean implements Serializable {
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
 	private Map<Long, Avaliacao> avaliacoes;
+	private Map<String,TotalizadorAvaliacaoPorEstado> totalizacoesPorEstado;
+	private Map <String, TotalizadorAvaliacaoPorNivel> totalizacoesPorNivel;
 	private Map<Long,Organizacao> organizacoesAvaliadas;
 	
 	
@@ -95,7 +96,8 @@ public class AvaliacaoBean implements Serializable {
 		dao = new AvaliacaoDAOObjectify();
 		
 		fillAvaliacoes();
-		
+		fillTotalizacoesPorEstado();
+		fillTotalizacoesPorNivel();
 		
 		
 	}
@@ -104,32 +106,14 @@ public class AvaliacaoBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
 	     avaliacao.setDeclaracao((String)session.getAttribute("documento"));
-    //    BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/declaracao/"+declaracao.getFileName());
-    
-    //	avaliacao.setFileDeclaracao(declaracao.getContents());
-   //     if (blobKey == null) {
-  //          avaliacao.setDeclaracao("/");
-  //      } else {
-  //      	avaliacao.setDeclaracao("/serve?blob-key=" + blobKey.getKeyString());
-  //      }
 
-		
-	//	addMessage("Carregamento de arquivo","carregando arquivo"); 
 		}
 
 	public void uploadResultado() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-	     avaliacao.setResultado((String)session.getAttribute("documento"));
-		//BlobKey blobKey =BlobstoreServiceFactory.getBlobstoreService().createGsBlobKey("/gs/resultado/"+resultado.getFileName());
-	//	 avaliacao.setFileResultado(resultado.getContents());
-    //    if (blobKey == null) {
-    //        avaliacao.setResultado("/");
-     //   } else {
-    //    	avaliacao.setResultado("/serve?blob-key=" + blobKey.getKeyString());
-   //     }
-	
-	//	addMessage("Carregamento de arquivo","carregando"); 
+	    avaliacao.setResultado((String)session.getAttribute("documento"));
+ 
 		}
 	
 	public Avaliacao getAvaliacao() {
@@ -153,6 +137,56 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	public DataModel<Avaliacao> getDmAvaliacoes() {
 		return new ListDataModel<Avaliacao>(new ArrayList<Avaliacao>(avaliacoes.values()));
+	}
+	
+	public DataModel<TotalizadorAvaliacaoPorEstado> getDmTotalizacoesPorEstado() {
+		List<TotalizadorAvaliacaoPorEstado> lista =new ArrayList<TotalizadorAvaliacaoPorEstado>();
+		for (TotalizadorAvaliacaoPorEstado totalizador:totalizacoesPorEstado.values()){
+			if (totalizador.getTotal()>0){
+				
+				lista.add(totalizador);
+			}
+		}
+		Collections.sort(lista);
+		return new ListDataModel<TotalizadorAvaliacaoPorEstado>(lista);
+	}
+	
+	public DataModel<TotalizadorAvaliacaoPorNivel> getDmTotalizacoesPorNivel() {
+		
+		return new ListDataModel<TotalizadorAvaliacaoPorNivel>(new ArrayList<TotalizadorAvaliacaoPorNivel>(totalizacoesPorNivel.values()));
+	}
+	
+	
+	private void fillTotalizacoesPorEstado() {
+		try {
+			List<TotalizadorAvaliacaoPorEstado> qryTotalizacoesPorEstado = new ArrayList<TotalizadorAvaliacaoPorEstado>(dao.getTotalPorEstado());
+			totalizacoesPorEstado = new HashMap<String, TotalizadorAvaliacaoPorEstado>();
+			for (TotalizadorAvaliacaoPorEstado t: qryTotalizacoesPorEstado) {
+				totalizacoesPorEstado.put(t.getEstado(), t);
+			}
+			
+			log.debug("Carregou a lista de totalizações por estado ("+totalizacoesPorEstado.size()+")");
+		} catch(Exception ex) {
+			log.error("Erro ao carregar a lista de totalizacoes.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.totalizacao_por_estado"), ex.getMessage());
+		}
+		
+	}
+	
+	private void fillTotalizacoesPorNivel() {
+		try {
+			List<TotalizadorAvaliacaoPorNivel> qryTotalizacoesPorNivel = new ArrayList<TotalizadorAvaliacaoPorNivel>(dao.getTotalPorNivel());
+			totalizacoesPorNivel = new HashMap<String, TotalizadorAvaliacaoPorNivel>();
+			for (TotalizadorAvaliacaoPorNivel t: qryTotalizacoesPorNivel) {
+				totalizacoesPorNivel.put(t.getNivel().toString(), t);
+			}
+			
+			log.debug("Carregou a lista de totalizações por nível ("+totalizacoesPorNivel.size()+")");
+		} catch(Exception ex) {
+			log.error("Erro ao carregar a lista de totalizacoes por nível.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.totalizacao_por_nivel"), ex.getMessage());
+		}
+		
 	}
 	
 	
@@ -227,6 +261,8 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	public void atualizar() {
 		fillAvaliacoes();
+		fillTotalizacoesPorEstado();
+		fillTotalizacoesPorNivel();
 	}
 	
 	/**
