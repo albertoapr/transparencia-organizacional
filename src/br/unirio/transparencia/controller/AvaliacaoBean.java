@@ -25,9 +25,7 @@ import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
 import br.unirio.transparencia.model.Avaliacao;
 import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
-import br.unirio.transparencia.util.ControladorEstados;
-import br.unirio.transparencia.util.TotalizadorAvaliacaoPorEstado;
-import br.unirio.transparencia.util.TotalizadorAvaliacaoPorNivel;
+import br.unirio.transparencia.util.TotalizadorAvaliacoes;
 
 
 /**
@@ -62,6 +60,9 @@ public class AvaliacaoBean implements Serializable {
 	private Avaliacao avaliacao;
 	
 	
+	private boolean somenteValidas;
+	
+	
 	/**
 	 * Informação é utilizada na edição da avaliacao, quando a seleção de um registro na listagem ocorrer.
 	 */
@@ -75,8 +76,8 @@ public class AvaliacaoBean implements Serializable {
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
 	private Map<Long, Avaliacao> avaliacoes;
-	private Map<String,TotalizadorAvaliacaoPorEstado> totalizacoesPorEstado;
-	private Map <String, TotalizadorAvaliacaoPorNivel> totalizacoesPorNivel;
+	private Map<String,TotalizadorAvaliacoes> totalizacoes;
+	
 	private Map<Long,Organizacao> organizacoesAvaliadas;
 	
 	
@@ -96,8 +97,8 @@ public class AvaliacaoBean implements Serializable {
 		dao = new AvaliacaoDAOObjectify();
 		
 		fillAvaliacoes();
-		fillTotalizacoesPorEstado();
-		fillTotalizacoesPorNivel();
+		fillTotalizacoesValidas();
+		
 		
 		
 	}
@@ -139,55 +140,38 @@ public class AvaliacaoBean implements Serializable {
 		return new ListDataModel<Avaliacao>(new ArrayList<Avaliacao>(avaliacoes.values()));
 	}
 	
-	public DataModel<TotalizadorAvaliacaoPorEstado> getDmTotalizacoesPorEstado() {
-		List<TotalizadorAvaliacaoPorEstado> lista =new ArrayList<TotalizadorAvaliacaoPorEstado>();
-		for (TotalizadorAvaliacaoPorEstado totalizador:totalizacoesPorEstado.values()){
+	public DataModel<TotalizadorAvaliacoes> getDmTotalizacoesValidas() {
+		List<TotalizadorAvaliacoes> lista =new ArrayList<TotalizadorAvaliacoes>();
+		for (TotalizadorAvaliacoes totalizador:totalizacoes.values()){
 			if (totalizador.getTotal()>0){
 				
 				lista.add(totalizador);
 			}
 		}
 		Collections.sort(lista);
-		return new ListDataModel<TotalizadorAvaliacaoPorEstado>(lista);
+		return new ListDataModel<TotalizadorAvaliacoes>(lista);
 	}
 	
-	public DataModel<TotalizadorAvaliacaoPorNivel> getDmTotalizacoesPorNivel() {
-		
-		return new ListDataModel<TotalizadorAvaliacaoPorNivel>(new ArrayList<TotalizadorAvaliacaoPorNivel>(totalizacoesPorNivel.values()));
-	}
+
 	
 	
-	private void fillTotalizacoesPorEstado() {
+	public void fillTotalizacoesValidas() {
 		try {
-			List<TotalizadorAvaliacaoPorEstado> qryTotalizacoesPorEstado = new ArrayList<TotalizadorAvaliacaoPorEstado>(dao.getTotalPorEstado());
-			totalizacoesPorEstado = new HashMap<String, TotalizadorAvaliacaoPorEstado>();
-			for (TotalizadorAvaliacaoPorEstado t: qryTotalizacoesPorEstado) {
-				totalizacoesPorEstado.put(t.getEstado(), t);
+			List<TotalizadorAvaliacoes> qryTotalizacoesValidas = new ArrayList<TotalizadorAvaliacoes>(dao.getTotalizacao(this.somenteValidas));
+			totalizacoes = new HashMap<String, TotalizadorAvaliacoes>();
+			for (TotalizadorAvaliacoes t: qryTotalizacoesValidas) {
+				totalizacoes.put(t.getEstado(), t);
 			}
 			
-			log.debug("Carregou a lista de totalizações por estado ("+totalizacoesPorEstado.size()+")");
+			log.debug("Carregou a lista de totalizações validas ("+totalizacoes.size()+")");
 		} catch(Exception ex) {
-			log.error("Erro ao carregar a lista de totalizacoes.", ex);
-			addMessage(getMessageFromI18N("msg.erro.listar.totalizacao_por_estado"), ex.getMessage());
+			log.error("Erro ao carregar a lista de totalizacoes validas.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.totalizacao.valida"), ex.getMessage());
 		}
 		
 	}
 	
-	private void fillTotalizacoesPorNivel() {
-		try {
-			List<TotalizadorAvaliacaoPorNivel> qryTotalizacoesPorNivel = new ArrayList<TotalizadorAvaliacaoPorNivel>(dao.getTotalPorNivel());
-			totalizacoesPorNivel = new HashMap<String, TotalizadorAvaliacaoPorNivel>();
-			for (TotalizadorAvaliacaoPorNivel t: qryTotalizacoesPorNivel) {
-				totalizacoesPorNivel.put(t.getNivel().toString(), t);
-			}
-			
-			log.debug("Carregou a lista de totalizações por nível ("+totalizacoesPorNivel.size()+")");
-		} catch(Exception ex) {
-			log.error("Erro ao carregar a lista de totalizacoes por nível.", ex);
-			addMessage(getMessageFromI18N("msg.erro.listar.totalizacao_por_nivel"), ex.getMessage());
-		}
-		
-	}
+
 	
 	
 	private void fillAvaliacoes() {
@@ -206,7 +190,11 @@ public class AvaliacaoBean implements Serializable {
 		
 	}
 	
-
+public String getTotalizacoes(){
+	this.atualizar();
+	return "totalizacoes" ;
+	
+}
 	
 	/**
 	 * Ação executada quando a página de inclusão de avaliacaos for carregada.
@@ -261,8 +249,8 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	public void atualizar() {
 		fillAvaliacoes();
-		fillTotalizacoesPorEstado();
-		fillTotalizacoesPorNivel();
+		fillTotalizacoesValidas();
+		
 	}
 	
 	/**
@@ -306,6 +294,12 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	private void addMessage(String summary, String detail) {
 		getCurrentInstance().addMessage(null, new FacesMessage(summary, summary.concat("<br/>").concat(detail)));
+	}
+	public Boolean getSomenteValidas() {
+		return somenteValidas;
+	}
+	public void setSomenteValidas(Boolean somenteValidas) {
+		this.somenteValidas = somenteValidas;
 	}
 
 }

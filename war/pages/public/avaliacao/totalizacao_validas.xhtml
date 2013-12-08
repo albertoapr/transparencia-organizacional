@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      
+      >
+
+    <ui:composition template="../../layout/template.xhtml">
+      <ui:param name="aba" value="avaliacoes" />
+    
+    	    
+    
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.avaliacao']}" /></ui:define>
+    	
+    	<f:metadata>
+    	    <f:viewParam name="somenteValidas" value="#{avaliacaoBean.somenteValidas}" />
+            <f:event type="preRenderView" listener="#{avaliacaoBean.fillTotalizacoesValidas}" />
+        </f:metadata>
+        
+        <ui:define name="sidebar">
+    	   <ui:include src="menu.xhtml" >
+    	         <ui:param name="comando" value="totalValidas" />  
+    	      
+    	   </ui:include>     
+    	</ui:define>
+    	
+		<ui:define name="content">
+		
+		
+		<div style="border-bottom: 1px solid #E5E5E5;">
+					<h3>	<small> <h:outputText value="#{msg['lista.avaliacao.informacao']}" /></small></h3>
+		 </div>
+			
+			
+		<h:messages />
+		<h:outputText value="Total de Avaliações válidas" rendered ="#{avaliacaoBean.somenteValidas}"/>
+		<h:outputText value="Total de Avaliações " rendered ="#{!avaliacaoBean.somenteValidas}"/>	
+			<h:form >
+				<h:dataTable value="#{avaliacaoBean.dmTotalizacoesValidas}" var="totalizador" styleClass="table table-hover">
+			
+	                <h:column >
+						<f:facet name="header" >
+						<h:outputText value="#{msg['label.organizacao.estado']}" /></f:facet>
+						<h:outputText value="#{totalizador.estado}" />
+	                </h:column>
+	                
+	                <h:column >
+						<f:facet name="header" >
+						<h:outputText value="Opaca" /></f:facet>
+				 		<h:outputText  value="#{totalizador.totalOpaca}" />
+                   </h:column>
+                   
+                   <h:column >
+						<f:facet name="header" >
+						<h:outputText value="Divulgada" /></f:facet>
+				 		<h:outputText  value="#{totalizador.totalDivulgada}" />
+                   </h:column>
+                   
+                  <h:column >
+						<f:facet name="header" >
+						<h:outputText value="Compreendida" /></f:facet>
+				 		<h:outputText  value="#{totalizador.totalCompreendida}" />
+                   </h:column>
+                   
+                   <h:column >
+						<f:facet name="header" >
+						<h:outputText value="Confiavel" /></f:facet>
+				 		<h:outputText  value="#{totalizador.totalConfiavel}" />
+                   </h:column>
+                   <h:column >
+						<f:facet name="header" >
+						<h:outputText value="Participativa" /></f:facet>
+				 		<h:outputText  value="#{totalizador.totalParticipativa}" />
+                   </h:column>
+                   
+                
+                                    
+	                <h:column >
+						<f:facet name="header" >
+						<h:outputText value="#{msg['label.avaliacao.total']}" /></f:facet>
+				 		<h:outputText  value="#{totalizador.total}" />
+                   </h:column>
+	                
+	              
+				</h:dataTable>
+				
+			
+			</h:form>
+			
+		</ui:define>
+    </ui:composition>
+</html>

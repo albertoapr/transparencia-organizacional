@@ -8,15 +8,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
 
 import br.unirio.transparencia.model.Avaliacao;
-import br.unirio.transparencia.util.TotalizadorAvaliacaoPorEstado;
-import br.unirio.transparencia.util.TotalizadorAvaliacaoPorNivel;
 import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
 import br.unirio.transparencia.model.Profissional;
 import br.unirio.transparencia.util.ControladorEstados;
+import br.unirio.transparencia.util.TotalizadorAvaliacaoPorNivel;
+import br.unirio.transparencia.util.TotalizadorAvaliacoes;
 
 import com.googlecode.objectify.Key;
 
@@ -78,31 +77,64 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 	/**
 	 * Neste método é feita uma busca em todas as avaliações realizadas e é feita uma lista de totalizações por estado
 	 */
-	public List<TotalizadorAvaliacaoPorEstado> getTotalPorEstado() {
+	public List<TotalizadorAvaliacoes> getTotalizacao(boolean somenteValidas) {
 		Date hoje = new Date();
-		List<TotalizadorAvaliacaoPorEstado> listaTotalizacoes =null;
-		Map<String,TotalizadorAvaliacaoPorEstado> totalizacoes = new HashMap<String, TotalizadorAvaliacaoPorEstado>();
+		List<TotalizadorAvaliacoes> listaTotalizacoes =null;
+		Map<String,TotalizadorAvaliacoes> totalizacoes = new HashMap<String, TotalizadorAvaliacoes>();
 		
 		List<Avaliacao> avaliacoes = ofy().load().type(Avaliacao.class).list();
-		/*Inicializa os totalizadores de estado*/
-		for (String estado: ControladorEstados.getSiglas())
-		{
+		
+		/*Inicializa os totais por estados brasileiros*/
+		for (String estado: ControladorEstados.getSiglas())		{
 		 if (totalizacoes.get(estado) == null)
-			  totalizacoes.put(estado, new TotalizadorAvaliacaoPorEstado(estado,0));
+			  totalizacoes.put(estado, new TotalizadorAvaliacoes(estado));
 		}
+		//inicializamos o Totalizador Geral 
+		String estado = "Todos";
+		if (totalizacoes.get(estado) == null)
+		  totalizacoes.put(estado, new TotalizadorAvaliacoes(estado));
 		
 		for(Avaliacao avaliacao : avaliacoes)
 		{
-		 if (avaliacao.getDataValidade().after(hoje)) //se a avaliação é válida é contabilizada
+		 if (avaliacao.getDataValidade().after(hoje) || !somenteValidas) //se a avaliação é válida é contabilizada
 		 {
-		   TotalizadorAvaliacaoPorEstado totalizador= totalizacoes.get(avaliacao.getOrganizacao().getEstado());
+		   TotalizadorAvaliacoes totalizador= totalizacoes.get(avaliacao.getOrganizacao().getEstado());
+		   TotalizadorAvaliacoes totalizadorGeral= totalizacoes.get("Todos");
+		   
 		   totalizador.setTotal(totalizador.getTotal()+1);
+		   totalizadorGeral.setTotal(totalizadorGeral.getTotal()+1);
+		   
+		   switch(avaliacao.getNivelTransparencia()){
+		   case OPACA:
+			   totalizador.setTotalOpaca(totalizador.getTotalOpaca()+1);
+			   totalizadorGeral.setTotalOpaca(totalizadorGeral.getTotalOpaca()+1);
+               break;
+		   case DIVULGADA:
+			   totalizador.setTotalDivulgada(totalizador.getTotalDivulgada()+1);
+			   totalizadorGeral.setTotalDivulgada(totalizadorGeral.getTotalDivulgada()+1);
+			   break;
+		   case COMPREENDIDA:
+			   totalizador.setTotalCompreendida(totalizador.getTotalCompreendida()+1);
+			   totalizadorGeral.setTotalCompreendida(totalizadorGeral.getTotalCompreendida()+1);
+			   break;
+		   case CONFIAVEL:
+			   totalizador.setTotalConfiavel(totalizador.getTotalConfiavel()+1);
+			   totalizadorGeral.setTotalConfiavel(totalizadorGeral.getTotalConfiavel()+1);
+			   break;
+		   case PARTICIPATIVA:
+			   totalizador.setTotalParticipativa(totalizador.getTotalParticipativa()+1);
+			   totalizadorGeral.setTotalParticipativa(totalizadorGeral.getTotalParticipativa()+1);
+			   break;	   
+           default:
+        	   
+		   }
 		   totalizacoes.put(avaliacao.getOrganizacao().getEstado(), totalizador);
+		   totalizacoes.put("Todos",totalizadorGeral);
 		 }
 			
 		}
 		
-		listaTotalizacoes =  new ArrayList<TotalizadorAvaliacaoPorEstado>(totalizacoes.values());
+		listaTotalizacoes =  new ArrayList<TotalizadorAvaliacoes>(totalizacoes.values());
 		
 		return listaTotalizacoes;
 		  

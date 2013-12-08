@@ -25,6 +25,12 @@
 	<!-- Define a navegacao global para a pagina com a lista de organizacoes. -->
 	<navigation-rule>
 	    <navigation-case>
+			 <from-outcome>totalizacoes</from-outcome>
+              <to-view-id>/pages/public/avaliacao/total_valido.xhtml</to-view-id>
+        </navigation-case>
+        
+	    
+	    <navigation-case>
 			 <from-outcome>login</from-outcome>
               <to-view-id>/pages/public/acesso.xhtml</to-view-id>
         </navigation-case>

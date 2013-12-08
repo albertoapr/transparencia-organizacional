@@ -2,7 +2,7 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core" >
-    
+
 	<ul class="nav nav-list" style="padding-top: 5px;padding-left: 5px;padding-right: 5px;padding-bottom: 5px;" >
 		<li class="nav-header"><h:outputText value="#{msg['label.avaliacoes']}" /></li>
 		<li class="divider"></li>
@@ -14,33 +14,31 @@
 		
 		</li>
 		
+		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
+			 <h:link outcome="incluir" value="#{msg['menu.incluir']}" rendered="#{loginBean.checkAdministrador}"/>
+	  
+        </li>
+
 	
 		
 		
-		<li class="nav-header"><h:outputText value="#{msg['menu.lista.nivel.total.avaliado']}" /></li>
-		
-		<li class="#{comando == 'totalAvaliadoPorEstado' ? 'active' : ''}">
-			<h:link outcome="total_avaliado_por_estado.jsf" value="#{msg['menu.lista.avaliacao.uf']}"/>
-		</li>
-		<li class="#{comando == 'totalAvaliadoPorNivel' ? 'active' : ''}">
-			<h:link outcome="total_avaliado_por_nivel.jsf" value="#{msg['menu.lista.avaliacao.nivel']}"/>
+		<li  class="#{comando == 'totalAvalidas' ? 'active' : ''}">
+		  <h:link outcome="totalizacao" value="#{msg['menu.lista.nivel.total.avaliado']}">
+		    <f:param name="somenteValidas" value="false" />
+		   </h:link> 
 		</li>
 		
-		<li class="nav-header"><h:outputText value="#{msg['menu.lista.nivel.total.valido']}" /></li>
+		<li  class="#{comando == 'totalValidas' ? 'active' : ''}">
+		<h:link outcome="totalizacao_validas" value="#{msg['menu.lista.nivel.total.valido']}">
+		<f:param name="somenteValidas" value="true" />
+		   
+		</h:link>
+		 
+		</li>
 		
-			<li class="#{comando == 'totalValidoPorEstado' ? 'active' : ''}">
-			<h:link outcome="total_valido_por_estado.jsf" value="#{msg['menu.lista.avaliacao.uf']}"/>
-		</li>
-		<li class="#{comando == 'totalValidoPorNivel' ? 'active' : ''}">
-			<h:link outcome="total_valido_por_nivel.jsf" value="#{msg['menu.lista.avaliacao.nivel']}"/>
-		</li>
-			
-		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
-			 <h:link outcome="incluir" value="#{msg['menu.incluir']}" rendered="#{loginBean.checkAdministrador}"/>
-								
-        
-      
-        </li>
+	
+
+		
        
 		
 	</ul>
