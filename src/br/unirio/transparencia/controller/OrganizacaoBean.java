@@ -19,7 +19,9 @@ import org.apache.log4j.Logger;
 
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
+import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
+import br.unirio.transparencia.util.ControladorEstados;
 
 /**
  * Componente atua como um intermediário das telas do cadastro e os componentes de negócio (<code>DAO</code>) da entidade <code>organizacao</code>.
@@ -68,6 +70,11 @@ public class OrganizacaoBean implements Serializable {
 	public OrganizacaoBean() {
 		dao = new OrganizacaoDAOObjectify();
 		fillOrganizacoes();
+	}
+	
+	public String[] getEstados(){
+		return ControladorEstados.getSiglas();
+		
 	}
 	
 	

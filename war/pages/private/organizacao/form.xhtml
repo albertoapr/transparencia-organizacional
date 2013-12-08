@@ -27,11 +27,25 @@
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.estado']}" /></label>
 	    		<div class="controls">
+	    		<h:selectOneMenu  id="cbEstado" value="#{organizacaoBean.organizacao.estado}"  label="#{msg['label.organizacao.estado']}" required="true" styleClass="input-small"  >
+					<f:selectItems value="#{organizacaoBean.estados}" var="estado" />
+				</h:selectOneMenu>
+	    		
+	    		
+	    		<!--  
 	    			<h:inputText value="#{organizacaoBean.organizacao.estado}" label="#{msg['label.organizacao.estado']}" required="true" styleClass="input-small">
 	    				<f:validateLength minimum="2" maximum="2" />
 	    			</h:inputText>
+	    			-->
 	    		</div>
 	    	</div>
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
 	    	
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.patrocinador']}" /></label>
