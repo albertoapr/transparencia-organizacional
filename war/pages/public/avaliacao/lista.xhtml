@@ -14,6 +14,7 @@
     	
     	<f:metadata>
             <f:event type="preRenderView" listener="#{avaliacaoBean.reset}" />
+            <f:event type="preRenderView" listener="#{avaliacaoBean.fillAvaliacoes}" />
         </f:metadata>
         
         <ui:define name="sidebar">
@@ -88,9 +89,7 @@
 	                
 				</h:dataTable>
 				
-				<h:panelGrid columns="1">
-					<h:commandButton action="#{avaliacaoBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
-				</h:panelGrid>
+				
 			</h:form>
 			
 		</ui:define>

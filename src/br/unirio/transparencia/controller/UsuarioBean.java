@@ -130,7 +130,7 @@ public class UsuarioBean implements Serializable {
 	
 
 	
-	private void fillUsuarios() {
+	public void fillUsuarios() {
 		
 		try {
 			

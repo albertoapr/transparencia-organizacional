@@ -101,7 +101,7 @@ public class OrganizacaoBean implements Serializable {
 		return new ListDataModel<Organizacao>(new ArrayList<Organizacao>(organizacoes.values()));
 	}
 	
-	private void fillOrganizacoes() {
+	public void fillOrganizacoes() {
 		try {
 			List<Organizacao> qryOrganizacoes = new ArrayList<Organizacao>(dao.getAll());
 			organizacoes = new HashMap<Long, Organizacao>();

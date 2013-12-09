@@ -174,7 +174,7 @@ public class AvaliacaoBean implements Serializable {
 
 	
 	
-	private void fillAvaliacoes() {
+	public void fillAvaliacoes() {
 		try {
 			List<Avaliacao> qryAvaliacoes = new ArrayList<Avaliacao>(dao.getAll());
 			avaliacoes = new HashMap<Long, Avaliacao>();

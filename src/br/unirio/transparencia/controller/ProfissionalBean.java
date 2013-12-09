@@ -107,7 +107,7 @@ private static Logger log = Logger.getLogger(ProfissionalBean.class);
 		return new ListDataModel<Profissional>(new ArrayList<Profissional>(profissionais.values()));
 	}
 
-	private void fillProfissionais() {
+	public void fillProfissionais() {
 		
 		try {
 			

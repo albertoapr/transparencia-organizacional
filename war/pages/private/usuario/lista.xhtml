@@ -13,6 +13,7 @@
 	<f:metadata>
 	        <f:event type="preRenderView" listener="#{usuarioBean.checkList}" /> 
             <f:event type="preRenderView" listener="#{usuarioBean.reset}" />
+            <f:event type="preRenderView" listener="#{usuarioBean.fillUsuarios}" />
         </f:metadata>
         
         <ui:define name="sidebar">
@@ -60,10 +61,8 @@
 						</h:outputText>
 	                </h:column>
 				</h:dataTable>
+			
 				
-				<h:panelGrid columns="1">
-					<h:commandButton action="#{usuarioBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
-				</h:panelGrid>
 			</h:form>
 			
 		</ui:define>

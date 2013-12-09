@@ -14,6 +14,7 @@
     	
     	<f:metadata>
             <f:event type="preRenderView" listener="#{profissionalBean.reset}" />
+            <f:event type="preRenderView" listener="#{profissionalBean.fillProfissionais}" />
         </f:metadata>
         
         <ui:define name="sidebar">
@@ -35,14 +36,7 @@
     </h:panelGroup>
 			<h:form >
 				<h:dataTable value="#{profissionalBean.dmProfissionais}" var="profissional" styleClass="table table-hover">
-				<!--  
-				<h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.id']}" /></f:facet>
-						<h:link outcome="editar" value="#{profissional.id}" >
-                		
-            			</h:link>
-	           </h:column>
-	           -->
+			
 	           <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.profissional.nome']}" /></f:facet>
 						<h:link outcome="editar" value="#{profissional.nome}" title="#{msg['label.editar']} #{profissional.nome}">
@@ -71,9 +65,7 @@
 	               
 				</h:dataTable>
 				
-				<h:panelGrid columns="1">
-					<h:commandButton action="#{profissionalBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
-				</h:panelGrid>
+				
 			</h:form>
 			
 		</ui:define>

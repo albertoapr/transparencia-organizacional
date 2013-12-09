@@ -13,6 +13,7 @@
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.lista.mercadoria']}" /></ui:define>
     	
     	<f:metadata>
+    	    <f:event type="preRenderView" listener="#{organizacaoBean.fillOrganizacoes}" />
             <f:event type="preRenderView" listener="#{organizacaoBean.reset}" />
         </f:metadata>
         
@@ -30,12 +31,7 @@
 			
 			<h:form rendered="#{loginBean.checkAdministrador}">
 				<h:dataTable value="#{organizacaoBean.dmOrganizacoes}" var="organizacao" styleClass="table table-hover">
-					<!--  
-					<h:column>
-						<f:facet name="header">#</f:facet>
-						<h:outputText value="#{organizacao.id}" />
-	                </h:column>
-	                -->
+				
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.nome']}" /></f:facet>
 						<h:link outcome="editar" value="#{organizacao.nome}" title="#{msg['label.editar']} #{organizacao.nome}">
@@ -54,17 +50,10 @@
 						<h:outputText value="#{organizacao.estado}" />
 	                </h:column>
 	                
-	                <h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.organizacao.patrocinador']}" /></f:facet>
-						<h:outputText value="#{organizacao.patrocinador}">
-							
-						</h:outputText>
-	                </h:column>
+	             
 				</h:dataTable>
 				
-				<h:panelGrid columns="1">
-					<h:commandButton action="#{organizacaoBean.atualizar}" value="#{msg['button.atualizar']}" styleClass="btn btn-success" />
-				</h:panelGrid>
+				
 			</h:form>
 			
 		</ui:define>
