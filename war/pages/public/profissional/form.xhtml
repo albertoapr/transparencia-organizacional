@@ -13,7 +13,7 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.profissional.nome']}" /></label>
 	    		<div class="controls">
 	    			<h:inputText value="#{profissionalBean.profissional.nome}" label="#{msg['label.profissional.nome']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="60" />
+	    				<f:validateLength minimum="1" maximum="60" />
 	    			</h:inputText>
 	    		</div>
     		</div>
@@ -22,7 +22,7 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.profissional.titulacao']}" /></label>
 	    		<div class="controls">
 	    			<h:inputText value="#{profissionalBean.profissional.titulacao}" label="#{msg['label.profissional.titulacao']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="2" maximum="30" />
+	    				<f:validateLength minimum="1" maximum="30" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>
@@ -31,7 +31,7 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.profissional.instituicao']}" /></label>
 	    		<div class="controls">
 	    			<h:inputText value="#{profissionalBean.profissional.instituicao}" label="#{msg['label.profissional.instituicao']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="30" />
+	    				<f:validateLength minimum="1" maximum="30" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>
@@ -40,7 +40,8 @@
 	    		<label class="control-label"><h:outputText value="#{msg['label.profissional.email']}" /></label>
 	    		<div class="controls">
 	    			<h:inputText value="#{profissionalBean.profissional.email}" label="#{msg['label.profissional.email']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="50" />
+	    				<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
+	    				<f:validateLength minimum="1" maximum="50" />
 	    			</h:inputText>
 	    		</div>
 	    	</div>

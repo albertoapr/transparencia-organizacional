@@ -17,7 +17,7 @@
 	    		
 	    			
 	    			<h:inputText  value="#{usuarioBean.usuario.nome}" size="30" maxlength="30" label="#{msg['label.usuario.nome']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="30" />
+	    				<f:validateLength minimum="2" maximum="30" />
 	    			</h:inputText>
 	    			
 	    		</div>
@@ -29,7 +29,7 @@
 	    			<h:inputText id="email" value="#{usuarioBean.usuario.email}" size="50" maxlength="50" 
 					validatorMessage="e-Mail inválido" label="#{msg['label.usuario.email']}" required="true" styleClass="input-large">
 						<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>
-						<f:validateLength minimum="5" maximum="100" />
+						<f:validateLength minimum="2" maximum="100" />
 					</h:inputText> 
 	    		</div>
 	    	</div>

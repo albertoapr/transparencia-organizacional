@@ -26,24 +26,20 @@
 		<ui:define name="content">
 		
 		
-		<div style="border-bottom: 1px solid #E5E5E5;">
-					<h3>	<small> <h:outputText value="#{msg['lista.avaliacao.informacao']}" /></small></h3>
-		 </div>
-			
+		
 			
 		<h:messages />	
 			<h:form >
 				<h:dataTable value="#{avaliacaoBean.dmAvaliacoes}" var="avaliacao" styleClass="table table-hover">
-				<!--  
-					<h:column>
-						<f:facet name="header"><h:outputText value="#{msg['label.id']}" /></f:facet>
-						<h:outputText outcome="editar" value="#{avaliacao.id}" />
-                		
-	                </h:column>
-				-->
+			 <f:facet name="header" align="center">  
+                    <h4 align="center">	<small> <h:outputText align="center" value="#{msg['lista.avaliacao.informacao']}" /></small></h4>
+                     </f:facet> 
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.organizacao']}" /></f:facet>
-						<h:outputText value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}"/>
+						<h:link outcome="editar" value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}" >
+						    <f:param name="id" value="#{avaliacao.id}" />
+						</h:link>
+						
                 	
 	                </h:column>
 	                
@@ -70,9 +66,7 @@
 	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></f:facet>
-						<h:link outcome="editar" value="#{avaliacao.escopo}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}" >
-						    <f:param name="id" value="#{avaliacao.id}" />
-						</h:link>
+						<h:outputText value="#{avaliacao.escopo}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}"/>
 					</h:column>
 					
 					<h:column>

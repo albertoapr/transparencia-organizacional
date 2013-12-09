@@ -26,18 +26,19 @@
     	
 		<ui:define name="content">
 		
-		
+		<!-- 
 		<div style="border-bottom: 1px solid #E5E5E5;">
 					<h3>	<small> <h:outputText value="#{msg['lista.avaliacao.informacao']}" /></small></h3>
 		 </div>
-			
+			 -->
 			
 		<h:messages />
-		<h:outputText value="Total de Avaliações válidas" rendered ="#{avaliacaoBean.somenteValidas}"/>
-		<h:outputText value="Total de Avaliações " rendered ="#{!avaliacaoBean.somenteValidas}"/>	
 			<h:form >
 				<h:dataTable value="#{avaliacaoBean.dmTotalizacoesValidas}" var="totalizador" styleClass="table table-hover">
-			
+			          <f:facet name="header" align="center"> 
+			          <h4 align="center">	<small> <h:outputText align="center" value="Total de Avaliações Válidas por Estado e Nível de Transpência" rendered ="#{avaliacaoBean.somenteValidas}"/></small></h4> 
+                      <h4 align="center">	<small>   <h:outputText align="center" value="Total de Organizações Avaliadas por Estado e Nível de Transpência" rendered ="#{!avaliacaoBean.somenteValidas}"/>	</small></h4>
+		              </f:facet> 
 	                <h:column >
 						<f:facet name="header" >
 						<h:outputText value="#{msg['label.organizacao.estado']}" /></f:facet>
