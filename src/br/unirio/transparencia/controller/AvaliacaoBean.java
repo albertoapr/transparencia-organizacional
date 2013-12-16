@@ -228,8 +228,10 @@ public String getTotalizacoes(){
             HttpSession session =(HttpSession) fc.getExternalContext().getSession(false);
             String fileSelo= (String)session.getAttribute("selo");
             String fileResultado= (String)session.getAttribute("resultado");
-            avaliacao.setDeclaracao(fileSelo);
-            avaliacao.setResultado(fileResultado);
+            if (session.getAttribute("selo")!=null)
+              avaliacao.setDeclaracao(fileSelo);
+            if (session.getAttribute("resultado")!=null)
+              avaliacao.setResultado(fileResultado);
             session.setAttribute("selo", null);
             session.setAttribute("resultado", null); 
 			dao.save(avaliacao);

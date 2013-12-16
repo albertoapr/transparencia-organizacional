@@ -2,7 +2,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      
+      xmlns:p="http://primefaces.org/ui"
       >
 
     <ui:composition template="../../layout/template.xhtml">
@@ -26,14 +26,11 @@
     	
 		<ui:define name="content">
 		
-		<!-- 
-		<div style="border-bottom: 1px solid #E5E5E5;">
-					<h3>	<small> <h:outputText value="#{msg['lista.avaliacao.informacao']}" /></small></h3>
-		 </div>
-			 -->
+	
 			
 		<h:messages />
 			<h:form >
+			
 				<h:dataTable value="#{avaliacaoBean.dmTotalizacoesValidas}" var="totalizador" styleClass="table table-hover">
 			          <f:facet name="header" align="center"> 
 			          <h4 align="center">	<small> <h:outputText align="center" value="Total de Avaliações Válidas por Estado e Nível de Transpência" rendered ="#{avaliacaoBean.somenteValidas}"/></small></h4> 
@@ -84,7 +81,7 @@
 	                
 	              
 				</h:dataTable>
-				
+	
 			
 				 
 			</h:form>

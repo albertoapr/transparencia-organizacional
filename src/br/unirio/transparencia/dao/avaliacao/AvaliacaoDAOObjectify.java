@@ -60,15 +60,16 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 		Date hoje = new Date();
 		List<TotalizadorAvaliacaoPorNivel> listaTotalPorNivel = new ArrayList<TotalizadorAvaliacaoPorNivel>();
 		List<Avaliacao> avaliacoes = ofy().load().type(Avaliacao.class).list();
-		for (NivelTransparencia nivel:NivelTransparencia.values())
-		{
-		  TotalizadorAvaliacaoPorNivel totalizador= new TotalizadorAvaliacaoPorNivel(nivel,0);
-		  for (Avaliacao avaliacao: avaliacoes){
-		    if (avaliacao.getNivelTransparencia()==nivel && avaliacao.getDataValidade().after(hoje)) {
-			 	totalizador.setTotal(totalizador.getTotal()+1);	
+		for (Avaliacao avaliacao: avaliacoes){
+		  for (NivelTransparencia nivel:NivelTransparencia.values()){
+			  TotalizadorAvaliacaoPorNivel totalizador= new TotalizadorAvaliacaoPorNivel(nivel,0);
+		     if (avaliacao.getNivelTransparencia()==nivel && avaliacao.getDataValidade().after(hoje)) {
+			 	totalizador.setTotal(totalizador.getTotal()+1);
+			 	break;
 			}
+		    listaTotalPorNivel.add(totalizador);
 			}
-		  listaTotalPorNivel.add(totalizador);
+		  
 		}
 		return listaTotalPorNivel;
 	}
