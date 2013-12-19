@@ -222,6 +222,7 @@ public String getTotalizacoes(){
 	 */
 	
 
+	@SuppressWarnings("finally")
 	public String salvar() {
 		try {
            FacesContext fc = FacesContext.getCurrentInstance();
@@ -236,14 +237,16 @@ public String getTotalizacoes(){
             session.setAttribute("resultado", null); 
 			dao.save(avaliacao);
 			avaliacoes.put(avaliacao.getId(), avaliacao);
+			log.debug("Salvou avaliacao "+avaliacao.getId());
+			addMessage("Avaliação registrada com sucesso !", "");
 		} catch(Exception ex) {
 			log.error("Erro ao salvar avaliacao.", ex);
 			addMessage(getMessageFromI18N("msg.erro.salvar.avaliacao"), ex.getMessage());
 			return "";
-		}
-		log.debug("Salvou avaliacao "+avaliacao.getId());
-		return "listaAvaliacoes";
+		}finally{
 	
+		return "listaAvaliacoes";
+		}
 	}
 	
 	/**
@@ -271,12 +274,15 @@ public String getTotalizacoes(){
 		try {
 			dao.remove(avaliacao);
 			avaliacoes.remove(avaliacao.getId());
+			addMessage("Avaliação excluída com sucesso !", "");
+			log.debug("Removeu avaliacao "+avaliacao.getId());
 		} catch(Exception ex) {
 			log.error("Erro ao remover avaliacao.", ex);
 			addMessage(getMessageFromI18N("msg.erro.remover.avaliacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu avaliacao "+avaliacao.getId());
+		
+		
 		return "listaAvaliacoes";
 	}
 	

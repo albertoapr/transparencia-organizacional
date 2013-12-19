@@ -154,6 +154,7 @@ public class OrganizacaoBean implements Serializable {
 		try {
 			dao.save(organizacao);
 			organizacoes.put(organizacao.getId(), organizacao);
+			addMessage("Organização salva com sucesso !", "");
 		} catch(Exception ex) {
 			log.error("Erro ao salvar organizacao.", ex);
 			addMessage(getMessageFromI18N("msg.erro.salvar.organizacao"), ex.getMessage());
@@ -187,12 +188,14 @@ public class OrganizacaoBean implements Serializable {
 		try {
 			dao.remove(organizacao);
 			organizacoes.remove(organizacao.getId());
+			addMessage("Organização excluída com sucesso !", "");
+			log.debug("Removeu organizacao "+organizacao.getId());
 		} catch(Exception ex) {
 			log.error("Erro ao remover organizacao.", ex);
 			addMessage(getMessageFromI18N("msg.erro.remover.organizacao"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu organizacao "+organizacao.getId());
+		
 		return "listaOrganizacoes";
 	}
 	

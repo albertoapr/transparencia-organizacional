@@ -2,7 +2,6 @@ package br.unirio.transparencia.controller;
 
 import static javax.faces.context.FacesContext.getCurrentInstance;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -184,7 +183,7 @@ public class LoginBean extends BaseBean implements Serializable {
 		{
 		  this.addErrorMessage("Login ou senha inválidos");
 		  log.debug("Login ou senha inválidos");
-		  addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "Login ou senha inválidos");
+		  addMessage(getMessageFromI18N("msg.erro.login.usuario"), "Login ou senha inválidos");
 		  return null;
 		}
 	   usuarioLogado = dao.findByEmail(user);
@@ -192,14 +191,14 @@ public class LoginBean extends BaseBean implements Serializable {
 		if (usuarioLogado == null)
 		{
 			  this.addErrorMessage("Login ou senha inválidos");
-			  addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "Login ou senha inválidos");
+			  addMessage(getMessageFromI18N("msg.erro.login.usuario"), "Login ou senha inválidos");
 			  return null;
 			}
 
 		if (!usuarioLogado.isActive())
 		{
 			  this.addErrorMessage("Usuário desabilitado !");
-			  addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "Usuário desabilitado");
+			  addMessage(getMessageFromI18N("msg.erro.login.usuario"), "Usuário desabilitado");
 			  return null;
 			}
 	
@@ -207,7 +206,7 @@ public class LoginBean extends BaseBean implements Serializable {
 		
 		{
 			  this.addErrorMessage("Usuário ou senha incorretos");
-			  addMessage(getMessageFromI18N("msg.erro.salvar.usuario"), "Login ou senha inválidos");
+			  addMessage(getMessageFromI18N("msg.erro.login.usuario"), "Login ou senha inválidos");
 			  return null;
 			}
 		this.setAutenticado(true);

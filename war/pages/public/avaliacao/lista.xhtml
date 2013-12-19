@@ -25,12 +25,14 @@
     	
 		<ui:define name="content">
 		
-		
+			<h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
 		
 			
-		<h:messages />	
+		
 			<h:form >
-				<h:dataTable value="#{avaliacaoBean.dmAvaliacoes}" var="avaliacao" styleClass="table table-hover">
+				<h:dataTable value="#{avaliacaoBean.dmAvaliacoes}" var="avaliacao" styleClass="table table-hover table-condensed">
 			 <f:facet name="header" align="center">  
                     <h4 align="center">	<small> <h:outputText align="center" value="#{msg['lista.avaliacao.informacao']}" /></small></h4>
                      </f:facet> 
@@ -46,10 +48,15 @@
 	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.nivel']}" /></f:facet>
+						<h:outputText value="#{avaliacao.nivelTransparencia == 'OPACA' ? '1-' : ''}" />
+						<h:outputText value="#{avaliacao.nivelTransparencia == 'DIVULGADA' ? '2-' : ''}" /> 
+						<h:outputText value="#{avaliacao.nivelTransparencia == 'COMPREENDIDA' ? '3-' : ''}" /> 
+						<h:outputText value="#{avaliacao.nivelTransparencia == 'CONFIAVEL' ? '4-' : ''}" /> 
+						<h:outputText value="#{avaliacao.nivelTransparencia == 'PARTICIPATIVA' ? '5-' : ''}" /> 
 						<h:outputText value="#{avaliacao.nivelTransparencia}" />
 	                </h:column>
 	                
-	                <h:column>
+	                <h:column >
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.download']}" /></f:facet>
 						
 						 

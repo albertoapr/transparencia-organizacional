@@ -220,12 +220,14 @@ private static Logger log = Logger.getLogger(ProfissionalBean.class);
 		try {
 			dao.remove(profissional);
 			profissionais.remove(profissional.getId());
+			addMessage("Profissional excluído com sucesso !", "");
+			log.debug("Removeu profissional "+profissional.getId());
 		} catch(Exception ex) {
 			log.error("Erro ao remover profissional.", ex);
 			addMessage(getMessageFromI18N("msg.erro.remover.profissional"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu profissional "+profissional.getId());
+		
 		return "listaProfissionais";
 	}
 	

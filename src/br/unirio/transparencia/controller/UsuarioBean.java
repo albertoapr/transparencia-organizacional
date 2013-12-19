@@ -13,8 +13,6 @@ import java.util.ResourceBundle;
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
@@ -40,6 +38,11 @@ import br.unirio.transparencia.model.Usuario;
 @SessionScoped
 public class UsuarioBean implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = Logger.getLogger(UsuarioBean.class);
 	
 	/**
@@ -252,12 +255,14 @@ public class UsuarioBean implements Serializable {
 		try {
 			dao.remove(usuario);
 			usuarios.remove(usuario.getId());
+			addMessage("Usuário excluído com sucesso !", "");
+			log.debug("Removeu usuario "+usuario.getId());
 		} catch(Exception ex) {
 			log.error("Erro ao remover usuario.", ex);
 			addMessage(getMessageFromI18N("msg.erro.remover.usuario"), ex.getMessage());
 			return "";
 		}
-		log.debug("Removeu usuario "+usuario.getId());
+		
 		return "listaUsuarios";
 	}
 	
