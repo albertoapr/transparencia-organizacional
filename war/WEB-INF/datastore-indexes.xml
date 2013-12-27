@@ -14,7 +14,13 @@
 		<property name="estado" direction="asc" />
 	</datastore-index>
 	
-	<datastore-index kind="Profissioanl" ancestor="false">
+	<datastore-index kind="Escopo" ancestor="false">
+	    <property name="nome" direction="asc" />
+		<property name="descricao" direction="asc" />
+		<property name="keyOrganizacao" direction="asc" />
+	</datastore-index>
+	
+	<datastore-index kind="Profissional" ancestor="false">
 	    <property name="nome" direction="asc" />
 		<property name="instituicao" direction="asc" />
 		<property name="email" direction="asc" />

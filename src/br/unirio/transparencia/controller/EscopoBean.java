@@ -9,15 +9,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
 import br.unirio.transparencia.dao.escopo.EscopoDAO;
+import br.unirio.transparencia.dao.escopo.EscopoDAOObjectify;
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.model.Escopo;
@@ -36,25 +39,24 @@ import br.unirio.transparencia.util.ControladorEstados;
  */
 @ManagedBean
 @SessionScoped
-public class OrganizacaoBean implements Serializable {
+public class EscopoBean implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
  
-	private static Logger log = Logger.getLogger(OrganizacaoBean.class);
+	private static Logger log = Logger.getLogger(EscopoBean.class);
 	
 	/**
 	 * Referência do componente de persistência.
 	 */
-	private OrganizacaoDAO dao;
-	private EscopoDAO daoEscopo;
+	private EscopoDAO dao;
+	private OrganizacaoBean organizacaoBean;
 	
 	/**
 	 * Referência para a organizacao utiliza na inclusão (nova) ou edição.
 	 */
-	private Organizacao organizacao;
 	private Escopo escopo;
 	
 	/**
@@ -69,25 +71,26 @@ public class OrganizacaoBean implements Serializable {
 	 * 
 	 * Dessa forma esse hashmap mantém um espelho do datastore para minizar o impacto desse modelo do App Engine.
 	 */
-	private Map<Long, Organizacao> organizacoes;
+	private Map<Long, Escopo> escopos;
 	
-	public OrganizacaoBean() {
-		dao = new OrganizacaoDAOObjectify();
-		fillOrganizacoes();
-	}
-	
-	public String[] getEstados(){
-		return ControladorEstados.getSiglas();
+	public EscopoBean() {
+		dao = new EscopoDAOObjectify();
 		
+		ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+	    this.organizacaoBean =(OrganizacaoBean)FacesContext.getCurrentInstance().getApplication()  
+                .getELResolver().getValue(elContext, null, "organizacaoBean");
+		fillEscopos();
 	}
 	
+
 	
-	public Organizacao getOrganizacao() {
-		return organizacao;
+	
+	public Escopo getEscopo() {
+		return escopo;
 	}
 	
-	public void setOrganizacao(Organizacao organizacao) {
-		this.organizacao = organizacao;
+	public void setEscopo(Escopo escopo) {
+		this.escopo = escopo;
 	}
 	
 	public void setIdSelecionado(Long idSelecionado) {
@@ -101,52 +104,63 @@ public class OrganizacaoBean implements Serializable {
 	/**
 	 * @return <code>DataModel</code> para carregar a lista de organizacaos.
 	 */
-	public DataModel<Organizacao> getDmOrganizacoes() {
-		return new ListDataModel<Organizacao>(new ArrayList<Organizacao>(organizacoes.values()));
+	public DataModel<Escopo> getDmEscopos() {
+		return new ListDataModel<Escopo>(new ArrayList<Escopo>(escopos.values()));
 	}
 	
-	public void fillOrganizacoes() {
+	public void fillEscopos() {
 		try {
-			List<Organizacao> qryOrganizacoes = new ArrayList<Organizacao>(dao.getAll());
-			organizacoes = new HashMap<Long, Organizacao>();
-			for (Organizacao m: qryOrganizacoes) {
-				organizacoes.put(m.getId(), m);
+			List<Escopo> qryEscopos = new ArrayList<Escopo>(dao.getAll(organizacaoBean.getOrganizacao()));
+			escopos = new HashMap<Long, Escopo>();
+			for (Escopo m: qryEscopos) {
+				escopos.put(m.getId(), m);
 			}
 			
-			log.debug("Carregou a lista de organizacoes ("+organizacoes.size()+")");
+			log.debug("Carregou a lista de escopos ("+escopos.size()+")");
 		} catch(Exception ex) {
-			log.error("Erro ao carregar a lista de organizacoes.", ex);
-			addMessage(getMessageFromI18N("msg.erro.listar.organizacao"), ex.getMessage());
+			log.error("Erro ao carregar a lista de escopo.", ex);
+			addMessage(getMessageFromI18N("msg.erro.listar.escopo"), ex.getMessage());
 		}
 		
 	}
 	
-	public Map<Long, Organizacao> getOrganizacoes() {
-		return organizacoes;
+	public Map<Long, Escopo> getEscopos() {
+		return escopos;
 	}
 
 
-	public void setOrganizacoes(Map<Long, Organizacao> organizacoes) {
-		this.organizacoes = organizacoes;
+	public void setEscopos(Map<Long, Escopo> escopos) {
+		this.escopos = escopos;
 	}
 
 
 	/**
-	 * Ação executada quando a página de inclusão de organizacaos for carregada.
+	 * Ação executada quando a página de inclusão de escopos for carregada.
 	 */
-	public void incluir(){
-		organizacao = new Organizacao();
-		log.debug("Pronto pra incluir");
+	public String incluir(){
+		escopo = new Escopo();
+		if (organizacaoBean.getOrganizacao()!=null)
+		{	
+		   escopo.setOrganizacao(organizacaoBean.getOrganizacao());
+		   log.debug("Pronto pra incluir");
+		   return null;
+		}
+		else
+		{
+			addMessage("Nenhuma organização selecionada !", "");
+			return "listaOrganizacoes";
+			}
+		
 	}
 	
 	/**
-	 * Ação executada quando a página de edição de organizacaos for carregada.
+	 * Ação executada quando a página de edição de escopos for carregada.
 	 */
 	public void editar() {
 		if (idSelecionado == null) {
 			return;
 		}
-		organizacao = organizacoes.get(idSelecionado);
+		escopo = escopos.get(idSelecionado);
 		log.debug("Pronto pra editar");
 	}
 
@@ -156,16 +170,18 @@ public class OrganizacaoBean implements Serializable {
 	 */
 	public String salvar() {
 		try {
-			dao.save(organizacao);
-			organizacoes.put(organizacao.getId(), organizacao);
-			addMessage("Organização salva com sucesso !", "");
+			//escopo.setOrganizacao(organizacaoBean.getOrganizacao());
+			dao.save(escopo);
+			escopos.put(escopo.getId(), escopo);
+			organizacaoBean.getOrganizacao().getEscopos().put(escopo.getId(), escopo);
+			addMessage("Escopo salvo com sucesso !", "");
 		} catch(Exception ex) {
-			log.error("Erro ao salvar organizacao.", ex);
-			addMessage(getMessageFromI18N("msg.erro.salvar.organizacao"), ex.getMessage());
+			log.error("Erro ao salvar escopo.", ex);
+			addMessage(getMessageFromI18N("msg.erro.salvar.escopo"), ex.getMessage());
 			return "";
 		}
-		log.debug("Salvour organizacao "+organizacao.getId());
-		return "listaOrganizacoes";
+		log.debug("Salvou escopo "+escopo.getId());
+		return "listaEscopos";
 	
 	}
 	
@@ -173,14 +189,14 @@ public class OrganizacaoBean implements Serializable {
 	 * Operação acionada pela tela de listagem, através do <code>commandButton</code> <strong>Atualizar</strong>. 
 	 */
 	public void atualizar() {
-		fillOrganizacoes();
+		fillEscopos();
 	}
 	
 	/**
 	 * Operação acionada toda a vez que a  tela de listagem for carregada.
 	 */
 	public void reset() {
-		organizacao = null;
+		escopo = null;
 		idSelecionado = null;
 	}
 	
@@ -190,17 +206,19 @@ public class OrganizacaoBean implements Serializable {
 	 */
 	public String remover() {
 		try {
-			dao.remove(organizacao);
-			organizacoes.remove(organizacao.getId());
-			addMessage("Organização excluída com sucesso !", "");
-			log.debug("Removeu organizacao "+organizacao.getId());
+			
+			dao.remove(escopo);
+			escopos.remove(escopo.getId());
+			organizacaoBean.getOrganizacao().removeEscopo(escopo);
+			addMessage("Escopo excluído com sucesso !", "");
+			log.debug("Removeu escopo "+escopo.getId());
 		} catch(Exception ex) {
-			log.error("Erro ao remover organizacao.", ex);
-			addMessage(getMessageFromI18N("msg.erro.remover.organizacao"), ex.getMessage());
+			log.error("Erro ao remover escopo.", ex);
+			addMessage(getMessageFromI18N("msg.erro.remover.escopo"), ex.getMessage());
 			return "";
 		}
 		
-		return "listaOrganizacoes";
+		return "listaEscopos";
 	}
 	
 	/**

@@ -38,7 +38,7 @@
                      </f:facet> 
 					<h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.organizacao']}" /></f:facet>
-						<h:link outcome="editar" value="#{avaliacao.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}" >
+						<h:link outcome="editar" value="#{avaliacao.escopo.organizacao.nome}" title="#{msg['label.editar']} #{avaliacao.escopo.organizacao.nome}" >
 						    <f:param name="id" value="#{avaliacao.id}" />
 						</h:link>
 						
@@ -73,7 +73,7 @@
 	                
 	                <h:column>
 						<f:facet name="header"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></f:facet>
-						<h:outputText value="#{avaliacao.escopo}" title="#{msg['label.editar']} #{avaliacao.organizacao.nome}"/>
+						<h:outputText value="#{avaliacao.escopo.nome}" title="#{msg['label.editar']} #{avaliacao.escopo.organizacao.nome}"/>
 					</h:column>
 					
 					<h:column>

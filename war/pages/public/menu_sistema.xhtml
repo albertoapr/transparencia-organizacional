@@ -9,11 +9,7 @@
                          <h:link outcome="listaAvaliacoes" value="Avaliações" />
 				         
                   </li>
-                  <!--  
-                  <li class="#{aba == 'consulta' ? 'active' : ''}"  >
-                      <h:link outcome="/pages/public/sobre" value="Consultas" rendered="#{loginBean.autenticado}"/>
-			     </li>
-			      -->
+              
                  <li class="#{aba == 'profissionais' ? 'active' : ''}"  >
                     <h:link outcome="listaProfissionais" value="Profissionais Habilitados" />
 
@@ -30,12 +26,7 @@
                <h:link outcome="listaUsuarios" value="Usuários" rendered="#{loginBean.autenticado}"/>
 				
             </li>
-            <!--  
-             <li class="#{aba == 'sobre' ? 'active' : ''}"  >
-                 <h:link outcome="/pages/public/sobre" value="Sobre" />
-		
-               </li>
--->
+  
           </ul>
 
 </ui:fragment>

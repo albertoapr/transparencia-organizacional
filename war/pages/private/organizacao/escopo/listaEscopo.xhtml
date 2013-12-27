@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:composition template="../../../layout/template.xhtml">
+      <ui:param name="aba" value="organizacoes" />
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.editar.organizacao']}" /></ui:define>
+    	
+    	<f:metadata>
+    	   <f:event type="preRenderView" listener="#{escopoBean.fillEscopos}" />
+            <f:event type="preRenderView" listener="#{escopoBean.reset}" />
+    	<!-- 
+    	    <f:event type="preRenderView" listener="#{usuarioBean.checkList}" />  
+            <f:viewParam name="id" value="#{organizacaoBean.idSelecionado}" />
+            <f:event type="preRenderView" listener="#{organizacaoBean.editar}" />
+            -->
+        </f:metadata>
+    	<ui:define name="sidebar">
+    	 <ui:include src="../menu.xhtml" >
+    	        <ui:param name="comando" value="lista" />
+    	   </ui:include>  
+    	</ui:define>
+		<ui:define name="content">
+		<ui:include src="../menu_organizacao.xhtml">
+		  <ui:param name="aba" value="escopos" />
+		</ui:include>
+
+<h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
+    	<h:messages showDetail="true" showSummary="false" />
+    </h:panelGroup>
+<h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador}">
+    	
+    	
+	    	<h:dataTable value="#{escopoBean.dmEscopos}" var="escopo" styleClass="table table-hover table-condensed table-bordered">
+				
+					<h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.escopo.nome']}" /></f:facet>
+						<h:link outcome="editarEscopo" value="#{escopo.nome}" title="#{msg['label.editar']} #{escopo.nome}">
+                			<f:param name="id" value="#{escopo.id}" />
+                			
+            			</h:link>
+	                </h:column>
+	                
+	                <h:column>
+						<f:facet name="header"><h:outputText value="#{msg['label.escopo.descricao']}" /></f:facet>
+						<h:outputText value="#{escopo.descricao}" />
+	                </h:column>
+	             
+				</h:dataTable>
+			
+    	</h:form>
+    	
+    	
+				
+			
+  
+		</ui:define>
+    </ui:composition>
+</html>
+ 
+   

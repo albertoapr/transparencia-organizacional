@@ -45,7 +45,26 @@
 			 <from-outcome>listaAvaliacoes</from-outcome>
         <to-view-id>/pages/public/avaliacao/lista.xhtml</to-view-id>
         
-    </navigation-case>  	
+    </navigation-case>
+    
+	<navigation-case>
+			 <from-outcome>listaEscopos</from-outcome>
+        <to-view-id>/pages/private/organizacao/escopo/listaEscopo.xhtml</to-view-id>
+        
+    </navigation-case>
+    
+	<navigation-case>
+			 <from-outcome>incluirEscopo</from-outcome>
+        <to-view-id>/pages/private/organizacao/escopo/incluirEscopo.xhtml</to-view-id>
+        
+    </navigation-case>	
+    
+	<navigation-case>
+			 <from-outcome>editarOrganizacao</from-outcome>
+        <to-view-id>/pages/private/organizacao/editar.xhtml</to-view-id>
+        
+    </navigation-case>	
+	
 	  	
 	<navigation-case>
 		 <from-outcome>listaUsuarios</from-outcome>

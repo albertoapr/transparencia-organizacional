@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.model.Escopo;
 import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
 import br.unirio.transparencia.model.Profissional;
@@ -30,10 +31,10 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 	public Long save(Avaliacao avaliacao) {
 		//setando as chaves de referência para tabelas externas
 		Key<Profissional> keyAvaliador =Key.create(Profissional.class, avaliacao.getAvaliador().getId());
-		Key<Organizacao> keyOrganizacao =Key.create(Organizacao.class, avaliacao.getOrganizacao().getId());
+		Key<Escopo> keyEscopo =Key.create(Escopo.class, avaliacao.getEscopo().getId());
 		
 		avaliacao.setKeyAvaliador(keyAvaliador);
-		avaliacao.setKeyOrganizacao(keyOrganizacao);
+		avaliacao.setKeyEscopo(keyEscopo);
 		ofy().save().entity(avaliacao).now();
 		return avaliacao.getId();
 	}
@@ -80,6 +81,7 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 	 */
 	public List<TotalizadorAvaliacoes> getTotalizacao(boolean somenteValidas) {
 		Date hoje = new Date();
+		Escopo escopo;
 		List<TotalizadorAvaliacoes> listaTotalizacoes =null;
 		Map<String,TotalizadorAvaliacoes> totalizacoes = new HashMap<String, TotalizadorAvaliacoes>();
 		
@@ -97,9 +99,12 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 		
 		for(Avaliacao avaliacao : avaliacoes)
 		{
-		 if (avaliacao.getDataValidade().after(hoje) || !somenteValidas) //se a avaliação é válida é contabilizada
+			escopo = avaliacao.getEscopo();
+		 if (escopo.getOrganizacao()!=null && (avaliacao.getDataValidade().after(hoje) || !somenteValidas)) //se a avaliação é válida é contabilizada
 		 {
-		   TotalizadorAvaliacoes totalizador= totalizacoes.get(avaliacao.getOrganizacao().getEstado());
+		   
+		   
+		   TotalizadorAvaliacoes totalizador= totalizacoes.get(escopo.getOrganizacao().getEstado());
 		   TotalizadorAvaliacoes totalizadorGeral= totalizacoes.get("Todos");
 		   
 		   totalizador.setTotal(totalizador.getTotal()+1);
@@ -129,7 +134,7 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
            default:
         	   
 		   }
-		   totalizacoes.put(avaliacao.getOrganizacao().getEstado(), totalizador);
+		   totalizacoes.put(avaliacao.getEscopo().getOrganizacao().getEstado(), totalizador);
 		   totalizacoes.put("Todos",totalizadorGeral);
 		 }
 			
@@ -140,7 +145,22 @@ public class AvaliacaoDAOObjectify implements Serializable, AvaliacaoDAO {
 		return listaTotalizacoes;
 		  
 		}
+
+	@Override
+	public List<Avaliacao> getAllByEscopo(Escopo escopo) {
+		Key<Escopo> keyEscopo =null;
+		if (escopo.getId()!=null)
+		 keyEscopo = Key.create(Escopo.class, escopo.getId());
+		if (keyEscopo!=null)
+		  return ofy().load().type(Avaliacao.class).filter("keyEscopo", keyEscopo).list();
+		else
+			return null;
+	}
 		
-	
+	@Override
+	public Avaliacao findByKey(Key<Avaliacao> k) {
+		
+		return ofy().load().key(k).get();
+	}
 	
 }

@@ -3,25 +3,26 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
-    <ui:composition template="../../layout/template.xhtml">
+    <ui:composition template="../../../layout/template.xhtml">
       <ui:param name="aba" value="organizacoes" />
-    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.editar.organizacao']}" /></ui:define>
+    	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.editar.organizacao']}" />
+    	</ui:define>
     	
     	<f:metadata>
     	    <f:event type="preRenderView" listener="#{usuarioBean.checkList}" />  
-            <f:viewParam name="id" value="#{organizacaoBean.idSelecionado}" />
-            <f:event type="preRenderView" listener="#{organizacaoBean.editar}" />
+            <f:viewParam name="id" value="#{escopoBean.idSelecionado}" />
+            <f:event type="preRenderView" listener="#{escopoBean.editar}" />
         </f:metadata>
     	<ui:define name="sidebar">
-    	 <ui:include src="menu.xhtml" >
+    	 <ui:include src="../menu.xhtml" >
     	        <ui:param name="comando" value="lista" />
     	   </ui:include>  
     	</ui:define>
 		<ui:define name="content">
-		<ui:include src="menu_organizacao.xhtml">
-		  <ui:param name="aba" value="organizacao" />
+		<ui:include src="../menu_organizacao.xhtml">
+		  <ui:param name="aba" value="escopos" />
 		</ui:include>
-			<ui:include src="form.xhtml">
+			<ui:include src="formEscopo.xhtml">
 				<ui:param name="subtitle" value="#{msg['label.editar']}" />
 			</ui:include>
 		</ui:define>

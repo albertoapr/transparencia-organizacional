@@ -17,10 +17,6 @@
 		<li class="#{comando == 'incluir' ? 'active' : ''}"  >
 		 <h:link outcome="incluir" value="#{msg['menu.incluir']}"/>
 	    </li>
-	    
-	    <li class="#{comando == 'incluirEscopo' ? 'active' : ''}"  >
-		 <h:link outcome="incluirEscopo" value="#{msg['menu.incluirEscopo']}" rendered="#{organizacaoBean.idSelecionado != null}"/>
-	    </li>
 	
 	
 	</ul>

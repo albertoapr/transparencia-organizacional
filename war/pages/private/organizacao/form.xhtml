@@ -1,15 +1,18 @@
 <ui:fragment xmlns="http://www.w3.org/1999/xhtml"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">
+    xmlns:f="http://java.sun.com/jsf/core" >
     
     
       <h:panelGroup layout="block" class="alert alert-error" rendered="#{facesContext.validationFailed or not empty facesContext.messageList }">
     	<h:messages showDetail="true" showSummary="false" />
     </h:panelGroup>
+    
     <h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador}">
-    	<fieldset>
+    	  
+  	       <fieldset>
     		<legend><h3><h:outputText value="#{msg['label.organizacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
+      
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao.nome']}" /></label>
 	    		<div class="controls">
@@ -40,8 +43,10 @@
 	    		</div>
 	    	</div>
 	    	
-	  
-    	</fieldset>
+		</fieldset>
+		
+    	    	
+    	
     	
     	<div class="control-group">
     		<div class="controls">

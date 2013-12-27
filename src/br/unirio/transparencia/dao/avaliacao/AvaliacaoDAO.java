@@ -2,7 +2,10 @@ package br.unirio.transparencia.dao.avaliacao;
 
 import java.util.List;
 
+import com.googlecode.objectify.Key;
+
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.model.Escopo;
 import br.unirio.transparencia.util.TotalizadorAvaliacoes;
 import br.unirio.transparencia.util.TotalizadorAvaliacaoPorNivel;
 
@@ -46,5 +49,9 @@ public interface AvaliacaoDAO {
 	
 
 	List<TotalizadorAvaliacoes> getTotalizacao(boolean somenteValidas);
+
+	List<Avaliacao> getAllByEscopo(Escopo escopo);
+
+	Avaliacao findByKey(Key<Avaliacao> k);
 
 }

@@ -3,6 +3,8 @@ package br.unirio.transparencia.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import br.unirio.transparencia.dao.escopo.EscopoDAO;
+import br.unirio.transparencia.dao.escopo.EscopoDAOObjectify;
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
 import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.dao.profissional.ProfissionalDAO;
@@ -29,19 +31,19 @@ public class Avaliacao implements Serializable {
 	
    
     
-    Key<Organizacao> keyOrganizacao;
+    Key<Escopo> keyEscopo;
     @Ignore
-    private Organizacao organizacao;
+    private Escopo escopo;
     
     Key<Profissional> keyAvaliador;
-    public Key<Organizacao> getKeyOrganizacao() {
-		return keyOrganizacao;
+    public Key<Escopo> getKeyEscopo() {
+		return keyEscopo;
 	}
 
 
 
-	public void setKeyOrganizacao(Key<Organizacao> keyOrganizacao) {
-		this.keyOrganizacao = keyOrganizacao;
+	public void setKeyEscopo(Key<Escopo> keyEscopo) {
+		this.keyEscopo = keyEscopo;
 	}
 
 
@@ -61,8 +63,7 @@ public class Avaliacao implements Serializable {
     
 	private String patrocinador;
 	
-	private String escopo;
-	
+		
 	private Date dataAvaliacao;
 	
 	private Date dataValidade;
@@ -115,7 +116,7 @@ public class Avaliacao implements Serializable {
 
 	public Avaliacao() {
 		this.avaliador =new Profissional();
-		this.organizacao =new Organizacao();
+		this.escopo =new Escopo();
 		this.dataAvaliacao = new Date();
 		this.dataValidade =new Date();
 		
@@ -124,16 +125,16 @@ public class Avaliacao implements Serializable {
 	
  
 
-	public Organizacao getOrganizacao() {
-		if (keyOrganizacao != null){
-			OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
-			return dao.findByKey(keyOrganizacao);
+	public Escopo getEscopo() {
+		if (keyEscopo != null){
+			EscopoDAO dao = new EscopoDAOObjectify();
+			return dao.findByKey(keyEscopo);
 		}
-		return organizacao;
+		return escopo;
 	}
 
-	public void setOrganizacao(Organizacao organizacao) {
-		this.organizacao = organizacao;
+	public void setEscopo(Escopo escopo) {
+		this.escopo = escopo;
 	}
 
 
@@ -202,13 +203,7 @@ public class Avaliacao implements Serializable {
 
 
 
-	public String getEscopo() {
-		return escopo;
-	}
-
-	public void setEscopo(String escopo) {
-		this.escopo = escopo;
-	}
+	
 
 	public String getPatrocinador() {
 		return patrocinador;
