@@ -110,7 +110,14 @@ public class EscopoBean implements Serializable {
 	
 	public void fillEscopos() {
 		try {
-			List<Escopo> qryEscopos = new ArrayList<Escopo>(dao.getAll(organizacaoBean.getOrganizacao()));
+			List<Escopo> qryEscopos ;
+			if (organizacaoBean.getOrganizacao()!=null)
+			{
+			 qryEscopos = new ArrayList<Escopo>(dao.getAll(organizacaoBean.getOrganizacao()));
+			}
+			else{
+			  qryEscopos = new ArrayList<Escopo>(dao.getAll());
+			}
 			escopos = new HashMap<Long, Escopo>();
 			for (Escopo m: qryEscopos) {
 				escopos.put(m.getId(), m);
@@ -170,10 +177,10 @@ public class EscopoBean implements Serializable {
 	 */
 	public String salvar() {
 		try {
-			//escopo.setOrganizacao(organizacaoBean.getOrganizacao());
 			dao.save(escopo);
+		
 			escopos.put(escopo.getId(), escopo);
-			organizacaoBean.getOrganizacao().getEscopos().put(escopo.getId(), escopo);
+			
 			addMessage("Escopo salvo com sucesso !", "");
 		} catch(Exception ex) {
 			log.error("Erro ao salvar escopo.", ex);

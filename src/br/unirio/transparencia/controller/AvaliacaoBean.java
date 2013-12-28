@@ -20,9 +20,16 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.googlecode.objectify.Key;
+
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
 import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
+import br.unirio.transparencia.dao.escopo.EscopoDAO;
+import br.unirio.transparencia.dao.escopo.EscopoDAOObjectify;
+import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
+import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.model.Avaliacao;
+import br.unirio.transparencia.model.Escopo;
 import br.unirio.transparencia.model.NivelTransparencia;
 import br.unirio.transparencia.model.Organizacao;
 import br.unirio.transparencia.util.TotalizadorAvaliacoes;
@@ -60,6 +67,13 @@ public class AvaliacaoBean implements Serializable {
 	private Avaliacao avaliacao;
 	
 	
+	private Organizacao organizacao;
+	
+	private Escopo escopo;
+	
+	private List<Escopo> escopos;
+	
+	
 	private boolean somenteValidas;
 	
 	
@@ -68,6 +82,18 @@ public class AvaliacaoBean implements Serializable {
 	 */
 	private Long idSelecionado;
 	
+	
+	/**
+	 * Informação é utilizada na inclusão da avaliacao, quando a seleção de um registro na listagem ocorrer.
+	 */
+	private Long idEscopo;
+	public Long getIdEscopo() {
+		return idEscopo;
+	}
+	public void setIdEscopo(Long idEscopo) {
+		this.idEscopo = idEscopo;
+	}
+
 	/**
 	 * Mantém as avaliacaos apresentadas na listagem indexadas pelo id.
 	 * <strong>Importante:</strong> a consulta (query) no DataStore do App Engine pode retornar <i>dados antigos</i>, 
@@ -95,7 +121,7 @@ public class AvaliacaoBean implements Serializable {
 	public AvaliacaoBean() {
 		
 		dao = new AvaliacaoDAOObjectify();
-		
+		organizacao = new Organizacao();
 		fillAvaliacoes();
 		fillTotalizacoesValidas();
 		
@@ -200,7 +226,14 @@ public String getTotalizacoes(){
 	 * Ação executada quando a página de inclusão de avaliacaos for carregada.
 	 */
 	public void incluir(){
+       EscopoDAO dao = new EscopoDAOObjectify();
+		if (idEscopo == null) {
+			return;
+		}
+		escopo = dao.findById(idEscopo);
+		
 		avaliacao = new Avaliacao();
+		avaliacao.setEscopo(escopo);
 		log.debug("Pronto pra incluir");
 	}
 	
@@ -235,6 +268,7 @@ public String getTotalizacoes(){
               avaliacao.setResultado(fileResultado);
             session.setAttribute("selo", null);
             session.setAttribute("resultado", null); 
+            
 			dao.save(avaliacao);
 			avaliacoes.put(avaliacao.getId(), avaliacao);
 			log.debug("Salvou avaliacao "+avaliacao.getId());
@@ -309,5 +343,33 @@ public String getTotalizacoes(){
 	public void setSomenteValidas(Boolean somenteValidas) {
 		this.somenteValidas = somenteValidas;
 	}
+	public Organizacao getOrganizacao() {
+		return organizacao;
+	}
+	public void setOrganizacao(Organizacao organizacao) {
+		this.organizacao = organizacao;
+	}
+	public List<Escopo> getEscopos() {
+		EscopoDAO dao = new EscopoDAOObjectify();
+		if (organizacao!=null)
+		for (Key<Escopo> key :organizacao.getKeysEscopos()){
+			escopos.add(dao.findByKey(key));
+		}
+		return escopos;
+	}
+	public void setEscopos(List<Escopo> escopos) {
+		this.escopos = escopos;
+	}
 
+	public String listarEscopos(){
+		this.escopos =this.getEscopos();
+		return "";
+	}
+	public Escopo getEscopo() {
+		return escopo;
+	}
+	public void setEscopo(Escopo escopo) {
+		this.escopo = escopo;
+	}
+	
 }

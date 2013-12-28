@@ -119,6 +119,7 @@ public class Avaliacao implements Serializable {
 		this.escopo =new Escopo();
 		this.dataAvaliacao = new Date();
 		this.dataValidade =new Date();
+		this.escopo = this.getEscopo();
 		
 		
 	}

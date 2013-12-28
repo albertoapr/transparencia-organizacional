@@ -1,5 +1,6 @@
 package br.unirio.transparencia.dao.escopo;
 
+import java.util.Collection;
 import java.util.List;
 
 import br.unirio.transparencia.model.Escopo;
@@ -38,4 +39,6 @@ public interface EscopoDAO {
 	Escopo findById(Long id);
 	
 	Escopo findByKey(Key<Escopo> k);
+//método que retorna todos os escopos
+	List<Escopo> getAll();
 }

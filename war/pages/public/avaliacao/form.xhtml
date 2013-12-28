@@ -12,16 +12,35 @@
     		<legend><h3><h:outputText value="#{msg['label.avaliacao']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.organizacao']}" /></label>
+	    		
+	    		  
 	    		<div class="controls">
 	    		<h:panelGroup>
-				  <h:selectOneMenu  id="organizacao" value="#{avaliacaoBean.avaliacao.organizacao.id}"  label="Organizacao"  >
+	    		<h:outputText value="#{avaliacaoBean.avaliacao.escopo.organizacao.nome}" />
+	    		<!--
+				  <h:selectOneMenu  id="organizacao" value="#{avaliacaoBean.organizacao.id}"  label="Organizacao"  >
 					<f:selectItems value="#{organizacaoBean.dmOrganizacoes}"  var="organizacao" itemValue="#{organizacao.id}" itemLabel="#{organizacao.nome}"/>
 				  </h:selectOneMenu>
-				
+				-->
 			   </h:panelGroup>
 	    	
 	    		</div>
+	    		
     		</div>
+    		
+    		<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></label>
+	    		<div class="controls">
+	    		<h:panelGroup>
+	    		<h:outputText value="#{avaliacaoBean.avaliacao.escopo.nome}" />
+	    		<!--  
+				  <h:selectOneMenu  id="escopo" value="#{avaliacaoBean.avaliacao.escopo.id}"  label="Escopo"  >
+					<f:selectItems value="#{avaliacaoBean.escopos}"  var="escopo" itemValue="#{escopo.id}" itemLabel="#{escopo.nome}"/>
+				  </h:selectOneMenu>
+				-->
+			   </h:panelGroup>
+	    		</div>
+	    	</div>
     		
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText  value="#{msg['label.avaliacao.nivel']}" /></label>
@@ -35,14 +54,7 @@
 	    		</div>
 	    	</div>
     		
-    		<div class="control-group">
-	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.escopo']}" /></label>
-	    		<div class="controls">
-	    			<h:inputText value="#{avaliacaoBean.avaliacao.escopo}" label="#{msg['label.avaliacao.escopo']}" required="true" styleClass="input-large">
-	    				<f:validateLength minimum="5" maximum="100" />
-	    			</h:inputText>
-	    		</div>
-	    	</div>
+    		
 	    	  
 	    	<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.avaliacao.avaliador']}" /></label>

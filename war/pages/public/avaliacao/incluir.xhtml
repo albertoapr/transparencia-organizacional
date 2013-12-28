@@ -10,6 +10,8 @@
     	<ui:define name="pageTitle"><h:outputText value="#{msg['page.title.incluir.avaliacao']}" /></ui:define>
     	
     	<f:metadata>
+    	    <f:viewParam name="id" value="#{avaliacaoBean.idEscopo}" />
+            
             <f:event type="preRenderView" listener="#{avaliacaoBean.incluir}" />
         </f:metadata>
     	<ui:define name="sidebar">

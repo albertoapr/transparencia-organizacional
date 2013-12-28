@@ -39,12 +39,15 @@ public class EscopoDAOObjectify implements Serializable, EscopoDAO {
 	private Escopo escopo;
 
 	@Override
-	public Long save(Escopo escopo) {
+	public Long save(Escopo _escopo) {
 		//setando as chaves de referência para tabelas externas
-	    Key<Organizacao> keyOrganizacao =Key.create(Organizacao.class, escopo.getOrganizacao().getId());
-		escopo.setKeyOrganizacao(keyOrganizacao);
-		ofy().save().entity(escopo).now();
-		return escopo.getId();
+	    Key<Organizacao> keyOrganizacao =Key.create(Organizacao.class, _escopo.getOrganizacao().getId());
+		_escopo.setKeyOrganizacao(keyOrganizacao);//aqui setamos a chave da organizacao no escopo
+		ofy().save().entity(_escopo).now();
+		
+		_escopo.getOrganizacao().addEscopo(_escopo);
+		ofy().save().entity(_escopo.getOrganizacao()).now(); //Aqui salvamos a organizacao com o escopo incluído
+		return _escopo.getId();
 	}
 	
 	@Override
@@ -93,6 +96,14 @@ public class EscopoDAOObjectify implements Serializable, EscopoDAO {
 	public Escopo findByKey(Key<Escopo> k) {
 		
 		return ofy().load().key(k).get();
+	}
+
+	@Override
+	public List<Escopo> getAll() {
+
+		
+		  return ofy().load().type(Escopo.class).order("keyOrganizacao").list();
+	
 	}
 
 

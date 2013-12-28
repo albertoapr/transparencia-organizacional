@@ -6,8 +6,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.VoidWork;
 
 
+import br.unirio.transparencia.dao.escopo.EscopoDAO;
+import br.unirio.transparencia.dao.escopo.EscopoDAOObjectify;
+import br.unirio.transparencia.model.Escopo;
 import br.unirio.transparencia.model.Organizacao;
 
 /**
@@ -29,6 +33,7 @@ public class OrganizacaoDAOObjectify implements Serializable, OrganizacaoDAO {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Organizacao organizacao;
 
 	@Override
 	public Long save(Organizacao organizacao) {
@@ -42,10 +47,42 @@ public class OrganizacaoDAOObjectify implements Serializable, OrganizacaoDAO {
 	}
 	
 	@Override
-	public Boolean remove(Organizacao organizacao) {
-		ofy().delete().entity(organizacao).now();
+	public Boolean remove(Organizacao _organizacao) {
+
+		this.remover(_organizacao);
+		
 		return true;
+		
+		
+	
 	}
+	
+	
+	public void remover(Organizacao _organizacao) {
+		organizacao = _organizacao;
+	    ofy().transact(new VoidWork() {
+	        public void vrun() {
+	            removerEscopos();
+	            ofy().delete().entity(organizacao).now();
+	        }
+	    });
+	}
+
+	public void removerEscopos() {
+	    ofy().transact(new VoidWork() {
+	        public void vrun() {
+	        	Escopo escopo;
+	        	EscopoDAO dao = new EscopoDAOObjectify();
+	        	for (Key<Escopo> key: organizacao.getKeysEscopos()){
+	        		escopo = dao.findByKey(key);
+	        		dao.remove(escopo);
+	        	}
+	        	
+	          }
+	    });
+	}
+	
+	
 	
 	@Override
 	public Organizacao findById(Long id) {

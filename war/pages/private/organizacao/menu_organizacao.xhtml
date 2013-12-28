@@ -6,7 +6,7 @@
     
                <ul class="nav nav-tabs" >
                    <li class="#{aba == 'organizacao' ? 'active' : ''}">
-                         <h:link outcome="editarOrganizacao" value="Organização" />
+                         <h:link outcome="editarOrganizacao" value="Organização" rendered="#{organizacaoBean.idSelecionado != null}"/>
 				         
                   </li>
               
