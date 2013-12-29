@@ -64,17 +64,25 @@ public class EscopoDAOObjectify implements Serializable, EscopoDAO {
 	@Override
 	public Boolean remove(Escopo _escopo) {
 		this.escopo = _escopo;
+		 Key<Escopo> keyEscopo = Key.create(Escopo.class, _escopo.getId());
+		 final List<Key<Avaliacao>>  avaliacoes = ofy().load().type(Avaliacao.class).filter("keyEscopo", keyEscopo).keys().list();	
+		  
+		
 		//iniciamos uma transação para remover o escopo, na transação removemos todas as avaliações realizadas no escopo
 		//e depois removemos o escopo
+		/*
+		for (Avaliacao avaliacao: _escopo.getAvaliacoes()){
+			ofy().delete().entities(avaliacao).now();
+		}
+		ofy().delete().entity(_escopo).now();
+		*/
 		
 		ofy().transact(new VoidWork(){
-			
-
 			@Override
-			public void vrun() {
-			if (escopo.getKeysAvaliacoes()!=null)	
-				ofy().delete().keys(escopo.getKeysAvaliacoes());
-			 ofy().delete().entity(escopo).now();				
+			public void vrun() 
+			{
+			   ofy().delete().keys(avaliacoes).now();
+		       ofy().delete().entity(escopo).now();				
 			}
 		});
 		
@@ -102,7 +110,7 @@ public class EscopoDAOObjectify implements Serializable, EscopoDAO {
 	public List<Escopo> getAll() {
 
 		
-		  return ofy().load().type(Escopo.class).order("keyOrganizacao").list();
+		  return ofy().load().type(Escopo.class).list();
 	
 	}
 

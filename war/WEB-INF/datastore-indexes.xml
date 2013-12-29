@@ -31,6 +31,7 @@
 	    <property name="escopo" direction="asc" />
 		<property name="dataValidade" direction="desc" />
 		<property name="dataAvaliacao" direction="desc" />
+		<property name="keyEscopo" direction="asc" />
 		
 	</datastore-index>
 	

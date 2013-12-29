@@ -5,8 +5,6 @@ import java.util.Date;
 
 import br.unirio.transparencia.dao.escopo.EscopoDAO;
 import br.unirio.transparencia.dao.escopo.EscopoDAOObjectify;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
 import br.unirio.transparencia.dao.profissional.ProfissionalDAO;
 import br.unirio.transparencia.dao.profissional.ProfissionalDAOObjectify;
 
@@ -15,6 +13,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Index;
 
 
 
@@ -30,7 +29,7 @@ public class Avaliacao implements Serializable {
 	private Long id;
 	
    
-    
+    @Index
     Key<Escopo> keyEscopo;
     @Ignore
     private Escopo escopo;

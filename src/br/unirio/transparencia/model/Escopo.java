@@ -1,18 +1,14 @@
 package br.unirio.transparencia.model;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAO;
-import br.unirio.transparencia.dao.avaliacao.AvaliacaoDAOObjectify;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAO;
-import br.unirio.transparencia.dao.organizacao.OrganizacaoDAOObjectify;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 
 /**
@@ -38,21 +34,11 @@ public class Escopo implements Serializable {
 	private String nome;
 	@Index
 	private String descricao;
-	List<Avaliacao> avaliacoes;
-	
-	private Key<Avaliacao>[] keysAvaliacoes;
-	
-	public Key<Avaliacao>[] getKeysAvaliacoes() {
-		return keysAvaliacoes;
-	}
-
-	public void setKeysAvaliacoes(Key<Avaliacao>[] keysAvaliacoes) {
-		this.keysAvaliacoes = keysAvaliacoes;
-	}
-
+	private List<Avaliacao> avaliacoes = new ArrayList<Avaliacao>();
 	@Index
 	Key<Organizacao> keyOrganizacao;
-    public Key<Organizacao> getKeyOrganizacao() {
+    
+	public Key<Organizacao> getKeyOrganizacao() {
 		return keyOrganizacao;
 	}
 
@@ -60,22 +46,21 @@ public class Escopo implements Serializable {
 		this.keyOrganizacao = keyOrganizacao;
 	}
 
-	@Ignore
-    private Organizacao organizacao;
+	
 	
 	
 	
 	
 	public Organizacao getOrganizacao() {
-		if (keyOrganizacao != null){
-			OrganizacaoDAO dao = new OrganizacaoDAOObjectify();
-			return dao.findByKey(keyOrganizacao);
+		if (this.keyOrganizacao != null){
+			return ofy().load().key(this.getKeyOrganizacao()).get();
 		}
-		return organizacao;
+		return null;
 	}
 
 	public void setOrganizacao(Organizacao organizacao) {
-		this.organizacao = organizacao;
+	 if (organizacao!=null)	
+		this.keyOrganizacao =Key.create(Organizacao.class, organizacao.getId());
 	}
 
 	public void setId(Long id) {
@@ -91,9 +76,11 @@ public class Escopo implements Serializable {
 
 	
 	public Escopo() {
-		avaliacoes = new ArrayList<Avaliacao>();
-		AvaliacaoDAO dao = new AvaliacaoDAOObjectify();
-	   avaliacoes =  dao.getAllByEscopo(this);
+	  if (this.getId()!=null)
+	  {
+		Key<Escopo> keyEscopo = Key.create(Escopo.class, this.getId());	
+		this.avaliacoes=ofy().load().type(Avaliacao.class).filter("keyEscopo", keyEscopo).list();
+	  }
 	}
 	
 	public String getNome() {
@@ -113,13 +100,30 @@ public class Escopo implements Serializable {
 	}
 
 	public List<Avaliacao> getAvaliacoes() {
-		return avaliacoes;
+	  
+		if (this.getId()!=null)
+		  {  
+			Key<Escopo> keyEscopo = Key.create(Escopo.class, this.getId());  
+		    this.avaliacoes=ofy().load().type(Avaliacao.class).filter("keyEscopo", keyEscopo).list();
+	      }
+	  
+	return avaliacoes;
 	}
 
 	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
 
+	public void addAvaliacao(Avaliacao avaliacao){
+		if (!avaliacoes.contains(avaliacao))
+		   avaliacoes.add(avaliacao);
+		else
+			avaliacoes.add(avaliacoes.indexOf(avaliacao), avaliacao);
+	}
+	
+	public void removeAvaliacao(Avaliacao avaliacao){
+		avaliacoes.remove(avaliacao);
+	}
 
 
 
