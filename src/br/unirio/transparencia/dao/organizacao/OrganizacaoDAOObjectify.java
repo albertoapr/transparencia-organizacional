@@ -3,6 +3,7 @@ package br.unirio.transparencia.dao.organizacao;
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.objectify.Key;
@@ -11,6 +12,7 @@ import com.googlecode.objectify.VoidWork;
 
 import br.unirio.transparencia.dao.escopo.EscopoDAO;
 import br.unirio.transparencia.dao.escopo.EscopoDAOObjectify;
+import br.unirio.transparencia.model.Avaliacao;
 import br.unirio.transparencia.model.Escopo;
 import br.unirio.transparencia.model.Organizacao;
 
@@ -60,27 +62,29 @@ public class OrganizacaoDAOObjectify implements Serializable, OrganizacaoDAO {
 	
 	public void remover(Organizacao _organizacao) {
 		organizacao = _organizacao;
-	    ofy().transact(new VoidWork() {
+		Key<Organizacao> keyOrganizacao = Key.create(Organizacao.class, _organizacao.getId());
+		final List<Key<Escopo>>  escopos = ofy().load().type(Escopo.class).filter("keyOrganizacao", keyOrganizacao).keys().list();	
+		
+		List<Key<Avaliacao>> listAvaliacoes = new ArrayList<Key<Avaliacao>>();
+		for (Key<Escopo> keyEscopo:escopos)
+			listAvaliacoes.addAll(ofy().load().type(Avaliacao.class).filter("keyEscopo",keyEscopo).keys().list());
+		
+		final List<Key<Avaliacao>> avaliacoes = listAvaliacoes ;
+	   
+		ofy().transact(new VoidWork() {
 	        public void vrun() {
-	            removerEscopos();
-	            ofy().delete().entity(organizacao).now();
+	        if (avaliacoes.size()>0)
+	          ofy().delete().keys(avaliacoes).now(); //deleta as avaliações da organização
+	        	
+	        if (escopos!=null  && escopos.size()>0)	
+	          ofy().delete().keys(escopos).now(); //deleta os escopos da organização
+	       
+	        ofy().delete().entity(organizacao).now(); //deleta a organização
 	        }
 	    });
 	}
-
-	public void removerEscopos() {
-	    ofy().transact(new VoidWork() {
-	        public void vrun() {
-	        	Escopo escopo;
-	        	EscopoDAO dao = new EscopoDAOObjectify();
-	        	for (Key<Escopo> key: organizacao.getKeysEscopos()){
-	        		escopo = dao.findByKey(key);
-	        		dao.remove(escopo);
-	        	}
-	        	
-	          }
-	    });
-	}
+	
+	
 	
 	
 	

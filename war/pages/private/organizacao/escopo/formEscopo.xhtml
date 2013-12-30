@@ -9,7 +9,7 @@
     </h:panelGroup>
     <h:form styleClass="form-horizontal" rendered="#{loginBean.checkAdministrador}">
     	<fieldset>
-    		<legend><h3><h:outputText value="#{msg['label.escopo']}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
+    		<legend><h3><h:outputText value="#{organizacaoBean.organizacao.nome}" /> <small> <h:outputText value="#{subtitle}" /></small></h3></legend>
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText value="#{msg['label.escopo.nome']}" /></label>
 	    		<div class="controls">

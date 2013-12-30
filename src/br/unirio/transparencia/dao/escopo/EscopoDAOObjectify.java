@@ -70,12 +70,7 @@ public class EscopoDAOObjectify implements Serializable, EscopoDAO {
 		
 		//iniciamos uma transação para remover o escopo, na transação removemos todas as avaliações realizadas no escopo
 		//e depois removemos o escopo
-		/*
-		for (Avaliacao avaliacao: _escopo.getAvaliacoes()){
-			ofy().delete().entities(avaliacao).now();
-		}
-		ofy().delete().entity(_escopo).now();
-		*/
+	
 		
 		ofy().transact(new VoidWork(){
 			@Override
@@ -85,6 +80,7 @@ public class EscopoDAOObjectify implements Serializable, EscopoDAO {
 		       ofy().delete().entity(escopo).now();				
 			}
 		});
+		
 		
 	
 		

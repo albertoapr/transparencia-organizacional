@@ -41,6 +41,13 @@
 			   </h:panelGroup>
 	    		</div>
 	    	</div>
+	    	
+	    	<div class="control-group">
+	    		<label class="control-label"><h:outputText value="#{msg['label.patrocinador']}" /></label>
+	    		<div class="controls">
+	    			<h:inputText id="patrocinador" value="#{avaliacaoBean.avaliacao.patrocinador}" label="#{msg['label.patrocinador']}" required="true" styleClass="input-large"/>
+	    		</div>
+	    	</div>
     		
     		<div class="control-group">
 	    		<label class="control-label"><h:outputText  value="#{msg['label.avaliacao.nivel']}" /></label>
